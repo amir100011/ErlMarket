@@ -58,3 +58,7 @@ reserve(ListOfProductsToReserve, NumberOfCustomers) ->
 optimizeReservation(ListOfProductsToReserve, NumberOfCustomers) ->
   {ListOfProductsToReserve,0.5}.
 
+getNumberOfCustomers() ->
+  masterFunction:getNumberOfCustomers().
+
+dor()-> gen_server:call(dairy, getTotalAmountOfValidProduct).

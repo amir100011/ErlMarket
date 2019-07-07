@@ -14,44 +14,57 @@
 
 
 main() ->
-  initErlMarketDataBase(),
-  initErlMarketFunctionality().
+  testDep().
+%%  initErlMarketDataBase(),
+%%  initErlMarketFunctionality().
+
+%%
+%%initErlMarketFunctionality() ->
+%%  put(numberOfCostumers,0),
+%%  initDepartments(),
+%%  initPurchaseDepartment(),
+%%  initCashiers(),
+%%  initSuppliers(),
+%%  initCustomer().
+%%
+%%
+%%initErlMarketDataBase() ->
+%%  inventory:initInventory().
+%%
+%%initDepartments() ->
+%%  DepartmentList = inventory:getDepartments(),
+%%  lists:foreach(fun(DepartmentName) ->
+%%    department:raiseDepartment(DepartmentName)
+%%                end, DepartmentList).
+%%
+%%initPurchaseDepartment() ->
+%%  register(purchaseDepartment,spawn(fun() -> purchaseDepartment:initPurchaseDepartment end)).
+%%
+%%initCashiers() ->
+%%  NumberOfCashiersNeeded = getNumberOfCustomers() * 0.25 + 1,
+%%  cashier:raiseCashier(NumberOfCashiersNeeded).
+%%
+%%initSuppliers() ->
+%%  DepartmentList = inventory:getDeparments(),
+%%  lists:foreach(fun(DepartmentName) ->
+%%    supplier:raiseSupplier(DepartmentName)
+%%                end, DepartmentList).
+%%
+%%initCustomer() ->
+%%  spawn(fun() -> costumer:initCustomer end),
+%%  updateNumberOfCustomers(1).
+%%
+%%updateNumberOfCustomers(NumberToAdd) ->
+%%  put(numberOfCustomers,get(numberOfCustomers) + NumberToAdd).
+%%
+%%getNumberOfCustomers() ->
+%%  get(numberOfCustomers).
 
 
-initErlMarketFunctionality() ->
-  put(numberOfCostumers,0),
-  initDepartments(),
-  initPurchaseDepartment(),
-  initCashiers(),
-  initSuppliers(),
-  initCostumer().
-
-
-initErlMarketDataBase() ->
-  inventory:initInventory().
-
-initDepartments() ->
-  DepartmentList = inventory:getDeparments(),
-  lists:foreach(fun(DepartmentName) ->
-    department:raiseDepartment(DepartmentName)
-                end, DepartmentList).
-
-initPurchaseDepartment() ->
-  register(purchaseDepartment,spawn(fun() -> purchaseDepartment:initPurchaseDepartment end)).
-
-initCashiers() ->
-  NumberOfCashiersNeeded = inventory:getNumOfCustomers() * 0.25 + 1,
-  cashier:raiseCashier(NumberOfCashiersNeeded).
-
-initSuppliers() ->
-  DepartmentList = inventory:getDeparments(),
-  lists:foreach(fun(DepartmentName) ->
-    supplier:raiseSupplier(DepartmentName)
-                end, DepartmentList).
-
-initCostumer() ->
-  spawn(fun() -> costumer:initCostumer end),
-  updateNumberOfCostumers(1).
-
-updateNumberOfCostumers(NumberToAdd) ->
-  put(numberOfCostumers,get(numberOfCostumers) + NumberToAdd).
+testDep() ->
+  inventory:initInventory(node()),
+  %Pid = department2:start(),
+  Pid2 = department:start(diary),
+  io:fwrite("whereAMI~n"),
+  %ResponseC = department2:put(color, "red"),
+  ResponseD = department:callFunc(diary).

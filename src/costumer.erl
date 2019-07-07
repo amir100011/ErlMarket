@@ -53,11 +53,11 @@ fillShoppingList()->
 
 fillFromDepartment([], Ans) -> Ans;
 fillFromDepartment([H| T], Ans) when Ans =:= [] ->
-  {atomic, ProductsFromDepartment} =  inventory:get_products_from_department(H),
+  {atomic, ProductsFromDepartment} =  inventory:getProductsFromDepartment(H),
   ChosenProducts = randomly_chose_products(ProductsFromDepartment, []),
   fillFromDepartment(T,ChosenProducts);
 fillFromDepartment([H| T], Ans) ->
-  {atomic, ProductsFromDepartment} =  inventory:get_products_from_department(H),
+  {atomic, ProductsFromDepartment} =  inventory:getProductsFromDepartment(H),
   ChosenProducts = randomly_chose_products(ProductsFromDepartment, []),
   TMP = Ans ++ ChosenProducts,
   fillFromDepartment(T, TMP).

@@ -9,7 +9,7 @@
 -module(inventory).
 -author("dorliv").
 %% API
--export([initInventory/1, get_products_from_department/1, getDepartments/0, test_mnesia/0]).
+-export([initInventory/1, getProductsFromDepartment/1, getDepartments/0, test_mnesia/0]).
 -define(Filename, "Inventory.txt").
 -record(product, {department, product_name, price, expiry_time}).
 -record(department, {department_name, department_pid}).
@@ -62,7 +62,7 @@ process_line(eof) -> eof;
 process_line({error,_}) -> io:fwrite("Error: reading line failed");
 process_line({ok,Data}) -> string:tokens(Data, "\n").
 
-get_products_from_department(Department)->
+getProductsFromDepartment(Department)->
   R = fun()->
     mnesia:read(product, Department)
       end,
