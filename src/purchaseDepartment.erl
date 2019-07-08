@@ -12,15 +12,30 @@
 
 %% API
 -export([initPurchaseDepartment/0]).
+-export([updateBalance/1]).
+-export([setInitialBudget/0]).
 
 
 initPurchaseDepartment() ->
   setInitialBudget(),
   purchaseDepartmentRecursiveLoop().
 
-
+%TODO add os:systemTime to the log
 setInitialBudget() ->
-  put(erlMarketBudget,10000).
+  put(erlMarketBudget,10000),
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s ~n",["setInitialBudget 10000"]),
+  file:close(S),
+  get(erlMarketBudget).
+
+updateBalance(AmountToAdd) ->
+  OldBalance = integer_to_list(get(erlMarketBudget)),
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s ~s ~n",["updateBalance: OldBalance:",OldBalance]),
+  put(erlMarketBudget, get(erlMarketBudget) + AmountToAdd),
+  NewBalance = integer_to_list(get(erlMarketBudget)),
+  io:format(S,"~s ~s ~n",["updateBalance: NewBalance:",NewBalance]),
+  file:close(S).
 
 purchaseDepartmentRecursiveLoop() ->
   DepartmentList = getDepartments(),
@@ -60,5 +75,3 @@ optimizeReservation(ListOfProductsToReserve, NumberOfCustomers) ->
 
 getNumberOfCustomers() ->
   masterFunction:getNumberOfCustomers().
-
-dor()-> gen_server:call(dairy, getTotalAmountOfValidProduct).

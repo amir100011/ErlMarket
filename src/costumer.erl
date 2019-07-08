@@ -41,7 +41,8 @@ initCostumer() ->
   ShoppingList = fillShoppingList(),
   Costumer = #costumer{customer_id = self(), budget = Budget, shopping_list = ShoppingList},
   A = Costumer#costumer.budget,
-  B = 5.
+  B = 5,
+  ShoppingList.
   %goShopping(Costumer),
   %terminate().
 

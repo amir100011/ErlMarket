@@ -11,6 +11,7 @@
 
 %% API
 -export([main/0]).
+-export([updateNumberOfCustomers/1,getNumberOfCustomers/0]).
 
 
 main() ->
@@ -54,17 +55,19 @@ main() ->
 %%  spawn(fun() -> costumer:initCustomer end),
 %%  updateNumberOfCustomers(1).
 %%
-%%updateNumberOfCustomers(NumberToAdd) ->
-%%  put(numberOfCustomers,get(numberOfCustomers) + NumberToAdd).
-%%
-%%getNumberOfCustomers() ->
-%%  get(numberOfCustomers).
+updateNumberOfCustomers(NumberToAdd) ->
+  put(numberOfCustomers,get(numberOfCustomers) + NumberToAdd).
+
+getNumberOfCustomers() ->
+  get(numberOfCustomers).
 
 
 testDep() ->
   inventory:initInventory(node()),
   %Pid = department2:start(),
   Pid2 = department:start(diary),
+  Pid3 = diary,
   io:fwrite("whereAMI~n"),
   %ResponseC = department2:put(color, "red"),
-  ResponseD = department:callFunc(diary).
+  %ResponseD = department:callFunc(diary).
+  gen_server:call({global,Pid3}, {getTotalAmountOfValidProduct, diary}).
