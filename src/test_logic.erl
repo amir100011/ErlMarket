@@ -1,66 +1,50 @@
 %%%-------------------------------------------------------------------
-%%% @author amir
+%%% @author dorliv
 %%% @copyright (C) 2019, <COMPANY>
 %%% @doc
 %%%
 %%% @end
-%%% Created : 07. Jul 2019 18:21
+%%% Created : 08. Jul 2019 2:49 PM
 %%%-------------------------------------------------------------------
--module(department).
--behavior(gen_server).
--author("amir").
-
--record(state, {}).
+-module(test_logic).
+-author("dorliv").
 -include_lib("records.hrl").
-
 %% API
--export([init/1, handle_call/3, handle_cast/2,
-  handle_info/2, terminate/2, code_change/3]).
+-export([init/1, handle_call/4, testLogic/0]).
 
--export([start/1,callFunc/1]).
+executeSale([],_) -> done;
+executeSale([H|T], Discount)  when Discount < 1 ->
+  Price = H#departmentProduct.price,
+  NewPrice = (1 - Discount) * Price,
+  NewPriceInt = round(NewPrice),
+  New = H#departmentProduct{price = NewPriceInt},
+  Department = H#departmentProduct.department,
+  mnesia:delete_object(Department, H, write),
+  mnesia:write(Department, New, write),
+  executeSale(T, Discount).
 
-start(Name) ->
-  gen_server:start({global, Name}, ?MODULE, [Name], []).
 
 init(_Args) ->
+  TimeStamp = 0,
+
   inventory:initInventory([node()]),
   put(server_name, _Args),
   {ok, []}.
 
 
-callFunc(ServerName) ->
-  gen_server:call(ServerName, {getTotalAmountOfValidProduct, ServerName}).
 
-
-handle_call(getTotalAmountOfValidProduct, _From, State) ->
+handle_call(getTotalAmountOfValidProduct, ServerName, _From, State) ->
   % return amount of valid productdepartmentProduct
   TimeStamp = 50, %  TODO get timestamp
   F = fun() ->
     Q = qlc:q([[E#departmentProduct.product_name, E#departmentProduct.price, E#departmentProduct.amount]
-      || E <- mnesia:table(get(server_name)), E#departmentProduct.expiry_time >= TimeStamp]),
+      || E <- mnesia:table(get(server_name)), E#departmentProduct.expiry_time =< TimeStamp]),
     qlc:e(Q)
       end,
   {atomic,ListAns} = mnesia:transaction(F),
   Reply = sumAmount(ListAns, dict:new()),  % returns a dictionary with key:=product_name and value:=[Amount,Price]
   {reply, Reply, State}.
 
-
-handle_cast(terminate, State) ->
-  terminate(0,0),
-  {noreply, State};
-
-handle_cast(_Request, State) ->
-  {noreply, State}.
-
-handle_info(_Info, State) ->
-  {noreply, State}.
-
-terminate(_Reason, _State) ->
-  io:fwrite("~p says bye bye ~n",[atom_to_list(server_name)]),
-  ok.
-
-code_change(_OldVsn, State, _Extra) ->
-  {ok, State}.
 
 
 
@@ -74,4 +58,12 @@ sumAmount([H|T], Dict) ->
     false -> Dict2 = dict:store(Name, [Amount, Price], Dict)
   end,
   sumAmount(T, Dict2).
+
+
+testLogic()->
+  init(dairy),
+  {Atom, Reply, State }= handle_call(getTotalAmountOfValidProduct, dairy, 10, 10),
+  io:fwrite("~p ~n",[Reply]).
+
+
 
