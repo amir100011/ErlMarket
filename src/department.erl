@@ -34,9 +34,10 @@ callFunc(ServerName) ->
 
 handle_call(getTotalAmountOfValidProduct, _From, State) ->
   % return amount of valid productdepartmentProduct
-  TimeStamp = 50,
+  TimeStamp = 50, %  TODO get timestamp
   F = fun() ->
-    Q = qlc:q([E || E <- mnesia:table(get(server_name)), E#departmentProduct.expiry_time =< TimeStamp]),
+    Q = qlc:q([[E#departmentProduct.product_name, E#departmentProduct.price, E#departmentProduct.amount]
+      || E <- mnesia:table(get(server_name)), E#departmentProduct.expiry_time >= TimeStamp]),
     qlc:e(Q)
       end,
   {atomic,ListAns} = mnesia:transaction(F),
