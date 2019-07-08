@@ -20,13 +20,10 @@
 -export([start/1,callFunc/1]).
 
 start(Name) ->
-  gen_server:start({local, Name}, ?MODULE, [Name], []).
+  gen_server:start({global, Name}, ?MODULE, [Name], []).
 
 init(_Args) ->
-  TimeStamp = 0,
-  inventory:initInventory(self()),
-  mnesia:create_table(_Args,[{type, bag}, {attributes, record_info(fields, product_info)}]),
-  initializeInventory(_Args, TimeStamp),
+  inventory:initInventory([node()]),
   put(server_name, _Args),
   {ok, []}.
 
@@ -34,18 +31,22 @@ init(_Args) ->
 callFunc(ServerName) ->
   gen_server:call(ServerName, {getTotalAmountOfValidProduct, ServerName}).
 
-handle_call({getTotalAmountOfValidProduct, ServerName}, _From, State) ->
-  % return amount of valid product
-  TimeStamp = 100, %  TODO get timestamp
+
+handle_call(getTotalAmountOfValidProduct, _From, State) ->
+  % return amount of valid productdepartmentProduct
+  TimeStamp = 50,
   F = fun() ->
-    Q = qlc:q([[E#product_info.product_name, E#product_info.price, E#product_info.amount]
-      || E <- mnesia:table(get(server_name)), E#product_info.expiry_time >= TimeStamp]),
+    Q = qlc:q([E || E <- mnesia:table(get(server_name)), E#departmentProduct.expiry_time =< TimeStamp]),
     qlc:e(Q)
       end,
-  ListAns = mnesia:transaction(F),
+  {atomic,ListAns} = mnesia:transaction(F),
   Reply = sumAmount(ListAns, dict:new()),  % returns a dictionary with key:=product_name and value:=[Amount,Price]
   {reply, Reply, State}.
 
+
+handle_cast(terminate, State) ->
+  terminate(0,0),
+  {noreply, State};
 
 handle_cast(_Request, State) ->
   {noreply, State}.
@@ -54,6 +55,7 @@ handle_info(_Info, State) ->
   {noreply, State}.
 
 terminate(_Reason, _State) ->
+  io:fwrite("~p says bye bye ~n",[atom_to_list(server_name)]),
   ok.
 
 code_change(_OldVsn, State, _Extra) ->
@@ -61,24 +63,6 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 
-
-
-initializeInventory(Department_Name, TimeStamp)->
-  {atomic, Products} = inventory:getProductsFromDepartment(Department_Name),
-  initializeInventory(Department_Name, Products, TimeStamp).
-
-initializeInventory(_, [], []) -> done;
-initializeInventory(Department_Name, [H|T], TimeStamp) ->
-  T = fun() ->
-    X = #product_info{product_name = H#product.product_name,
-      price = H#product.price,
-      expiry_time = H#product.expiry_time + TimeStamp,
-      amount = 1000
-    },
-    mnesia:write(Department_Name, X, write)
-      end,
-  mnesia:transaction(T),
-  initializeInventory(Department_Name, T, TimeStamp).
 
 sumAmount([],Dict) -> Dict;
 sumAmount([H|T], Dict) ->
