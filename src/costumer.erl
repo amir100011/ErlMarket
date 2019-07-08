@@ -11,23 +11,33 @@
 
 %% API
 -export([test_initCostumer/0]).
+-include_lib("records.hrl").
 -record(costumer, {customer_id, budget, shopping_list}).
 -define(MAXIMUM_BUDGET, 1000).
 %-import(inventory,[initInventory/1, get_products_from_department/1]).
 
+createShoppingListEle(H)->
+ % {RandomAmount, State} = random:uniform_s(10,random:seed()),
+  RandomAmount = rand:uniform(10),
+  Element = #shoppinlistelement{department_name = H#product.department,
+                                product_name = H#product.product_name,
+                                price = H#product.price,
+                                amount = round(RandomAmount)},
+  Element.
 
 randomly_chose_products([], Ans) -> Ans;
 randomly_chose_products([H|T], Ans) when Ans =:= [] ->
   AddToShoppingListRV =  rand:uniform(),
   if
-    AddToShoppingListRV< 0.8 -> randomly_chose_products(T, [H]);
+    AddToShoppingListRV< 0.8 -> ShoppingListElement = createShoppingListEle(H),
+                                randomly_chose_products(T, [ShoppingListElement]);
     true -> randomly_chose_products(T, Ans)
   end;
 randomly_chose_products([H|T], Ans) ->
   AddToShoppingListRV =  rand:uniform(),
-  TMP = Ans ++ [H],
   if
-    AddToShoppingListRV< 0.8 -> randomly_chose_products(T, TMP);
+    AddToShoppingListRV< 0.8 -> ShoppingListElement = createShoppingListEle(H),
+                                randomly_chose_products(T, Ans ++ [ShoppingListElement]);
     true -> randomly_chose_products(T, Ans)
   end.
 
@@ -40,12 +50,14 @@ initCostumer() ->
   Budget = initBudget(),
   ShoppingList = fillShoppingList(),
   Costumer = #costumer{customer_id = self(), budget = Budget, shopping_list = ShoppingList},
-  A = Costumer#costumer.budget,
-  B = 5,
-  ShoppingList.
+  spawn(fun()-> put(costumer_info, Costumer),
+                    goShopping()
+        end).
+
   %goShopping(Costumer),
   %terminate().
-
+goShopping()->
+  A = 5.
 
 fillShoppingList()->
   Departments = inventory:getDepartments(),
@@ -62,6 +74,10 @@ fillFromDepartment([H| T], Ans) ->
   ChosenProducts = randomly_chose_products(ProductsFromDepartment, []),
   TMP = Ans ++ ChosenProducts,
   fillFromDepartment(T, TMP).
+
+getBudget()->
+  CostumerInfo = get(costumer_info),
+  CostumerInfo#costumer.budget.
 
 
 terminate() ->
