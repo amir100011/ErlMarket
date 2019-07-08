@@ -63,11 +63,12 @@ getNumberOfCustomers() ->
 
 
 testDep() ->
-  inventory:initInventory(node()),
+  %inventory:initInventory(node()),
   %Pid = department2:start(),
-  Pid2 = department:start(diary),
-  Pid3 = diary,
+  Pid2 = department:start(dairy),
+  Pid3 = dairy,
   io:fwrite("whereAMI~n"),
   %ResponseC = department2:put(color, "red"),
   %ResponseD = department:callFunc(diary).
-  gen_server:call({global,Pid3}, {getTotalAmountOfValidProduct, diary}).
+  X = gen_server:call({global,Pid3}, getTotalAmountOfValidProduct),
+  X.

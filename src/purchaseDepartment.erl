@@ -55,8 +55,11 @@ getDepartments() ->
 
 
 checkProductStatus(DepartmentName, NumberOfCustomers) ->
-  ListOfValidProducts = gen_server:call(DepartmentName,getTotalAmountOfValidProduct), %List [{product_name,amount,price}]
-  shouldReserve(ListOfValidProducts, NumberOfCustomers).
+  ListOfValidProducts = gen_server:call({global,DepartmentName},getTotalAmountOfValidProduct), %List [{product_name,amount,price}]
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s~w ~n",["Payment:Add to balance - ",ListOfValidProducts]),
+  file:close(S).
+  %TODO: shouldReserve(ListOfValidProducts, NumberOfCustomers).
 
 
 
@@ -75,3 +78,5 @@ optimizeReservation(ListOfProductsToReserve, NumberOfCustomers) ->
 
 getNumberOfCustomers() ->
   masterFunction:getNumberOfCustomers().
+
+

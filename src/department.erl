@@ -23,8 +23,17 @@ start(Name) ->
   gen_server:start({global, Name}, ?MODULE, [Name], []).
 
 init(_Args) ->
+  {ok, S} = file:open("../Log.txt", [append]),
   inventory:initInventory([node()]),
   put(server_name, _Args),
+  F2 = fun() ->
+    Q = qlc:q([E  || E <- mnesia:table(get(server_name))]),
+    qlc:e(Q)
+       end,
+  ListAnsTmp = mnesia:transaction(F2),
+  io:format(S,"~p ~n",[ListAnsTmp]),
+  io:format(S,"~s ~n",["Got to init"]),
+  file:close(S),
   {ok, []}.
 
 
@@ -34,13 +43,26 @@ callFunc(ServerName) ->
 
 handle_call(getTotalAmountOfValidProduct, _From, State) ->
   % return amount of valid productdepartmentProduct
-  TimeStamp = 50, %  TODO get timestamp
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s ~n",["Got to handleCall"]),
+  TimeStamp = 20, %  TODO get timestamp
+
   F = fun() ->
     Q = qlc:q([[E#departmentProduct.product_name, E#departmentProduct.price, E#departmentProduct.amount]
       || E <- mnesia:table(get(server_name)), E#departmentProduct.expiry_time >= TimeStamp]),
     qlc:e(Q)
       end,
+  io:format(S,"~s ~n",["Pass F"]),
+  F2 = fun() ->
+    Q = qlc:q([E  || E <- mnesia:table(get(server_name))]),
+    qlc:e(Q)
+      end,
+  ListAnsTmp = mnesia:transaction(F2),
+  io:format(S,"~p ~n",[ListAnsTmp]),
+  io:format(S,"~s ~n",["Pass F2"]),
   {atomic,ListAns} = mnesia:transaction(F),
+  io:format(S,"~s ~n",["Pass transaction"]),
+  file:close(S),
   Reply = sumAmount(ListAns, dict:new()),  % returns a dictionary with key:=product_name and value:=[Amount,Price]
   {reply, Reply, State}.
 
