@@ -49,7 +49,8 @@ initCostumer() ->
   inventory:initInventory(Node),
   Budget = initBudget(),
   ShoppingList = fillShoppingList(),
-  Costumer = #customer{customer_id = self(), budget = Budget, shopping_list = ShoppingList},
+  ReshuffledShoppingList = [X||{_,X} <- lists:sort([ {rand:uniform(), N} || N <- ShoppingList])],
+  Costumer = #customer{customer_id = self(), budget = Budget, shopping_list = ReshuffledShoppingList},
   spawn(customer, goShopping, [Costumer]).
 
   %goShopping(Costumer),
@@ -74,6 +75,7 @@ fillFromDepartment([H| T], Ans) ->
   ChosenProducts = randomly_chose_products(ProductsFromDepartment, []),
   TMP = Ans ++ ChosenProducts,
   fillFromDepartment(T, TMP).
+
 
 getBudget()->
   CostumerInfo = get(customer_info),
