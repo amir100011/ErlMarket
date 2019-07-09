@@ -17,7 +17,10 @@
 getDepartments()->
   mnesia:dirty_all_keys(product).
 
+%% @doc initialize the inventory for all the nodes in NodeList
+%% this function creates the initial tables and fills them with initial value
 initInventory(NodeList)->
+
   mnesia:create_schema(NodeList),
   mnesia:start(),
   mnesia:create_table(product,[{type, bag} ,{attributes, record_info(fields, product)}]),
@@ -40,7 +43,7 @@ initInventory(NodeList)->
   fillInventory().
 
 
-
+%% @doc reads from inventory.txt the different kinds of products we have in our ErlMarket
 fillInventory()->
   {Ack, File} = file:open(?Filename,[read]),
   if
@@ -87,6 +90,7 @@ process_line(eof) -> eof;
 process_line({error,_}) -> io:fwrite("Error: reading line failed");
 process_line({ok,Data}) -> string:tokens(Data, "\n").
 
+%% @doc get the different types of products in Department
 getProductsFromDepartment(Department)->
   R = fun()->
     mnesia:read(product, Department)
