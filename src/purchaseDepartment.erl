@@ -8,12 +8,15 @@
 %%%-------------------------------------------------------------------
 -module(purchaseDepartment).
 -include_lib("records.hrl").
+-define(DESIRED_RATIO, 0.5).
+-define(SAVING_RATIO, 0.9).
 -author("amir").
 
 %% API
 -export([initPurchaseDepartment/0]).
 -export([updateBalance/1]).
 -export([setInitialBudget/0]).
+-export([testReservation/0]).
 
 
 initPurchaseDepartment() ->
@@ -46,8 +49,8 @@ purchaseDepartmentRecursiveLoop() ->
 purchaseDepartmentRecursiveLoop([H|T], ListOfProductsToReserve, NumberOfCustomers) ->
   ListOfProductsToReserve = ListOfProductsToReserve ++ checkProductStatus(H, NumberOfCustomers),
   purchaseDepartmentRecursiveLoop(T, ListOfProductsToReserve, NumberOfCustomers);
-purchaseDepartmentRecursiveLoop([], ListOfProductsToReserve, NumberOfCustomers) ->
-  reserve(ListOfProductsToReserve, NumberOfCustomers),
+purchaseDepartmentRecursiveLoop([], ListOfProductsToReserve, _NumberOfCustomers) ->
+  reserve(ListOfProductsToReserve),
   purchaseDepartmentRecursiveLoop().
 
 getDepartments() ->
@@ -55,28 +58,93 @@ getDepartments() ->
 
 
 checkProductStatus(DepartmentName, NumberOfCustomers) ->
-  ListOfValidProducts = gen_server:call({global,DepartmentName},getTotalAmountOfValidProduct), %List [{product_name,amount,price}]
+  ListOfValidProducts = gen_server:call({global,DepartmentName},getTotalAmountOfValidProduct), %record(departmentProduct,{department, product_name, price, expiry_time, amount}).
+  ListOfValidProductsWithRatio = getRatio(ListOfValidProducts, NumberOfCustomers),
   {ok, S} = file:open("../Log.txt", [append]),
-  io:format(S,"~s~w ~n",["Payment:Add to balance - ",ListOfValidProducts]),
-  file:close(S).
-  %TODO: shouldReserve(ListOfValidProducts, NumberOfCustomers).
+  io:format(S,"~s~w ~n",["checkProductStatus:ListOfValidProducts  - ",ListOfValidProducts]),
+  file:close(S),
+  ErlMarketBudget = get(erlMarketBudget),
+  ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers, ErlMarketBudget).
+
+
+getRatio([H|T],NumberOfCustomers)->
+  [getRatioSingleElement(H,NumberOfCustomers)] ++ getRatio(T,NumberOfCustomers);
+getRatio([],_NumberOfCustomers)->[].
+
+getRatioSingleElement({departmentProduct,{Department, Product_name, Price, _Expiry_time, Amount}},NumberOfCustomers) ->
+  NumberOfProductsToOrder = (NumberOfCustomers * ?DESIRED_RATIO) - Amount,
+  if  NumberOfProductsToOrder =< 0 -> AmountToOrder = 0;
+    true -> AmountToOrder = NumberOfProductsToOrder
+  end,
+  [Department,Product_name,Price,AmountToOrder].
 
 
 
-shouldReserve(ListOfValidProducts , NumberOfCustomers) ->
-  %TODO: add check list of products to reserve
-  %FIXME: returns a list of tuples [{product Name,price,ratio}]
-  [{milk,5,0.1}].
+ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers, ErlMarketBudget) ->
+  if NumberOfCustomers > 0 ->
+    PriceOfReservation = priceOfReservation(ListOfValidProductsWithRatio),
+    if PriceOfReservation =< ErlMarketBudget ->
+      writeToLogger("ratioToReserve Success: PriceOfReservation - " , PriceOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
+      reserve(ListOfValidProductsWithRatio);
+      true ->
+        writeToLogger("ratioToReserve Failed: PriceOfReservation - " , PriceOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
+        DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / PriceOfReservation,
+        ListOfValidProductsWithNewRatio =  editRatio(ListOfValidProductsWithRatio,DeltaRatio),
+        ratioToReserve(ListOfValidProductsWithNewRatio, NumberOfCustomers, ErlMarketBudget)
+    end;
+    true ->
+      purchaseDepartmentRecursiveLoop()
+  end.
 
-reserve(ListOfProductsToReserve, NumberOfCustomers) ->
-  {ListOfProductsToReserve, Ratio} = optimizeReservation(ListOfProductsToReserve, NumberOfCustomers),
-  gen_server:call(supplierServer,reserveation,  {ListOfProductsToReserve, Ratio}). %List [{product_name,amount,price}]
+
+editRatio([H|T],DeltaRatio) ->
+  [editRatio(H,DeltaRatio,1)] ++ editRatio(T,DeltaRatio);
+editRatio([],_DeltaRatio) -> [].
+
+editRatio([Department,Product_name,Price,AmountToOrder], DeltaRatio, 1) ->
+  [Department,Product_name,Price,round(AmountToOrder*DeltaRatio)].
+
+priceOfReservation([H|T]) ->
+  priceOfReservation(H,1) + priceOfReservation(T);
+priceOfReservation([]) -> 0.
+
+priceOfReservation([_Department,_Product_name,Price,AmountToOrder], 1) ->
+  Price * AmountToOrder.
 
 
-optimizeReservation(ListOfProductsToReserve, NumberOfCustomers) ->
-  {ListOfProductsToReserve,0.5}.
+reserve(ListOfProductsToReserve) ->
+  gen_server:call({global,supplierServer},{reserveation,  ListOfProductsToReserve}). %List [{product_name,amount,price}]
+
 
 getNumberOfCustomers() ->
   masterFunction:getNumberOfCustomers().
 
+
+
+writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
+  file:close(S).
+
+
+
+testReservation() ->
+
+  ListOfProductsToReserve =  [{departmentProduct,{diary, milk, 5, 5, 50}},
+    {departmentProduct,{meat, "chicken", 9, 5, 7}},
+    {departmentProduct,{bakery, "bread", 9, 5, 77}},
+    {departmentProduct,{diary, "yogurt", 1, 5, 3}},
+    {departmentProduct,{diary, "cheese", 100, 5, 25}},
+    {departmentProduct,{meat, "steak", 17, 5, 33}}],
+
+  department:start(meat),
+  department:start(dairy),
+  department:start(bakery),
+  setInitialBudget(),
+  ErlMarketBudget = get(erlMarketBudget),
+
+  RatioedList = getRatio(ListOfProductsToReserve, 1000),
+
+
+  ratioToReserve(RatioedList, 1000, ErlMarketBudget).
 

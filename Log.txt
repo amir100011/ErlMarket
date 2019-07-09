@@ -1,6 +1,3 @@
-{aborted,{badarg,[dairy],[{'$1',[],['$1']}],100}} 
-Got to init 
-Got to handleCall 
-Pass F 
-{aborted,{badarg,[dairy],[{'$1',[],['$1']}],100}} 
-Pass F2 
+setInitialBudget 10000 
+ratioToReserve Faild: PriceOfReservation - 66430.0 ErlMarketBudget - 10000 
+ratioToReserve Success: PriceOfReservation - 8959 ErlMarketBudget - 10000 

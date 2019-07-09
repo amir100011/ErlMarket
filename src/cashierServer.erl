@@ -30,10 +30,10 @@ callFunc(ListOfProductsAndAmounts, CostumerBalance) ->
 
 handle_call({pay,ListOfProductsAndAmounts, CostumerBalance}, _From, State) ->
   % checks if the customer can pay or not, if not pays to the maximum available, the rest are going back to the relevant department
-  CanPay = canPay(ListOfProductsAndAmounts,CostumerBalance),
+  {CanPay, AmountToPay} = canPay(ListOfProductsAndAmounts,CostumerBalance),
   case CanPay of
     canPay ->
-      pay(ListOfProductsAndAmounts);
+      pay(AmountToPay);
     cannotPay ->
       payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CostumerBalance)
   end,
@@ -56,42 +56,63 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 canPay(ListOfProductsAndAmounts,CostumerBalance) ->
-  canPay.
+  SumOfAllProducts = sumOfAllProducts(ListOfProductsAndAmounts),
+  if SumOfAllProducts =< CostumerBalance -> {canPay,SumOfAllProducts};
+    true -> {cannotPay,0}
+  end.
+
+payToMaxAndReturnTheRest([],_CostumerBalance) ->[];
+payToMaxAndReturnTheRest([H|T],CostumerBalance) ->
+  {CanPay, AmountToPay} = canPay([H],CostumerBalance),
+  case CanPay of
+    canPay ->
+      NewCostumerBalance = CostumerBalance - AmountToPay,
+      writeNewBalanceToFile(CostumerBalance, NewCostumerBalance),
+      pay(AmountToPay),
+      payToMaxAndReturnTheRest(T,NewCostumerBalance);
+    cannotPay ->
+      returnProductToDepartment(H),
+      payToMaxAndReturnTheRest(T, CostumerBalance)
+  end.
 
 
+pay(AmountToPay) ->
+  updateErlMarketBalance(AmountToPay).
 
-payToMaxAndReturnTheRest(ListOfProductsAndAmounts,CostumerBalance) ->
-    null.
+returnProductToDepartment({product,Department,ProductName,_PriceForEach, Amount}) ->
+  gen_server:cast({global,Department},{return,ProductName,Amount,500}).%TODO: add expiry date
 
-pay(ListOfProductsAndAmounts) ->
-  AmountToAdd = sumOfAllProducts(ListOfProductsAndAmounts),
-  updateErlMarketBalance(AmountToAdd).
-
-sumOfAllProducts([]) -> 0;
 sumOfAllProducts([H|T]) ->
-  Sum = sumOfAllProducts(H,1) + sumOfAllProducts(T),
-  Sum.
+  sumOfAllProducts(H,1) + sumOfAllProducts(T);
+sumOfAllProducts([]) -> 0.
 
 sumOfAllProducts({product,_department,_productName,PriceForEach, Amount},1) ->
-  Sum = Amount * PriceForEach,
-  {ok, S} = file:open("../Log.txt", [append]),
-  io:format(S,"~s~w ~n",["Payment:Add to balance - ",Sum]),
-  file:close(S).
+  Amount * PriceForEach.
 
 updateErlMarketBalance(AmountToAdd) ->
   purchaseDepartment:updateBalance(AmountToAdd).
 
+
+writeNewBalanceToFile(OldCustomerBalance, NewCustomerBalance) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s~w~s~w ~n",["Customer:Oldbalance - ",OldCustomerBalance, " NewBalance - ", NewCustomerBalance]),
+  file:close(S).
+
 testPay() ->
   ShoppingList =
-[{product,"meat","chicken",40,500},
- {product,"meat","steak",80,500},
- {product,"dairy","milk",5,40},
- {product,"dairy","yogurt",3,40},
- {product,"dairy","cheese",10,60},
- {product,"bakery","bread",8,100},
- {product,"bakery","buns",20,120}],
+[{product,meat,"chicken",40,500},
+ {product,meat,"steak",80,500},
+ {product,dairy,"milk",5,40},
+ {product,dairy,"yogurt",3,40},
+ {product,dairy,"cheese",10,60},
+ {product,bakery,"bread",8,100},
+ {product,bakery,"buns",20,120}],
 
-  pay(ShoppingList).
+  department:start(meat),
+  department:start(dairy),
+  department:start(bakery),
+  purchaseDepartment:setInitialBudget(),
+  payToMaxAndReturnTheRest(ShoppingList, 985).
 
 
 
