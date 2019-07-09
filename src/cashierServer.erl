@@ -90,7 +90,7 @@ sumOfAllProducts({product,_department,_productName,PriceForEach, Amount},1) ->
   Amount * PriceForEach.
 
 updateErlMarketBalance(AmountToAdd) ->
-  purchaseDepartment:updateBalance(AmountToAdd).
+  purchaseDepartment:setBalance("add", AmountToAdd).
 
 
 writeNewBalanceToFile(OldCustomerBalance, NewCustomerBalance) ->

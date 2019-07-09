@@ -11,6 +11,7 @@
 
 %% API
 -export([main/0]).
+-export([getNumberOfCustomers/0]).
 
 count()->
   Fun = fun() ->
@@ -82,18 +83,23 @@ main() ->
 %%updateNumberOfCustomers(NumberToAdd) ->
 %%  put(numberOfCustomers,get(numberOfCustomers) + NumberToAdd).
 %%
-%%getNumberOfCustomers() ->
-%%  get(numberOfCustomers).
+
+getNumberOfCustomers() -> 1000.
+  %get(numberOfCustomers).
 
 testDep() ->
-  %inventory:initInventory(node()),
-  %Pid = department2:start(),
-  Pid2 = department:start(dairy),
-  %ResponseC = department2:put(color, "red"),
-  %ResponseD = department:callFunc(diary).
-  ListA = department:callFunc(dairy, getProducts),
-  department:castFunc(dairy, {sale, 0.2}),
-  ListB = department:callFunc(dairy, getProducts),
-  department:castFunc(dairy, cancelSale),
-  ListC = department:callFunc(dairy, getProducts),
-  A = 5.
+
+  department:start(dairy),
+  List = department:callFunc(dairy, getTotalAmountOfValidProduct),
+  ListFormattedRight = purchaseDepartment:sumAmount(List, dairy),
+
+  purchaseDepartment:setInitialBudget(),
+  ErlMarketBudget =  10000,
+
+  RatioedList = purchaseDepartment:getRatio(ListFormattedRight, 1000),
+
+  file:write("../Log.txt",RatioedList),
+
+  purchaseDepartment:ratioToReserve(RatioedList, 1000, ErlMarketBudget),
+
+    A = 5.

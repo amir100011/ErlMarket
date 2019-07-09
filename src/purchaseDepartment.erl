@@ -1,7 +1,7 @@
 %%%-------------------------------------------------------------------
 %%% @author amir
 %%% @copyright (C) 2019, <COMPANY>
-%%% @doc
+%%% @doc describes ErlMarket purchase department
 %%%
 %%% @end
 %%% Created : 07. Jul 2019 11:37
@@ -10,68 +10,49 @@
 -include_lib("records.hrl").
 -define(DESIRED_RATIO, 0.5).
 -define(SAVING_RATIO, 0.9).
+-define(DEPARTMENT_LIST, inventory:getDepartments()).
 -author("amir").
 
 %% API
 -export([initPurchaseDepartment/0]).
--export([updateBalance/1]).
+-export([setBalance/2]).
 -export([setInitialBudget/0]).
 -export([testReservation/0]).
+-export([sumAmount/2]).
+-export([getRatio/2,ratioToReserve/3]).
 
 
+
+%%----------------PRIMARY FUNCTION-------------------------
 initPurchaseDepartment() ->
   setInitialBudget(),
-  purchaseDepartmentRecursiveLoop().
-
-%TODO add os:systemTime to the log
-setInitialBudget() ->
-  put(erlMarketBudget,10000),
-  {ok, S} = file:open("../Log.txt", [append]),
-  io:format(S,"~s ~n",["setInitialBudget 10000"]),
-  file:close(S),
-  get(erlMarketBudget).
-
-updateBalance(AmountToAdd) ->
-  OldBalance = integer_to_list(get(erlMarketBudget)),
-  {ok, S} = file:open("../Log.txt", [append]),
-  io:format(S,"~s ~s ~n",["updateBalance: OldBalance:",OldBalance]),
-  put(erlMarketBudget, get(erlMarketBudget) + AmountToAdd),
-  NewBalance = integer_to_list(get(erlMarketBudget)),
-  io:format(S,"~s ~s ~n",["updateBalance: NewBalance:",NewBalance]),
-  file:close(S).
-
-purchaseDepartmentRecursiveLoop() ->
-  DepartmentList = getDepartments(),
-  NumberOfCustomers = getNumberOfCustomers(),
-  purchaseDepartmentRecursiveLoop(DepartmentList, [], NumberOfCustomers).
-
-
-purchaseDepartmentRecursiveLoop([H|T], ListOfProductsToReserve, NumberOfCustomers) ->
-  ListOfProductsToReserve = ListOfProductsToReserve ++ checkProductStatus(H, NumberOfCustomers),
-  purchaseDepartmentRecursiveLoop(T, ListOfProductsToReserve, NumberOfCustomers);
-purchaseDepartmentRecursiveLoop([], ListOfProductsToReserve, _NumberOfCustomers) ->
-  reserve(ListOfProductsToReserve),
-  purchaseDepartmentRecursiveLoop().
-
-getDepartments() ->
-  inventory:getDepartments().
-
-
-checkProductStatus(DepartmentName, NumberOfCustomers) ->
-  ListOfValidProducts = gen_server:call({global,DepartmentName},getTotalAmountOfValidProduct), %record(departmentProduct,{department, product_name, price, expiry_time, amount}).
-  ListOfValidProductsWithRatio = getRatio(ListOfValidProducts, NumberOfCustomers),
-  {ok, S} = file:open("../Log.txt", [append]),
-  io:format(S,"~s~w ~n",["checkProductStatus:ListOfValidProducts  - ",ListOfValidProducts]),
-  file:close(S),
   ErlMarketBudget = get(erlMarketBudget),
+  purchaseDepartmentRecursiveLoop(ErlMarketBudget).
+
+
+%%----------------INTERNAL FUNCTIONS-------------------------
+
+%% @doc Forever loop that checks with each department if it has some products that need to be reserved from supplier.
+purchaseDepartmentRecursiveLoop(ErlMarketBudget) ->
+  NumberOfCustomers = getNumberOfCustomers(),
+  ListOfValidProductsToReserve = getListOfProductsToReserve(?DEPARTMENT_LIST),
+  ListOfValidProductsWithRatio = checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers),
   ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers, ErlMarketBudget).
+
+%% @doc checks the ratio for each product (customer / number of products valid in depatment)
+checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers) ->
+  writeToLogger("checkProductStatus:ListOfValidProducts  - ",ListOfValidProductsToReserve),
+  ListOfValidProductsWithRatio = getRatio(ListOfValidProductsToReserve, NumberOfCustomers),
+  writeToLogger("checkProductStatus:ListOfValidProductsWithRatio  - ",ListOfValidProductsWithRatio),
+  ListOfValidProductsWithRatio.
+
 
 
 getRatio([H|T],NumberOfCustomers)->
   [getRatioSingleElement(H,NumberOfCustomers)] ++ getRatio(T,NumberOfCustomers);
 getRatio([],_NumberOfCustomers)->[].
 
-getRatioSingleElement({departmentProduct,{Department, Product_name, Price, _Expiry_time, Amount}},NumberOfCustomers) ->
+getRatioSingleElement({departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers) ->
   NumberOfProductsToOrder = (NumberOfCustomers * ?DESIRED_RATIO) - Amount,
   if  NumberOfProductsToOrder =< 0 -> AmountToOrder = 0;
     true -> AmountToOrder = NumberOfProductsToOrder
@@ -81,20 +62,18 @@ getRatioSingleElement({departmentProduct,{Department, Product_name, Price, _Expi
 
 
 ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers, ErlMarketBudget) ->
-  if NumberOfCustomers > 0 ->
-    PriceOfReservation = priceOfReservation(ListOfValidProductsWithRatio),
-    if PriceOfReservation =< ErlMarketBudget ->
-      writeToLogger("ratioToReserve Success: PriceOfReservation - " , PriceOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
-      reserve(ListOfValidProductsWithRatio);
+  CostOfReservation = priceOfReservation(ListOfValidProductsWithRatio),
+    if CostOfReservation =< ErlMarketBudget ->
+      writeToLogger("ratioToReserve Success: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
+      reserve(ListOfValidProductsWithRatio, CostOfReservation);
+%%      ErlMarketBudget = get(erlMarketBudget),
+%%      purchaseDepartmentRecursiveLoop(ErlMarketBudget);
       true ->
-        writeToLogger("ratioToReserve Failed: PriceOfReservation - " , PriceOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
-        DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / PriceOfReservation,
+        writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
+        DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,
         ListOfValidProductsWithNewRatio =  editRatio(ListOfValidProductsWithRatio,DeltaRatio),
         ratioToReserve(ListOfValidProductsWithNewRatio, NumberOfCustomers, ErlMarketBudget)
-    end;
-    true ->
-      purchaseDepartmentRecursiveLoop()
-  end.
+    end.
 
 
 editRatio([H|T],DeltaRatio) ->
@@ -112,39 +91,108 @@ priceOfReservation([_Department,_Product_name,Price,AmountToOrder], 1) ->
   Price * AmountToOrder.
 
 
-reserve(ListOfProductsToReserve) ->
-  gen_server:call({global,supplierServer},{reserveation,  ListOfProductsToReserve}). %List [{product_name,amount,price}]
+reserve(_ListOfProductsToReserve, CostOfReservation) ->
+  setBalance("deduce", CostOfReservation).
+  %gen_server:call({global,supplierServer},{reserveation,  ListOfProductsToReserve}). %List [{product_name,amount,price}]
 
 
+%% @doc sumAmount return a list of departmentProducts where each product has the amount of all valid products of the same name
+sumAmount(List, Department) ->
+  Dict = sumAmountInternal(List, dict:new()),
+  KeysAndValues = dict:to_list(Dict),
+  sumAmount(KeysAndValues, [], Department).
+sumAmount([],Ans,_) -> Ans;
+sumAmount([{ProductName, [Amount, Price]}|T], Ans, Department)->
+  FormattedOutput = #departmentProduct{department = Department,
+    product_name = ProductName,
+    price = Price,
+    expiry_time = 0,
+    amount = Amount
+  },
+  sumAmount(T, Ans ++ [FormattedOutput], Department).
+
+sumAmountInternal([],Dict) -> Dict;
+sumAmountInternal([H|T], Dict) ->
+  [Name, Price, Amount] = H,
+  case dict:is_key(Name, Dict) of
+    true -> [CurrentAmount,_] = dict:fetch(Name, Dict),
+      UpdatedDictToReturn = dict:store(Name,[CurrentAmount + Amount, Price], Dict);
+    false -> UpdatedDictToReturn = dict:store(Name, [Amount, Price], Dict)
+  end,
+  sumAmountInternal(T, UpdatedDictToReturn).
+
+
+
+
+%%----------------------GETTERS/SETTERS----------------------
+
+%% @doc returns the current number of customers in ErlMarket
 getNumberOfCustomers() ->
   masterFunction:getNumberOfCustomers().
 
+%% @doc returns List of records %[{departmentProduct,department, product_name, price, expiry_time, amount}].
+getListOfProductsToReserve([H|T]) ->
+  getListOfProductsToReserveInternal(H) ++ getListOfProductsToReserve(T);
+getListOfProductsToReserve([]) -> [].
+
+getListOfProductsToReserveInternal(DepartmentName) ->
+  ListNotOrganized = gen_server:call({global,DepartmentName},getTotalAmountOfValidProduct),
+  sumAmount(ListNotOrganized, DepartmentName).
+
+setInitialBudget() ->
+  put(erlMarketBudget,10000),
+  writeToLogger("setInitialBudget 10000"),
+  get(erlMarketBudget).
+
+setBalance(TypeOfAction , Amount) ->
+  OldBalance = get(erlMarketBudget),
+  case TypeOfAction of
+    "add" -> put(erlMarketBudget, get(erlMarketBudget) + Amount);
+    "deduce" -> put(erlMarketBudget, get(erlMarketBudget) - Amount)
+  end,
+  NewBalance = get(erlMarketBudget),
+  writeToLogger("updateBalance: OldBalance: ",OldBalance, " NewBalance:",NewBalance).
 
 
+%%------------------WRITING TO LOGGER------------------
+
+%% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
 writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
   {ok, S} = file:open("../Log.txt", [append]),
   io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
   file:close(S).
 
 
+%TODO - fix List writing into File
+writeToLogger(String, List) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s~w ~n",[String, List]),
+  file:close(S).
+
+writeToLogger(String) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s ~n",[String]),
+  file:close(S).
+
+
+
 
 testReservation() ->
 
-  ListOfProductsToReserve =  [{departmentProduct,{diary, milk, 5, 5, 50}},
-    {departmentProduct,{meat, "chicken", 9, 5, 7}},
-    {departmentProduct,{bakery, "bread", 9, 5, 77}},
-    {departmentProduct,{diary, "yogurt", 1, 5, 3}},
-    {departmentProduct,{diary, "cheese", 100, 5, 25}},
-    {departmentProduct,{meat, "steak", 17, 5, 33}}],
+%%  ListOfProductsToReserve =  [{departmentProduct,diary, milk, 5, 5, 50},
+%%    {departmentProduct,meat, "chicken", 9, 5, 7},
+%%    {departmentProduct,bakery, "bread", 9, 5, 77},
+%%    {departmentProduct,diary, "yogurt", 1, 5, 3},
+%%    {departmentProduct,diary, "cheese", 100, 5, 25},
+%%    {departmentProduct,meat, "steak", 17, 5, 33}],
 
   department:start(meat),
   department:start(dairy),
   department:start(bakery),
   setInitialBudget(),
   ErlMarketBudget = get(erlMarketBudget),
+  purchaseDepartmentRecursiveLoop(ErlMarketBudget).
 
-  RatioedList = getRatio(ListOfProductsToReserve, 1000),
-
-
-  ratioToReserve(RatioedList, 1000, ErlMarketBudget).
+%%  RatioedList = getRatio(ListOfProductsToReserve, 1000),
+%%  ratioToReserve(RatioedList, 1000, ErlMarketBudget).
 
