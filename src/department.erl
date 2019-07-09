@@ -120,32 +120,6 @@ terminate(_Reason, _State) ->
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
 
-%% TODO transfer to purchase department and use outside of gen_server to increase performance and prevent starvations FROM HERE
-%% @doc sumAmount return a list of departmentProducts where each product has the amount of all valid products of the same name
-sumAmount(List, Department) ->
-  Dict = sumAmountInternal(List, dict:new()),
-  KeysAndValues = dict:to_list(Dict),
-  sumAmount(KeysAndValues, [], Department).
-sumAmount([],Ans,_) -> Ans;
-sumAmount([{ProductName, [Amount, Price]}|T], Ans, Department)->
-  FormattedOutput = #departmentProduct{department = Department,
-                                       product_name = ProductName,
-                                       price = Price,
-                                       expiry_time = nevermind,
-                                       amount = Amount
-                                       },
-  sumAmount(T, Ans ++ [FormattedOutput], Department).
-
-sumAmountInternal([],Dict) -> Dict;
-sumAmountInternal([H|T], Dict) ->
-  [Name, Price, Amount] = H,
-  case dict:is_key(Name, Dict) of
-    true -> [CurrentAmount,_] = dict:fetch(Name, Dict),
-      Dict2 = dict:store(Name,[CurrentAmount + Amount, Price], Dict);
-    false -> Dict2 = dict:store(Name, [Amount, Price], Dict)
-  end,
-  sumAmount(T, Dict2).
-%% TODO TO HERE. Important need to debug this because i changed it a little bit!!!!
 
 %% @doc change the price value of each product during sale
 executeSale([],_) -> done;
@@ -239,7 +213,7 @@ addProducts([H|T]) ->
                         CurrentAmount = Product#departmentProduct.amount,
                         UpdateProduct = Product#departmentProduct{amount = CurrentAmount + RequestedAmount},
                         mnesia:dirty_delete_object(get(server_name), Product) ;
-    true -> noneedtodeleteproductfromtable
+    true -> UpdateProduct = H
   end,
   mnesia:dirty_write(get(server_name), UpdateProduct),
   addProducts(T).
