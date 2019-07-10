@@ -20,6 +20,7 @@
 -export([testReservation/0]).
 -export([sumAmount/2]).
 -export([getRatio/2,ratioToReserve/3]).
+-export([writeToLogger/2]).
 
 
 
@@ -162,19 +163,16 @@ writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
   io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
   file:close(S).
 
-
-%TODO - fix List writing into File
 writeToLogger(String, List) ->
   {ok, S} = file:open("../Log.txt", [append]),
-  io:format(S,"~s~w ~n",[String, List]),
-  file:close(S).
+  io:format(S,"~s~n ",[String]),
+  file:close(S),
+  file:write_file("../Log.txt", io_lib:format("~p.~n", [List]), [append]).
 
 writeToLogger(String) ->
   {ok, S} = file:open("../Log.txt", [append]),
   io:format(S,"~s ~n",[String]),
   file:close(S).
-
-
 
 
 testReservation() ->
@@ -185,6 +183,8 @@ testReservation() ->
 %%    {departmentProduct,diary, "yogurt", 1, 5, 3},
 %%    {departmentProduct,diary, "cheese", 100, 5, 25},
 %%    {departmentProduct,meat, "steak", 17, 5, 33}],
+
+
 
   department:start(meat),
   department:start(dairy),

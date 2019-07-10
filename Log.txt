@@ -1,3 +1,15 @@
 setInitialBudget 10000 
-checkProductStatus:ListOfValidProducts  - checkProductStatus:ListOfValidProductsWithRatio  - ratioToReserve Success: PriceOfReservation - 0 ErlMarketBudget - 10000 
+checkProductStatus:ListOfValidProducts  - 
+ [{departmentProduct,meat,"chicken",40,0,1000},
+ {departmentProduct,meat,"steak",80,0,1000},
+ {departmentProduct,dairy,"cheese",10,0,1000},
+ {departmentProduct,bakery,"bread",8,0,1000},
+ {departmentProduct,bakery,"buns",20,0,1000}].
+checkProductStatus:ListOfValidProductsWithRatio  - 
+ [[meat,"chicken",40,0],
+ [meat,"steak",80,0],
+ [dairy,"cheese",10,0],
+ [bakery,"bread",8,0],
+ [bakery,"buns",20,0]].
+ratioToReserve Success: PriceOfReservation - 0 ErlMarketBudget - 10000 
 updateBalance: OldBalance: 10000 NewBalance:10000 
