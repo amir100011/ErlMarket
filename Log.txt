@@ -1,15 +1,18 @@
-setInitialBudget 10000 
-checkProductStatus:ListOfValidProducts  - 
- [{departmentProduct,meat,"chicken",40,0,1000},
- {departmentProduct,meat,"steak",80,0,1000},
- {departmentProduct,dairy,"cheese",10,0,1000},
- {departmentProduct,bakery,"bread",8,0,1000},
- {departmentProduct,bakery,"buns",20,0,1000}].
-checkProductStatus:ListOfValidProductsWithRatio  - 
- [[meat,"chicken",40,0],
- [meat,"steak",80,0],
- [dairy,"cheese",10,0],
- [bakery,"bread",8,0],
- [bakery,"buns",20,0]].
-ratioToReserve Success: PriceOfReservation - 0 ErlMarketBudget - 10000 
-updateBalance: OldBalance: 10000 NewBalance:10000 
+customerInfo: 
+ {customer,<0.491.0>,979.5722613162042,
+          [{shoppinlistelement,bakery,"buns",20,4},
+           {shoppinlistelement,meat,"steak",80,4},
+           {shoppinlistelement,meat,"chicken",40,4},
+           {shoppinlistelement,dairy,"yogurt",3,2},
+           {shoppinlistelement,bakery,"bread",8,5},
+           {shoppinlistelement,dairy,"cheese",10,9},
+           {shoppinlistelement,dairy,"milk",5,10}]}.
+i'm paying 
+customerInfo: 
+ {customer,<0.491.0>,266.77505051989823,
+          [{shoppinlistelement,dairy,"cheese",10,4},
+           {shoppinlistelement,dairy,"yogurt",3,2},
+           {shoppinlistelement,meat,"steak",80,4},
+           {shoppinlistelement,bakery,"buns",20,7},
+           {shoppinlistelement,bakery,"bread",8,6}]}.
+i'm paying 

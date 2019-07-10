@@ -1,5 +1,5 @@
 %%%-------------------------------------------------------------------
-%%% @author amir
+%%% @author
 %%% @copyright (C) 2019, <COMPANY>
 %%% @doc
 %%%
@@ -28,8 +28,13 @@ init(_Args) ->
 callFunc(ListOfProductsAndAmounts, CostumerBalance) ->
   gen_server:call({global,?MODULE}, {pay,ListOfProductsAndAmounts, CostumerBalance}).
 
-handle_call({pay,ListOfProductsAndAmounts, CostumerBalance}, _From, State) ->
-  % checks if the customer can pay or not, if not pays to the maximum available, the rest are going back to the relevant department
+handle_call(_Request, _From, State) ->
+  {reply, ok, State}.
+
+%% @doc  checks if the customer can pay or not, if not pays to the maximum available, the rest are going back to the relevant department
+handle_cast({pay,ListOfProductsAndAmounts}, State) ->
+  writeToLogger("Handle Case - CashierServer ",ListOfProductsAndAmounts),
+  CostumerBalance = 5,
   {CanPay, AmountToPay} = canPay(ListOfProductsAndAmounts,CostumerBalance),
   case CanPay of
     canPay ->
@@ -37,12 +42,6 @@ handle_call({pay,ListOfProductsAndAmounts, CostumerBalance}, _From, State) ->
     cannotPay ->
       payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CostumerBalance)
   end,
-
-  Reply = CanPay,  % returns a dictionary with key:=product_name and value:=[Amount,Price]
-  {reply, Reply, State}.
-
-
-handle_cast(_Request, State) ->
   {noreply, State}.
 
 handle_info(_Info, State) ->
@@ -116,5 +115,24 @@ testPay() ->
 
 
 
+
+%%------------------WRITING TO LOGGER------------------
+
+%% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
+writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
+  file:close(S).
+
+writeToLogger(String, List) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s~n ",[String]),
+  file:close(S),
+  file:write_file("../Log.txt", io_lib:format("~p.~n", [List]), [append]).
+
+writeToLogger(String) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s ~n",[String]),
+  file:close(S).
 
 

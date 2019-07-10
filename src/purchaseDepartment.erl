@@ -47,8 +47,6 @@ checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers) ->
   writeToLogger("checkProductStatus:ListOfValidProductsWithRatio  - ",ListOfValidProductsWithRatio),
   ListOfValidProductsWithRatio.
 
-
-
 getRatio([H|T],NumberOfCustomers)->
   [getRatioSingleElement(H,NumberOfCustomers)] ++ getRatio(T,NumberOfCustomers);
 getRatio([],_NumberOfCustomers)->[].
@@ -67,6 +65,9 @@ ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers, ErlMarketBudget)
     if CostOfReservation =< ErlMarketBudget ->
       writeToLogger("ratioToReserve Success: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
       reserve(ListOfValidProductsWithRatio, CostOfReservation);
+%%      {A1,A2,A3} = now(),
+%%      random:seed(A1, A2, A3),
+%%      timer:sleep(timer:seconds(random:uniform())); %%THE PROCESS IS SLEEPING FOR RANDOM TIME SEED SAVES ITS DICTIONARY
 %%      ErlMarketBudget = get(erlMarketBudget),
 %%      purchaseDepartmentRecursiveLoop(ErlMarketBudget);
       true ->
