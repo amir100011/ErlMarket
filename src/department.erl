@@ -63,6 +63,7 @@ handle_call(getTotalAmountOfValidProduct, _From, State) ->
 
 handle_call({purchase, ListOfProducts}, _From, State) ->
   % a purchase request has been made, the department removes the products that exist in the inventory
+  writeToLogger("got to handle call with the following list: ", ListOfProducts),
   RemovedProducts = removeProducts(ListOfProducts),
   {reply, RemovedProducts, State};
 
@@ -217,3 +218,24 @@ addProducts([H|T]) ->
   end,
   mnesia:dirty_write(get(server_name), UpdateProduct),
   addProducts(T).
+
+
+%%------------------WRITING TO LOGGER------------------
+
+%% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
+writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
+  file:close(S).
+
+writeToLogger(String, List) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s~n ",[String]),
+  file:close(S),
+  file:write_file("../Log.txt", io_lib:format("~p.~n", [List]), [append]).
+
+writeToLogger(String) ->
+  {ok, S} = file:open("../Log.txt", [append]),
+  io:format(S,"~s ~n",[String]),
+  file:close(S).
+

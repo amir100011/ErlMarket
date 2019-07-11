@@ -143,10 +143,10 @@ getListOfProductsToReserveInternal(DepartmentName) ->
 
 setInitialBudget() ->
   put(erlMarketBudget,10000),
-  writeToLogger("setInitialBudget 10000"),
-  get(erlMarketBudget).
+  writeToLogger("setInitialBudget 10000").
 
 setBalance(TypeOfAction , Amount) ->
+  writeToLogger("setBalance: ", [TypeOfAction,Amount]),
   OldBalance = get(erlMarketBudget),
   case TypeOfAction of
     "add" -> put(erlMarketBudget, get(erlMarketBudget) + Amount);

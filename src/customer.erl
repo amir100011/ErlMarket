@@ -10,11 +10,11 @@
 -author("dorliv").
 
 %% API
--export([testInit/0, goShopping/1]).
+-export([testInit/0, initCostumer/0]).
 -include_lib("records.hrl").
 -define(DEPARTMENT_LIST, inventory:getDepartments()).
 -record(customer, {customer_id, budget, shopping_list}).
--define(MAXIMUM_BUDGET, 1000).
+-define(MAXIMUM_BUDGET, 10000).
 
 
 
@@ -26,13 +26,16 @@ initCostumer() ->
   Costumer = #customer{customer_id = self(), budget = initBudget(), shopping_list = createShuffledShoppingList()},
   spawn(customer, goShopping, [Costumer]).
 
-%% TODO need to implement costumer goes shopping func
+%% @doc the life cycle of a customer
 goShopping(Customer)->
   put(customerInfo, Customer),
-  AvailiableProductsToPurchase = getProductsFromDepartments(Customer#customer.shopping_list,shuffleList(?DEPARTMENT_LIST)),
   writeToLogger("customerInfo: ", Customer),
-  pay().
-  %terminate().
+  UniqueShuffledDepartmentList = shuffleList(?DEPARTMENT_LIST),
+  OrderShoppingListByDepartments = getProductsFromDepartments(Customer#customer.shopping_list,UniqueShuffledDepartmentList),
+  AvailableProductsToPurchase = takeTheProductsFromTheDifferentDepartments(OrderShoppingListByDepartments, UniqueShuffledDepartmentList),
+  writeToLogger("customerInfo - AvailableProductsToPurchase: ", AvailableProductsToPurchase),
+  pay(AvailableProductsToPurchase,Customer#customer.budget),
+  terminate().
 
 
 
@@ -49,56 +52,81 @@ createShoppingListEle(H)->
                                 amount = round(RandomAmount)},
   Element.
 
-%% @doc create the shopping list randomly from the list of products
-randomlyChooseProducts([], Ans) -> Ans;
-randomlyChooseProducts([H|T], Ans) when Ans =:= [] ->
-  AddToShoppingListRV =  rand:uniform(),
-  if
-    AddToShoppingListRV< 0.8 -> ShoppingListElement = createShoppingListEle(H),
-                                randomlyChooseProducts(T,[ShoppingListElement]);
-    true -> randomlyChooseProducts(T, Ans)
-  end;
-randomlyChooseProducts([H|T], Ans) ->
-  AddToShoppingListRV =  rand:uniform(),
-  if
-    AddToShoppingListRV< 0.8 -> ShoppingListElement = createShoppingListEle(H),
-                                randomlyChooseProducts(T, Ans ++ [ShoppingListElement]);
-    true -> randomlyChooseProducts(T, Ans)
-  end.
-
-
-initBudget() -> (1 - rand:uniform()) * ?MAXIMUM_BUDGET.
-
-%% @doc for debuggging TODO delete before submission
-getList(Department)->
-  F = fun() ->
-    Q = qlc:q([E || E <- mnesia:table(Department)]),
-    qlc:e(Q)
-      end,
-  {atomic, ListAns} = mnesia:transaction(F),
-  ListAns.
-
 %% @doc creates a random shuffled shopping list for the customer's process
 createShuffledShoppingList()->
-  Departments = inventory:getDepartments(),
-  OrderedShoppingList = chooseRandomProductsFromDepartment(Departments,[]),
+  OrderedShoppingList = chooseRandomProductsFromDepartment(?DEPARTMENT_LIST,[]),
   shuffleList(OrderedShoppingList).
 
-shuffleList(ShoppingList) ->
-  [X||{_,X} <- lists:sort([ {rand:uniform(), N} || N <- ShoppingList])].
-
-
+%% @doc chooses for each existing product in the department if include it in the shopping list or not
 chooseRandomProductsFromDepartment([], Ans) -> Ans;
-chooseRandomProductsFromDepartment([H| T], Ans) when Ans =:= [] ->
+chooseRandomProductsFromDepartment([H|T], Ans) when Ans =:= [] ->
   {atomic, ProductsFromDepartment} =  inventory:getProductsFromDepartment(H),
-  ChosenProducts = randomlyChooseProducts(ProductsFromDepartment, []),
+  ChosenProducts = chooseRandomProductsFromDepartmentInternal(ProductsFromDepartment, []),
   chooseRandomProductsFromDepartment(T,ChosenProducts);
-chooseRandomProductsFromDepartment([H| T], Ans) ->
+chooseRandomProductsFromDepartment([H|T], Ans) ->
   {atomic, ProductsFromDepartment} =  inventory:getProductsFromDepartment(H),
-  ChosenProducts = randomlyChooseProducts(ProductsFromDepartment, []),
+  ChosenProducts = chooseRandomProductsFromDepartmentInternal(ProductsFromDepartment, []),
   TMP = Ans ++ ChosenProducts,
   chooseRandomProductsFromDepartment(T, TMP).
 
+%% @doc create the shopping list randomly from the list of products
+chooseRandomProductsFromDepartmentInternal([], Ans) -> Ans;
+chooseRandomProductsFromDepartmentInternal([H|T], Ans) when Ans =:= [] ->
+  AddToShoppingListRV =  rand:uniform(),
+  if
+    AddToShoppingListRV< 0.8 -> ShoppingListElement = createShoppingListEle(H),
+      chooseRandomProductsFromDepartmentInternal(T,[ShoppingListElement]);
+    true -> chooseRandomProductsFromDepartmentInternal(T, Ans)
+  end;
+chooseRandomProductsFromDepartmentInternal([H|T], Ans) ->
+  AddToShoppingListRV =  rand:uniform(),
+  if
+    AddToShoppingListRV< 0.8 -> ShoppingListElement = createShoppingListEle(H),
+      chooseRandomProductsFromDepartmentInternal(T, Ans ++ [ShoppingListElement]);
+    true -> chooseRandomProductsFromDepartmentInternal(T, Ans)
+  end.
+
+%% @doc this function takes a list and shuffles its elements - returns a shuffled list
+shuffleList(ShoppingList) ->
+  [X||{_,X} <- lists:sort([ {rand:uniform(), N} || N <- ShoppingList])].
+
+%% @doc returns available purchasable products from all departments according to the shopping list
+getProductsFromDepartments(ShoppingList, [H|T]) ->
+  [getAllProductsInShoppingListThatBelongToDepartment(ShoppingList, H)]++getProductsFromDepartments(ShoppingList,T);
+getProductsFromDepartments(_ShoppingList,[]) -> [].
+
+
+%% @doc this function should be used by the customer process before shopping at a certain department
+%TODO try minimizing it to O(N) instead of O(N^2) by clearing the department elements from the original shopping list
+getAllProductsInShoppingListThatBelongToDepartment([H|T], DepartmentName) ->
+  ProductDepartmentName = H#shoppinlistelement.department_name,
+  case ProductDepartmentName of
+    DepartmentName -> getAllProductsInShoppingListThatBelongToDepartment(T, DepartmentName) ++ [H];
+    _ -> getAllProductsInShoppingListThatBelongToDepartment(T, DepartmentName)
+  end;
+getAllProductsInShoppingListThatBelongToDepartment([],_DepartmentName) -> [].
+
+
+takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T]) ->
+  LastElementInList =  lists:nth(1,OrderedShoppingList),
+  NewList = lists:delete(LastElementInList,OrderedShoppingList),
+  if LastElementInList =:= [] -> takeTheProductsFromTheDifferentDepartments(NewList, T);
+    true ->
+      gen_server:call({global,H},{purchase,LastElementInList}) ++
+      takeTheProductsFromTheDifferentDepartments(NewList, T)
+  end;
+takeTheProductsFromTheDifferentDepartments(_OrderedShoppingList, []) -> [].
+
+
+pay(AvailableProductsToPurchase, Balance) ->
+  writeToLogger("i'm paying"),
+  gen_server:cast({global,cashierServer}, {pay, AvailableProductsToPurchase,Balance}).
+
+
+
+%%------------------GETTERS/SETTERS------------------
+
+initBudget() -> (1 - rand:uniform()) * ?MAXIMUM_BUDGET.
 
 getBudget()->
   CostumerInfo = get(customer_info),
@@ -108,50 +136,14 @@ getBudget()->
 terminate() ->
   masterFunction:updateNumberOfCostumers("terminame").
 
-testInit()->
-%%  department:start(meat),
-%%  department:start(dairy),
-%%  department:start(bakery),
-%%  initCostumer().
 
 
-  ShoppingList = [{shoppinlistelement,bakery,"buns",20,4},
-    {shoppinlistelement,meat,"steak",80,4},
-    {shoppinlistelement,meat,"chicken",40,4},
-    {shoppinlistelement,dairy,"yogurt",3,2},
-    {shoppinlistelement,bakery,"bread",8,5},
-    {shoppinlistelement,dairy,"cheese",10,9},
-    {shoppinlistelement,dairy,"milk",5,10}],
-
-X = getProductsFromDepartments(ShoppingList,[meat,dairy,bakery]),
-R = 5.
-
-
-
-getProductsFromDepartments(ShoppingList, [H|T]) ->
-  [getAllProductsInShoppingListThatBelongToDepartment(ShoppingList, H)]++getProductsFromDepartments(ShoppingList,T);
-  getProductsFromDepartments(_ShoppingList,[]) -> [].
-
-
-%% @doc this function should be used by the customer process before shopping at a certain department
-%TODO try minmize it to O(N) instead of O(N^2) by clearing the department elements from the original shopping list
-getAllProductsInShoppingListThatBelongToDepartment([],_DepartmentName) -> [];
-getAllProductsInShoppingListThatBelongToDepartment([H|T], DepartmentName) ->
-  ProductDepartmentName = H#shoppinlistelement.department_name,
-  case ProductDepartmentName of
-    DepartmentName -> getAllProductsInShoppingListThatBelongToDepartment(T, DepartmentName) ++ [H];
-    _ -> getAllProductsInShoppingListThatBelongToDepartment(T, DepartmentName)
-  end.
-
-
-pay() ->
-  writeToLogger("i'm paying"),
-  gen_server:cast({global,cashierServer}, {pay,get(customerInfo)}).
 
 
 %%------------------WRITING TO LOGGER------------------
 
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
+
 writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
   {ok, S} = file:open("../Log.txt", [append]),
   io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
@@ -169,4 +161,35 @@ writeToLogger(String) ->
   file:close(S).
 
 
+%%------------------TEST FUNCTIONS------------------
 
+
+testInit()->
+  department:start(meat),
+  department:start(dairy),
+  department:start(bakery),
+%%  initCostumer().
+
+
+  ShoppingList = [{shoppinlistelement,bakery,"buns",20,4},
+    {shoppinlistelement,meat,"steak",80,4},
+    {shoppinlistelement,meat,"chicken",40,4},
+    {shoppinlistelement,dairy,"yogurt",3,2},
+    {shoppinlistelement,bakery,"bread",8,5},
+    {shoppinlistelement,dairy,"cheese",10,9},
+    {shoppinlistelement,dairy,"milk",5,10}],
+
+  X = getProductsFromDepartments(ShoppingList,[meat,dairy,asd,bakery]),
+  Y = takeTheProductsFromTheDifferentDepartments(X,[meat,dairy,asd,bakery]),
+  Y.
+
+
+
+%% @doc for debuggging
+getList(Department)->
+  F = fun() ->
+    Q = qlc:q([E || E <- mnesia:table(Department)]),
+    qlc:e(Q)
+      end,
+  {atomic, ListAns} = mnesia:transaction(F),
+  ListAns.

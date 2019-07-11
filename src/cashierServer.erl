@@ -25,22 +25,21 @@ init(_Args) ->
   {ok, []}.
 
 
-callFunc(ListOfProductsAndAmounts, CostumerBalance) ->
-  gen_server:call({global,?MODULE}, {pay,ListOfProductsAndAmounts, CostumerBalance}).
+callFunc(ListOfProductsAndAmounts, CustomerBalance) ->
+  gen_server:call({global,?MODULE}, {pay,ListOfProductsAndAmounts, CustomerBalance}).
 
 handle_call(_Request, _From, State) ->
   {reply, ok, State}.
 
 %% @doc  checks if the customer can pay or not, if not pays to the maximum available, the rest are going back to the relevant department
-handle_cast({pay,ListOfProductsAndAmounts}, State) ->
-  writeToLogger("Handle Case - CashierServer ",ListOfProductsAndAmounts),
-  CostumerBalance = 5,
-  {CanPay, AmountToPay} = canPay(ListOfProductsAndAmounts,CostumerBalance),
+handle_cast({pay,ListOfProductsAndAmounts,CustomerBalance}, State) ->
+  writeToLogger("Handle Cast - CashierServer ",[ListOfProductsAndAmounts,CustomerBalance]),
+  {CanPay, AmountToPay} = canPay(ListOfProductsAndAmounts,CustomerBalance),
   case CanPay of
     canPay ->
-      pay(AmountToPay);
+      updateErlMarketBalance(AmountToPay);
     cannotPay ->
-      payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CostumerBalance)
+      payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance)
   end,
   {noreply, State}.
 
@@ -54,29 +53,26 @@ code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
 
 
-canPay(ListOfProductsAndAmounts,CostumerBalance) ->
+canPay(ListOfProductsAndAmounts,CustomerBalance) ->
   SumOfAllProducts = sumOfAllProducts(ListOfProductsAndAmounts),
-  if SumOfAllProducts =< CostumerBalance -> {canPay,SumOfAllProducts};
+  if SumOfAllProducts =< CustomerBalance -> {canPay,SumOfAllProducts};
     true -> {cannotPay,0}
   end.
 
-payToMaxAndReturnTheRest([],_CostumerBalance) ->[];
-payToMaxAndReturnTheRest([H|T],CostumerBalance) ->
-  {CanPay, AmountToPay} = canPay([H],CostumerBalance),
+payToMaxAndReturnTheRest([],_CustomerBalance) ->[];
+payToMaxAndReturnTheRest([H|T],CustomerBalance) ->
+  {CanPay, AmountToPay} = canPay([H],CustomerBalance),
   case CanPay of
     canPay ->
-      NewCostumerBalance = CostumerBalance - AmountToPay,
-      writeNewBalanceToFile(CostumerBalance, NewCostumerBalance),
-      pay(AmountToPay),
-      payToMaxAndReturnTheRest(T,NewCostumerBalance);
+      NewCustomerBalance = CustomerBalance - AmountToPay,
+      writeToLogger("Customer:Oldbalance - ",CustomerBalance, " NewBalance - ", NewCustomerBalance),
+      updateErlMarketBalance(AmountToPay),
+      payToMaxAndReturnTheRest(T,NewCustomerBalance);
     cannotPay ->
       returnProductToDepartment(H),
-      payToMaxAndReturnTheRest(T, CostumerBalance)
+      payToMaxAndReturnTheRest(T, CustomerBalance)
   end.
 
-
-pay(AmountToPay) ->
-  updateErlMarketBalance(AmountToPay).
 
 returnProductToDepartment({product,Department,ProductName,_PriceForEach, Amount}) ->
   gen_server:cast({global,Department},{return,ProductName,Amount,500}).%TODO: add expiry date
@@ -90,30 +86,6 @@ sumOfAllProducts({product,_department,_productName,PriceForEach, Amount},1) ->
 
 updateErlMarketBalance(AmountToAdd) ->
   purchaseDepartment:setBalance("add", AmountToAdd).
-
-
-writeNewBalanceToFile(OldCustomerBalance, NewCustomerBalance) ->
-  {ok, S} = file:open("../Log.txt", [append]),
-  io:format(S,"~s~w~s~w ~n",["Customer:Oldbalance - ",OldCustomerBalance, " NewBalance - ", NewCustomerBalance]),
-  file:close(S).
-
-testPay() ->
-  ShoppingList =
-[{product,meat,"chicken",40,500},
- {product,meat,"steak",80,500},
- {product,dairy,"milk",5,40},
- {product,dairy,"yogurt",3,40},
- {product,dairy,"cheese",10,60},
- {product,bakery,"bread",8,100},
- {product,bakery,"buns",20,120}],
-
-  department:start(meat),
-  department:start(dairy),
-  department:start(bakery),
-  purchaseDepartment:setInitialBudget(),
-  payToMaxAndReturnTheRest(ShoppingList, 985).
-
-
 
 
 %%------------------WRITING TO LOGGER------------------
@@ -135,4 +107,23 @@ writeToLogger(String) ->
   io:format(S,"~s ~n",[String]),
   file:close(S).
 
+
+%%------------------TEST FUNCTIONS------------------
+
+testPay() ->
+  cashierServer:start(),
+  purchaseDepartment:setInitialBudget(),
+  ShoppingList =
+    [{product,meat,"chicken",40,500},
+      {product,meat,"steak",80,500},
+      {product,dairy,"milk",5,40},
+      {product,dairy,"yogurt",3,40},
+      {product,dairy,"cheese",10,60},
+      {product,bakery,"bread",8,100},
+      {product,bakery,"buns",20,120}],
+
+  department:start(meat),
+  department:start(dairy),
+  department:start(bakery),
+  gen_server:cast({global,?MODULE},{pay,ShoppingList, 50000000}).
 
