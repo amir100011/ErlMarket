@@ -26,7 +26,7 @@ init(_Args) ->
 
 
 callFunc(ListOfProductsAndAmounts, CustomerBalance) ->
-  gen_server:call({global,?MODULE}, {pay,ListOfProductsAndAmounts, CustomerBalance}).
+  gen_server:cast({global,?MODULE}, {pay,ListOfProductsAndAmounts, CustomerBalance}).
 
 handle_call(_Request, _From, State) ->
   {reply, ok, State}.
@@ -34,14 +34,8 @@ handle_call(_Request, _From, State) ->
 %% @doc  checks if the customer can pay or not, if not pays to the maximum available, the rest are going back to the relevant department
 handle_cast({pay,ListOfProductsAndAmounts,CustomerBalance}, State) ->
   writeToLogger("Handle Cast - CashierServer ",[ListOfProductsAndAmounts,CustomerBalance]),
-  {CanPay, AmountToPay} = canPay(ListOfProductsAndAmounts,CustomerBalance),
-  case CanPay of
-    canPay ->
-      updateErlMarketBalance(AmountToPay);
-    cannotPay ->
-      payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance)
-  end,
-  {noreply, State}.
+  pay(ListOfProductsAndAmounts,CustomerBalance),
+ {noreply, State}.
 
 handle_info(_Info, State) ->
   {noreply, State}.
@@ -51,6 +45,17 @@ terminate(_Reason, _State) ->
 
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
+
+
+pay(ListOfProductsAndAmounts,CustomerBalance)->
+  writeToLogger("payFunction ",[ListOfProductsAndAmounts,CustomerBalance]),
+  {CanPay, AmountToPay} = canPay(ListOfProductsAndAmounts,CustomerBalance),
+  case CanPay of
+    canPay ->
+      updateErlMarketBalance(AmountToPay);
+    cannotPay ->
+      payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance)
+  end.
 
 
 canPay(ListOfProductsAndAmounts,CustomerBalance) ->
@@ -78,15 +83,15 @@ returnProductToDepartment({product,Department,ProductName,_PriceForEach, Amount}
   gen_server:cast({global,Department},{return,ProductName,Amount,500}).%TODO: add expiry date
 
 sumOfAllProducts([H|T]) ->
-  sumOfAllProducts(H,1) + sumOfAllProducts(T);
+  costOfSingleProduct(H) + sumOfAllProducts(T);
 sumOfAllProducts([]) -> 0.
 
-sumOfAllProducts({product,_department,_productName,PriceForEach, Amount},1) ->
+costOfSingleProduct({departmentProduct,_department,_productName,PriceForEach,_expiryDate, Amount}) ->
   Amount * PriceForEach.
 
 updateErlMarketBalance(AmountToAdd) ->
-  purchaseDepartment:setBalance("add", AmountToAdd).
-
+  purchaseDepartment ! {"add", AmountToAdd}.
+%%  purchaseDepartment:setBalance("add", AmountToAdd).
 
 %%------------------WRITING TO LOGGER------------------
 
@@ -113,17 +118,18 @@ writeToLogger(String) ->
 testPay() ->
   cashierServer:start(),
   purchaseDepartment:setInitialBudget(),
-  ShoppingList =
-    [{product,meat,"chicken",40,500},
-      {product,meat,"steak",80,500},
-      {product,dairy,"milk",5,40},
-      {product,dairy,"yogurt",3,40},
-      {product,dairy,"cheese",10,60},
-      {product,bakery,"bread",8,100},
-      {product,bakery,"buns",20,120}],
+  [ShoppingList,Balance] =
+    [[{departmentProduct,dairy,"milk",5,40,2},
+      {departmentProduct,dairy,"yogurt",3,40,3},
+      {departmentProduct,dairy,"cheese",10,60,5},
+      {departmentProduct,meat,"chicken",40,500,5},
+      {departmentProduct,meat,"steak",80,500,2},
+      {departmentProduct,bakery,"bread",8,100,10}],
+      6108.332946432113],
 
   department:start(meat),
   department:start(dairy),
   department:start(bakery),
-  gen_server:cast({global,?MODULE},{pay,ShoppingList, 50000000}).
+  %pay(ShoppingList,Balance).
+  gen_server:cast({global,?MODULE},{pay,ShoppingList, Balance}).
 

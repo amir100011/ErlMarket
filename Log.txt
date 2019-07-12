@@ -1,23 +1,77 @@
-got to handle call with the following list: 
- [{shoppinlistelement,meat,"chicken",40,4},
- {shoppinlistelement,meat,"steak",80,4}].
-got to handle call with the following list: 
- [{shoppinlistelement,dairy,"milk",5,10},
- {shoppinlistelement,dairy,"cheese",10,9},
- {shoppinlistelement,dairy,"yogurt",3,2}].
-got to handle call with the following list: 
- [{shoppinlistelement,bakery,"bread",8,5},
- {shoppinlistelement,bakery,"buns",20,4}].
-
-setInitialBudget 10000 
+10000.
+["add",10000].
+10000.
+10000.
+["add",10000].
+10000.
+10000.
+["add",10000].
+10000.
 Handle Cast - CashierServer 
- [[{product,meat,"chicken",40,500},
-  {product,meat,"steak",80,500},
-  {product,dairy,"milk",5,40},
-  {product,dairy,"yogurt",3,40},
-  {product,dairy,"cheese",10,60},
-  {product,bakery,"bread",8,100},
-  {product,bakery,"buns",20,120}],
- 50000000].
-setBalance: 
- ["add",64120].
+ [[{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"bread",8,100,10}],
+ 6108.332946432113].
+payFunction 
+ [[{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"bread",8,100,10}],
+ 6108.332946432113].
+Handle Cast - CashierServer 
+ [[{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"bread",8,100,10}],
+ 6108.332946432113].
+payFunction 
+ [[{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"bread",8,100,10}],
+ 6108.332946432113].
+Handle Cast - CashierServer 
+ [[{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"bread",8,100,10}],
+ 6108.332946432113].
+payFunction 
+ [[{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"bread",8,100,10}],
+ 6108.332946432113].
+Handle Cast - CashierServer 
+ [[{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"bread",8,100,10}],
+ 6108.332946432113].
+payFunction 
+ [[{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"bread",8,100,10}],
+ 6108.332946432113].
+getNumberOfCustomers:Status 
+ undefined.
+getNumberOfCustomers:Status 
+ undefined.

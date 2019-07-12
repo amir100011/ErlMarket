@@ -10,7 +10,7 @@
 -author("dorliv").
 
 %% API
--export([testInit/0, initCostumer/0]).
+-export([testInit/0, initCustomer/0, getBudget/0,goShopping/1]).
 -include_lib("records.hrl").
 -define(DEPARTMENT_LIST, inventory:getDepartments()).
 -record(customer, {customer_id, budget, shopping_list}).
@@ -21,13 +21,14 @@
 %%----------------PRIMARY FUNCTION-------------------------
 
 %% @doc initialize the customer and spawn a customer process that shops in ErlMarket
-initCostumer() ->
-  inventory:initInventory([node()]), % TODO once we have nodes we should initialize the Inventory once for all nodes, so in future design we delete this line
-  Costumer = #customer{customer_id = self(), budget = initBudget(), shopping_list = createShuffledShoppingList()},
-  spawn(customer, goShopping, [Costumer]).
+initCustomer() ->
+ %% inventory:initInventory([node()]), % TODO once we have nodes we should initialize the Inventory once for all nodes, so in future design we delete this line
+  Customer = #customer{customer_id = self(), budget = initBudget(), shopping_list = createShuffledShoppingList()},
+  spawn(customer, goShopping, [Customer]).
 
 %% @doc the life cycle of a customer
 goShopping(Customer)->
+  writeToLogger("reached to goShopping"),
   put(customerInfo, Customer),
   writeToLogger("customerInfo: ", Customer),
   UniqueShuffledDepartmentList = shuffleList(?DEPARTMENT_LIST),
@@ -134,7 +135,7 @@ getBudget()->
 
 
 terminate() ->
-  masterFunction:updateNumberOfCostumers("terminame").
+  masterFunction:updateNumberOfCustomers("terminate").
 
 
 
@@ -168,20 +169,22 @@ testInit()->
   department:start(meat),
   department:start(dairy),
   department:start(bakery),
-%%  initCostumer().
-
-
-  ShoppingList = [{shoppinlistelement,bakery,"buns",20,4},
-    {shoppinlistelement,meat,"steak",80,4},
-    {shoppinlistelement,meat,"chicken",40,4},
-    {shoppinlistelement,dairy,"yogurt",3,2},
-    {shoppinlistelement,bakery,"bread",8,5},
-    {shoppinlistelement,dairy,"cheese",10,9},
-    {shoppinlistelement,dairy,"milk",5,10}],
-
-  X = getProductsFromDepartments(ShoppingList,[meat,dairy,asd,bakery]),
-  Y = takeTheProductsFromTheDifferentDepartments(X,[meat,dairy,asd,bakery]),
+  Y = 5,
+  initCustomer(),
   Y.
+
+
+%%  ShoppingList = [{shoppinlistelement,bakery,"buns",20,4},
+%%    {shoppinlistelement,meat,"steak",80,4},
+%%    {shoppinlistelement,meat,"chicken",40,4},
+%%    {shoppinlistelement,dairy,"yogurt",3,2},
+%%    {shoppinlistelement,bakery,"bread",8,5},
+%%    {shoppinlistelement,dairy,"cheese",10,9},
+%%    {shoppinlistelement,dairy,"milk",5,10}],
+%%
+%%  X = getProductsFromDepartments(ShoppingList,[meat,dairy,asd,bakery]),
+%%  Y = takeTheProductsFromTheDifferentDepartments(X,[meat,dairy,asd,bakery]),
+%%  Y.
 
 
 
