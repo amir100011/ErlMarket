@@ -12,6 +12,8 @@
 %% API
 -export([main/0]).
 -define(DEPARTMENT_LIST, inventory:getDepartments()).
+-define(LOGGER_FILE_PATH, "../Logger-masterFunction.txt").
+-define(NUMBER_OF_ITERATIONS, 5).
 -export([getNumberOfCustomers/0]).
 
 
@@ -19,20 +21,41 @@ main() ->
   initErlMarketDataBase(),
   initErlMarketFunctionality().
   %testDep().
-
  % register(cleaner, spawn(cleaner,[])).
-%%  initErlMarketDataBase(),
-%%  initErlMarketFunctionality().
-
 
 initErlMarketFunctionality() ->
+  put(currentIteration , 0),
+  globalRegisterMasterFunction(),
   writeToLogger("strating initialization"),
   put(numberOfCustomers,0),
   initDepartments(?DEPARTMENT_LIST),
   initPurchaseDepartment(),
   initCashiers(),
   %initSuppliers(),
-  initCustomer().
+  initCustomer(),
+  waitingLoop().
+
+globalRegisterMasterFunction() ->
+  global:register_name(masterFunction, self()).
+
+
+waitingLoop() ->
+  receive
+    {"customerOut"} -> updateNumberOfCustomers("terminate"), waitingLoop();
+    {"createCustomer"} -> updateNumberOfCustomers("create"), waitingLoop();
+    {"terminateMaster"} -> global:send(purchaseDepartment,"terminate"),exit(normal);
+    {"getNumberOfCustomers"} -> global:send(purchaseDepartment,{"numberOfCustomers",getNumberOfCustomers()}), waitingLoop();
+    _Msg -> writeToLogger("masterFunction Wrong recieve, got: ", _Msg)
+
+    after 5 ->
+    CurrentIteration =  get(currentIteration),
+    if CurrentIteration < ?NUMBER_OF_ITERATIONS ->
+      initCustomer(),
+      waitingLoop();
+      true -> global:send(masterFunction,"terminateMaster"),exit(normal)
+    end
+
+  end.
 
 
 initErlMarketDataBase() ->
@@ -54,6 +77,7 @@ initCashiers() ->
 
 
 initCustomer() ->
+  put(currentIteration , get(currentIteration) + 1),
   writeToLogger("Initializaing Customer"),
   customer:initCustomer(),
   updateNumberOfCustomers("create").
@@ -110,18 +134,18 @@ getNumberOfCustomers() ->
 
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
 writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
-  {ok, S} = file:open("../Log.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
   file:close(S).
 
 writeToLogger(String, List) ->
-  {ok, S} = file:open("../Log.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~n ",[String]),
   file:close(S),
-  file:write_file("../Log.txt", io_lib:format("~p.~n", [List]), [append]).
+  file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
 
 writeToLogger(String) ->
-  {ok, S} = file:open("../Log.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s ~n",[String]),
   file:close(S).
 

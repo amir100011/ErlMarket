@@ -13,6 +13,7 @@
 -export([testInit/0, initCustomer/0, getBudget/0,goShopping/1]).
 -include_lib("records.hrl").
 -define(DEPARTMENT_LIST, inventory:getDepartments()).
+-define(LOGGER_FILE_PATH, "../Logger-Customer.txt").
 -record(customer, {customer_id, budget, shopping_list}).
 -define(MAXIMUM_BUDGET, 10000).
 
@@ -135,7 +136,7 @@ getBudget()->
 
 
 terminate() ->
-  masterFunction:updateNumberOfCustomers("terminate").
+  global:send(masterFunction,{"customerOut"}).
 
 
 
@@ -146,18 +147,18 @@ terminate() ->
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
 
 writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
-  {ok, S} = file:open("../Log.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
   file:close(S).
 
 writeToLogger(String, List) ->
-  {ok, S} = file:open("../Log.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~n ",[String]),
   file:close(S),
-  file:write_file("../Log.txt", io_lib:format("~p.~n", [List]), [append]).
+  file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
 
 writeToLogger(String) ->
-  {ok, S} = file:open("../Log.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s ~n",[String]),
   file:close(S).
 

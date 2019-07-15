@@ -8,6 +8,7 @@
 %%%-------------------------------------------------------------------
 -module(cashierServer).
 -behavior(gen_server).
+-define(LOGGER_FILE_PATH, "../Logger-CashierServer.txt").
 -author("amir").
 
 %% API
@@ -79,8 +80,8 @@ payToMaxAndReturnTheRest([H|T],CustomerBalance) ->
   end.
 
 
-returnProductToDepartment({product,Department,ProductName,_PriceForEach, Amount}) ->
-  gen_server:cast({global,Department},{return,ProductName,Amount,500}).%TODO: add expiry date
+returnProductToDepartment({product,Department,ProductName,_PriceForEach, Expiry, Amount}) ->
+  gen_server:cast({global,Department},{return,[ProductName,Expiry,Amount]}).%TODO: fix function to match department patern
 
 sumOfAllProducts([H|T]) ->
   costOfSingleProduct(H) + sumOfAllProducts(T);
@@ -90,25 +91,25 @@ costOfSingleProduct({departmentProduct,_department,_productName,PriceForEach,_ex
   Amount * PriceForEach.
 
 updateErlMarketBalance(AmountToAdd) ->
-  purchaseDepartment ! {"add", AmountToAdd}.
+ global:send(purchaseDepartment, {"add", AmountToAdd}).
 %%  purchaseDepartment:setBalance("add", AmountToAdd).
 
 %%------------------WRITING TO LOGGER------------------
 
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
 writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
-  {ok, S} = file:open("../Log.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
   file:close(S).
 
 writeToLogger(String, List) ->
-  {ok, S} = file:open("../Log.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~n ",[String]),
   file:close(S),
-  file:write_file("../Log.txt", io_lib:format("~p.~n", [List]), [append]).
+  file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
 
 writeToLogger(String) ->
-  {ok, S} = file:open("../Log.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s ~n",[String]),
   file:close(S).
 
@@ -117,7 +118,7 @@ writeToLogger(String) ->
 
 testPay() ->
   cashierServer:start(),
-  purchaseDepartment:setInitialBudget(),
+  purchaseDepartment:initPurchaseDepartment(),
   [ShoppingList,Balance] =
     [[{departmentProduct,dairy,"milk",5,40,2},
       {departmentProduct,dairy,"yogurt",3,40,3},

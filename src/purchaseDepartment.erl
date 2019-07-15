@@ -10,6 +10,7 @@
 -include_lib("records.hrl").
 -define(DESIRED_RATIO, 0.5).
 -define(SAVING_RATIO, 0.9).
+-define(LOGGER_FILE_PATH, "../Logger-PurchaseDepartment.txt").
 -define(DEPARTMENT_LIST, inventory:getDepartments()).
 -author("amir").
 
@@ -27,34 +28,41 @@
 
 %%----------------PRIMARY FUNCTION-------------------------
 initPurchaseDepartment() ->
-  global:register_name(purchase,spawn(purchaseDepartment, initPurchaseDepartmentData, [])).
+  global:register_name(purchaseDepartment,spawn(purchaseDepartment, initPurchaseDepartmentData, [])).
 
 
 %%----------------INTERNAL FUNCTIONS-------------------------
 initPurchaseDepartmentData()->
   setInitialBudget(),
-  ErlMarketBudget = get(erlMarketBudget),
-  purchaseDepartmentRecursiveLoop(ErlMarketBudget).
+  purchaseDepartmentRecursiveLoop().
 
 %% @doc Forever loop that checks with each department if it has some products that need to be reserved from supplier.
-purchaseDepartmentRecursiveLoop(ErlMarketBudget) ->
+purchaseDepartmentRecursiveLoop() ->
   writeToLogger("got to recursive loop"),
   receive
     {"add", AmountToAdd} ->
-      setBalance("add",AmountToAdd), purchaseDepartmentRecursiveLoop(get(erlMarketBudget));
+      setBalance("add",AmountToAdd), purchaseDepartmentRecursiveLoop();
     {"deduce",AmountToDeduct} ->
-      setBalance("deduce",AmountToDeduct), purchaseDepartmentRecursiveLoop(get(erlMarketBudget));
-    {"terminate"} -> ok
+      setBalance("deduce",AmountToDeduct), purchaseDepartmentRecursiveLoop();
+    "terminate" -> writeToLogger("purchaseDeartment terminated"), exit(normal)
 
 after 5000 ->
 
-    purchaseDepartmentRecursiveLoop(50)
-%%  NumberOfCustomers = getNumberOfCustomers(),
-%%  ListOfValidProductsToReserve = getListOfProductsToReserve(?DEPARTMENT_LIST),
-%%  ListOfValidProductsWithRatio = checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers),
-%%  ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers, ErlMarketBudget)
+  getNumberOfCustomers(),
+    receive
+      {"numberOfCustomers",ReturnedNumberOfCustomers} ->
+        NumberOfCustomers = ReturnedNumberOfCustomers,
+        ErlMarketBudget = get(erlMarketBudget),
+        ListOfValidProductsToReserve = getListOfProductsToReserve(?DEPARTMENT_LIST),
+        ListOfValidProductsWithRatio = checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers),
+        ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers,ErlMarketBudget )
 
-end.
+    after 1000 ->
+      purchaseDepartmentRecursiveLoop()
+    end,
+
+    purchaseDepartmentRecursiveLoop()
+  end.
 
 %% @doc checks the ratio for each product (customer / number of products valid in depatment)
 checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers) ->
@@ -68,6 +76,7 @@ getRatio([H|T],NumberOfCustomers)->
 getRatio([],_NumberOfCustomers)->[].
 
 getRatioSingleElement({departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers) ->
+  writeToLogger("getRatioSingleElement",[{departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers]),
   NumberOfProductsToOrder = (NumberOfCustomers * ?DESIRED_RATIO) - Amount,
   if  NumberOfProductsToOrder =< 0 -> AmountToOrder = 0;
     true -> AmountToOrder = NumberOfProductsToOrder
@@ -84,8 +93,8 @@ ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers, ErlMarketBudget)
 %%      {A1,A2,A3} = now(),
 %%      random:seed(A1, A2, A3),
 %%      timer:sleep(timer:seconds(random:uniform())); %%THE PROCESS IS SLEEPING FOR RANDOM TIME SEED SAVES ITS DICTIONARY
-      ErlMarketBudget = get(erlMarketBudget),
-      purchaseDepartmentRecursiveLoop(ErlMarketBudget);
+      reserve(ListOfValidProductsWithRatio,CostOfReservation),
+      ErlMarketBudget = get(erlMarketBudget);
       true ->
         writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
         DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,
@@ -146,7 +155,7 @@ sumAmountInternal([H|T], Dict) ->
 
 %% @doc returns the current number of customers in ErlMarket
 getNumberOfCustomers() ->
-  masterFunction:getNumberOfCustomers().
+  global:send(masterFunction,{"getNumberOfCustomers"}).
 
 %% @doc returns List of records %[{departmentProduct,department, product_name, price, expiry_time, amount}].
 getListOfProductsToReserve([H|T]) ->
@@ -178,17 +187,17 @@ setBalance(TypeOfAction , Amount) ->
 
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
 writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
-  {ok, S} = file:open("../purchaseDepartmentLog.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
   file:close(S).
 
 writeToLogger(String, OldBalance) ->
-  {ok, S} = file:open("../purchaseDepartmentLog.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~w~n ",[String, OldBalance]),
   file:close(S).
 
 writeToLogger(String) ->
-  {ok, S} = file:open("../purchaseDepartmentLog.txt", [append]),
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s ~n",[String]),
   file:close(S).
 

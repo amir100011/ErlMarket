@@ -11,6 +11,7 @@
 %% API
 -export([initInventory/1, getProductsFromDepartment/1, getDepartments/0, test_mnesia/0]).
 -define(Filename, "Inventory.txt").
+-define(LOGGER_FILE_PATH, "../Logger-Inventory.txt").
 -include_lib("records.hrl").
 
 
