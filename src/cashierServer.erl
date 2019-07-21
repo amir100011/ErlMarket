@@ -15,7 +15,7 @@
 -export([init/1, handle_call/3, handle_cast/2,
   handle_info/2, terminate/2, code_change/3]).
 
--export([start/0,callFunc/2,castFunc/1, payToMaxAndReturnTheRest/2]).
+-export([start/0,callFunc/2,castFunc/1, payToMaxAndReturnTheRest/2, payToMaxAndReturnTheRest/4]).
 
 -export([testPay/0]).
 
@@ -79,7 +79,14 @@ canPay(ListOfProductsAndAmounts,CustomerBalance) ->
     true -> {cannotPay,0}
   end.
 payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance)->
-  payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance, dict:new(), []).
+  spawn_monitor(?MODULE, payToMaxAndReturnTheRest, [ListOfProductsAndAmounts, CustomerBalance, dict:new(), []]),
+  receive
+    {'DOWN', _, process, _, normal} -> done;
+    {'DOWN', _, process, PID, Reason} ->
+      writeToLogger(variable, "Process ~p Died because ~p , respawning a new process~n",[PID, Reason]),
+      payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance)
+  end.
+  %payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance, dict:new(), []).
 
 payToMaxAndReturnTheRest([],_CustomerBalance, Dict, ListOfProducts) ->
   case dict:is_key(amountToPay, Dict) of % when the customer didnt buy anything this will be false
