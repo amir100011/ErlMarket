@@ -153,7 +153,8 @@ sumAmountInternal([H|T], Dict) ->
 
 %% @doc returns the current number of customers in ErlMarket
 getNumberOfCustomers() ->
-  global:send(masterFunction,{"getNumberOfCustomers"}).
+    masterFunction:castFunc(getNumberOfCustomers).
+  % global:send(masterFunction,{"getNumberOfCustomers"}).
 
 %% @doc returns List of records %[{departmentProduct,department, product_name, price, expiry_time, amount}].
 getListOfProductsToReserve([H|T]) ->

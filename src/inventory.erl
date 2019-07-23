@@ -9,14 +9,15 @@
 -module(inventory).
 -author("dorliv").
 %% API
--export([initInventory/1, getProductsFromDepartment/1, getDepartments/0, test_mnesia/0]).
+-export([initInventory/1, getProductsFromDepartment/1, getDepartments/0, test_mnesia/0, fillInventory/0]).
 -define(Filename, "Inventory.txt").
 -define(LOGGER_FILE_PATH, "../Logger-Inventory.txt").
 -include_lib("records.hrl").
 
 
 getDepartments()->
-  mnesia:dirty_all_keys(product).
+  mnesia:dirty_all_keys(product). % no problem
+  %mnesia:all_keys(product). % problem
 
 test_mnesia()->
   Node = node(),
@@ -47,7 +48,7 @@ initInventory(NodeList)->
     {type, bag},
     {record_name, departmentProduct},
     {attributes,record_info(fields,departmentProduct)}]
-  ),
+ ),
   fillInventory().
 
 
@@ -104,18 +105,3 @@ getProductsFromDepartment(Department)->
     mnesia:read(product, Department)
       end,
   mnesia:transaction(R).
-
-
-test_mnesia2()->
-  Node = node(),
-  initInventory([Node]),
-  Departments = getDepartments(),
-  io:fwrite("Departments : ~p ~n",[Departments]),
-  R = fun()->
-        mnesia:read(product, dairy)
-      end,
-  Ans = mnesia:transaction(R),
-  io:fwrite("Ans ~p ~n", [Ans]),
-  List = getProductsFromDepartment(dairy),
-  io:fwrite("Ans ~p ~n", [List]).
-
