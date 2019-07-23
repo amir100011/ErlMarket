@@ -6,7 +6,7 @@
 %%% @end
 %%% Created : 06. Jul 2019 4:48 PM
 %%%-------------------------------------------------------------------
--module(customer).
+-module(customer_deadlock).
 -author("dorliv").
 
 %% API
@@ -26,7 +26,7 @@ initCustomer() ->
  %% inventory:initInventory([node()]), % TODO once we have nodes we should initialize the Inventory once for all nodes, so in future design we delete this line
   %Customer = #customer{customer_id = self(), budget = initBudget(), shopping_list = createShuffledShoppingList()},
   %goShopping(Customer).
-  spawn_link(customer, goShopping, []).
+  spawn(customer, goShopping, []).
 
 %% @doc the life cycle of a customer
 goShopping()->
@@ -119,8 +119,17 @@ takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T]) ->
   NewList = lists:delete(LastElementInList,OrderedShoppingList),
   if LastElementInList =:= [] -> takeTheProductsFromTheDifferentDepartments(NewList, T);
     true ->
-      gen_server:call({global,H},{purchase,LastElementInList}) ++
-      takeTheProductsFromTheDifferentDepartments(NewList, T)
+       AnsFromServer = gen_server:call({global,H},{purchase,LastElementInList}),
+       if
+         AnsFromServer == noProducts ->
+                 % if products were not found in department wait for them to restock,
+                 % TODO this will cause dead lock without implementing suppliers
+                  writeToLogger("noProducts: this will cause dead lock without implementing suppliers ~n "),
+                  timer:sleep(200),
+                  takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T]);
+         true -> AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T) % products found
+       end
+
   end;
 takeTheProductsFromTheDifferentDepartments(_OrderedShoppingList, []) -> [].
 

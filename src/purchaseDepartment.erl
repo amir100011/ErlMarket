@@ -44,19 +44,17 @@ purchaseDepartmentRecursiveLoop() ->
       setBalance("add",AmountToAdd), purchaseDepartmentRecursiveLoop();
     {"deduce",AmountToDeduct} ->
       setBalance("deduce",AmountToDeduct), purchaseDepartmentRecursiveLoop();
+    {getBudget} -> io:fwrite("Budget is : ~p~n",[getBalance()]), purchaseDepartmentRecursiveLoop();
     "terminate" -> writeToLogger("purchaseDeartment terminated"), exit(normal)
-
-after 5000 ->
-
-  getNumberOfCustomers(),
+  after 5000 ->
+  %getNumberOfCustomers(), % Doesnt work without masterfunction thread
     receive
       {"numberOfCustomers",ReturnedNumberOfCustomers} ->
         NumberOfCustomers = ReturnedNumberOfCustomers,
         ErlMarketBudget = get(erlMarketBudget),
         ListOfValidProductsToReserve = getListOfProductsToReserve(?DEPARTMENT_LIST),
         ListOfValidProductsWithRatio = checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers),
-        ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers,ErlMarketBudget )
-
+        ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers,ErlMarketBudget)
     after 1000 ->
       purchaseDepartmentRecursiveLoop()
     end,
@@ -118,9 +116,15 @@ priceOfReservation([_Department,_Product_name,Price,AmountToOrder], 1) ->
   Price * AmountToOrder.
 
 
-reserve(_ListOfProductsToReserve, CostOfReservation) ->
-  setBalance("deduce", CostOfReservation).
-  %gen_server:call({global,supplierServer},{reserveation,  ListOfProductsToReserve}). %List [{product_name,amount,price}]
+reserve([H|T], CostOfReservation) ->
+  setBalance("deduce", CostOfReservation),
+  sendProductsToDepartment(tmp,tmp).
+%[[diary,milk,5,450.0],[meat,"chicken",9,493.0],[bakery,"bread",9,423.0],[diary,"yogurt",1,497.0],[diary,"cheese",100,475.0],[meat,"steak",17,467.0]]
+
+
+
+sendProductsToDepartment(Department, DebarmentAndList)->
+  gen_server:call({global,Department},{restock, DebarmentAndList}). %List [{product_name,amount,price}]
 
 
 %% @doc sumAmount return a list of departmentProducts where each product has the amount of all valid products of the same name
@@ -182,7 +186,7 @@ setBalance(TypeOfAction , Amount) ->
   NewBalance = get(erlMarketBudget),
   writeToLogger("updateBalance: OldBalance: ",OldBalance, " NewBalance:",NewBalance).
 
-
+getBalance()-> get(erlMarketBudget).
 %%------------------WRITING TO LOGGER------------------
 
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment

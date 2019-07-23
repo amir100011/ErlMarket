@@ -18,6 +18,13 @@
 getDepartments()->
   mnesia:dirty_all_keys(product).
 
+test_mnesia()->
+  Node = node(),
+  initInventory([Node]),
+  Departments = getDepartments(),
+  io:fwrite("Departments : ~p ~n",[Departments]).
+
+
 %% @doc initialize the inventory for all the nodes in NodeList
 %% this function creates the initial tables and fills them with initial value
 initInventory(NodeList)->
@@ -99,9 +106,11 @@ getProductsFromDepartment(Department)->
   mnesia:transaction(R).
 
 
-test_mnesia()->
+test_mnesia2()->
   Node = node(),
   initInventory([Node]),
+  Departments = getDepartments(),
+  io:fwrite("Departments : ~p ~n",[Departments]),
   R = fun()->
         mnesia:read(product, dairy)
       end,

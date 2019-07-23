@@ -6,7 +6,7 @@
 %%% @end
 %%% Created : 07. Jul 2019 18:21
 %%%-------------------------------------------------------------------
--module(department).
+-module(department_deadlock).
 -behavior(gen_server).
 -define(LOGGER_FILE_PATH, "../Logger-Department.txt").
 -author("amir").
@@ -64,8 +64,7 @@ handle_call(getTotalAmountOfValidProduct, _From, State) ->
 
 handle_call({purchase, ListOfProducts}, _From, State) ->
   % a purchase request has been made, the department removes the products that exist in the inventory
-  %writeToLogger("got to handle call with the following list: ", ListOfProducts),
-  RemovedProducts = removeProducts(ListOfProducts),
+  RemovedProducts = removeProducts(ListOfProducts, []),
   {reply, RemovedProducts, State}.
 
 
@@ -182,14 +181,14 @@ updateAmountOrDeleteProduct(Product, RequestedAmount)->
   if
     RequestedAmount =:= ProductAmountInDepartment -> done;
     RequestedAmount < ProductAmountInDepartment ->   New = Product#departmentProduct{amount = ProductAmountInDepartment - RequestedAmount},
-      mnesia:dirty_write(DepartmentName, New)
+      mnesia:dirty_write(DepartmentName, New) % TODO what to do with dirty
   end,
   RemovedProduct.
 
 
 %% @doc this function is used when a purchase is made and we need to update the department wares
-removeProducts([]) -> [];
-removeProducts([H|T]) ->
+removeProducts([], Ans) -> Ans;
+removeProducts([H|T], Ans) ->
   Product_Name = H#shoppinlistelement.product_name,
   RequestedAmount = H#shoppinlistelement.amount,
   F = fun() ->
@@ -199,11 +198,12 @@ removeProducts([H|T]) ->
       end,
   {atomic, ListAns} = mnesia:transaction(F),
   if
-    ListAns =:= [] -> removeProducts(T) ;
+    ListAns =:= [] -> writeToLogger("no products in system deadlock initialized if not implemented restock ability~n"),
+                      removeProducts([], noProducts); %removeProducts(T) ; % if inventory doesn't have the product move on to the next one
     true ->
       ProductChosenRandomlyFromAvailableProducts = getRandomElement(ListAns),
       Product = updateAmountOrDeleteProduct(ProductChosenRandomlyFromAvailableProducts, RequestedAmount),
-      removeProducts(T) ++ [Product]
+      removeProducts(T, Ans ++ [Product])
   end.
 
 
