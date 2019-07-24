@@ -25,7 +25,6 @@
 -export([writeToLogger/2]).
 
 
-
 %%----------------PRIMARY FUNCTION-------------------------
 initPurchaseDepartment() ->
   global:register_name(purchaseDepartment,spawn(purchaseDepartment, initPurchaseDepartmentData, [])).
@@ -46,8 +45,8 @@ purchaseDepartmentRecursiveLoop() ->
       setBalance("deduce",AmountToDeduct), purchaseDepartmentRecursiveLoop();
     {getBudget} -> io:fwrite("Budget is : ~p~n",[getBalance()]), purchaseDepartmentRecursiveLoop();
     "terminate" -> writeToLogger("purchaseDeartment terminated"), exit(normal)
-  after 5000 ->
-  %getNumberOfCustomers(), % Doesnt work without masterfunction thread
+  after 500 ->
+  getNumberOfCustomers(), % Doesnt work without masterfunction thread
     receive
       {"numberOfCustomers",ReturnedNumberOfCustomers} ->
         NumberOfCustomers = ReturnedNumberOfCustomers,
@@ -92,6 +91,7 @@ ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers, ErlMarketBudget)
 %%      random:seed(A1, A2, A3),
 %%      timer:sleep(timer:seconds(random:uniform())); %%THE PROCESS IS SLEEPING FOR RANDOM TIME SEED SAVES ITS DICTIONARY
       reserve(ListOfValidProductsWithRatio,CostOfReservation),
+      writeToLogger("reserve - ", ListOfValidProductsWithRatio),
       ErlMarketBudget = get(erlMarketBudget);
       true ->
         writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
@@ -109,22 +109,49 @@ editRatio([Department,Product_name,Price,AmountToOrder], DeltaRatio, 1) ->
   [Department,Product_name,Price,round(AmountToOrder*DeltaRatio)].
 
 priceOfReservation([H|T]) ->
-  priceOfReservation(H,1) + priceOfReservation(T);
+  priceOfReservationSingleElement(H) + priceOfReservation(T);
 priceOfReservation([]) -> 0.
 
-priceOfReservation([_Department,_Product_name,Price,AmountToOrder], 1) ->
+priceOfReservationSingleElement([_Department,_Product_name,Price,AmountToOrder]) ->
   Price * AmountToOrder.
 
 
-reserve([H|T], CostOfReservation) ->
+reserve(ListOfValidProductsWithRatio, CostOfReservation) ->
   setBalance("deduce", CostOfReservation),
-  sendProductsToDepartment(tmp,tmp).
-%[[diary,milk,5,450.0],[meat,"chicken",9,493.0],[bakery,"bread",9,423.0],[diary,"yogurt",1,497.0],[diary,"cheese",100,475.0],[meat,"steak",17,467.0]]
+  lists:foreach(
+    fun(N) ->
+      ListOfProductsToAddToDepartment = addProducts(N,ListOfValidProductsWithRatio,[]),
+      sendProductsToDepartment(N,ListOfProductsToAddToDepartment)
+    end, ?DEPARTMENT_LIST).
+
+addProducts(DepartmentName,[H|T],CallList) ->
+  CallListToAdd = addProductsToCallList(DepartmentName,H,CallList),
+  addProducts(DepartmentName,T,CallListToAdd);
+addProducts(_DepartmentName,[],CallList) -> CallList.
+
+
+addProductsToCallList(DepartmentName,[Department,Product,Price,Amount], CallList) ->
+
+  if Department =:= DepartmentName ->
+    ProductToAdd = [#departmentProduct{department = DepartmentName,
+      product_name = Product,
+      price = Price,
+      expiry_time = get_time() + rand:uniform(),
+      amount = Amount}],
+    CallList++ProductToAdd;
+
+    true -> CallList
+  end.
+
+get_time() -> 1000. %%FIXME global timer
+% sendProductsToDepartment(tmp,tmp).
+%[[Department,ProductName,Price,expiry],[meat,[115,116,101,97,107],80,0],[dairy,[99,104,101,101,115,101],10,0],[dairy,[109,105,108,107],5,0],[dairy,[121,111,103,117,114,116],3,0],[bakery,[98,114,101,97,100],8,0],[bakery,[98,117,110,115],20,0]]
 
 
 
 sendProductsToDepartment(Department, DebarmentAndList)->
-  gen_server:call({global,Department},{restock, DebarmentAndList}). %List [{product_name,amount,price}]
+  writeToLogger("restock ",DebarmentAndList),
+  gen_server:cast({global,Department},{restock, DebarmentAndList}). %List [{product_name,amount,price}]
 
 
 %% @doc sumAmount return a list of departmentProducts where each product has the amount of all valid products of the same name
@@ -171,7 +198,7 @@ getListOfProductsToReserveInternal(DepartmentName) ->
   sumAmount(ListNotOrganized, DepartmentName).
 
 setInitialBudget() ->
-  put(erlMarketBudget,10000),
+  put(erlMarketBudget,1000000),
   writeToLogger("setInitialBudget ", get(erlMarketBudget)).
 
 setBalance(TypeOfAction , Amount) ->
@@ -208,19 +235,61 @@ writeToLogger(String) ->
 
 testReservation() ->
 
-%%  ListOfProductsToReserve =  [{departmentProduct,diary, milk, 5, 5, 50},
-%%    {departmentProduct,meat, "chicken", 9, 5, 7},
-%%    {departmentProduct,bakery, "bread", 9, 5, 77},
-%%    {departmentProduct,diary, "yogurt", 1, 5, 3},
-%%    {departmentProduct,diary, "cheese", 100, 5, 25},
-%%    {departmentProduct,meat, "steak", 17, 5, 33}],
-%%  department:start(meat),
-%%  department:start(dairy),
-%%  department:start(bakery),
-  initPurchaseDepartment().
+  department:start(meat),
+  department:start(dairy),
+  department:start(bakery),
+
+  ListOfProductsToReserve =
+    [[dairy, "milk", 5, 5, 50],
+    [dairy, "yogurt", 1, 5, 3],
+    [dairy, "cheese", 100, 5, 25],
+    [meat, "steak", 17, 5, 33],
+    [meat, "chicken", 9, 5, 7],
+    [bakery, "bread", 9, 5, 77]],
+
+
+
+  reserveTmp(ListOfProductsToReserve).
+
+reserveTmp(RatioedList)->
+  lists:foreach(
+    fun(N) ->
+      List = addProductsAMIR(N,RatioedList,[]),
+      sendProductsToDepartment(N,List)
+    end, ?DEPARTMENT_LIST).
+
+addProductsAMIR(DepartmentName,[H|T],CallList) ->
+  CallListToAdd = addProductsToCallListAMIR(DepartmentName,H,CallList),
+  addProductsAMIR(DepartmentName,T,CallListToAdd);
+addProductsAMIR(_DepartmentName,[],CallList) -> CallList.
+
+
+addProductsToCallListAMIR(DepartmentName,[Department,Product,Price,Expiry,Amount], CallList) ->
+
+  if Department =:= DepartmentName ->
+    ProductToAdd = [#departmentProduct{department = DepartmentName,
+    product_name = Product,
+    price = Price,
+    expiry_time = Expiry,
+    amount = Amount}],
+    CallList++ProductToAdd;
+
+    true -> CallList
+  end.
+%%
+%%addProductsDor([]) -> done;
+%%addProductsDor([H|T]) ->
+%%  Product_Name = H#departmentProduct.product_name,
+%%  RequestedAmount = H#departmentProduct.amount,
+%%  ExpiryTime = H#departmentProduct.expiry_time,
+%%  addProductsDor(T).
+%%
+%%
+%%
+
+
+%%   RatioedList = getRatio(Tmp, 1000),
+%%  initPurchaseDepartment().
 %%  ErlMarketBudget = get(erlMarketBudget),
 %%  purchaseDepartment ! {"add",5}.
-
-%%  RatioedList = getRatio(ListOfProductsToReserve, 1000),
 %%  ratioToReserve(RatioedList, 1000, ErlMarketBudget).
-
