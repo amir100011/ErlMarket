@@ -189,7 +189,8 @@ sumAmountInternal([H|T], Dict) ->
 
 %% @doc returns the current number of customers in ErlMarket
 getNumberOfCustomers() ->
-  global:send(masterFunction,{"getNumberOfCustomers"}).
+    masterFunction:castFunc(getNumberOfCustomers).
+  % global:send(masterFunction,{"getNumberOfCustomers"}).
 
 getListOfProductsToReserveInternal(DepartmentName) ->
   ListNotOrganized = gen_server:call({global,DepartmentName},getTotalAmountOfValidProduct),
