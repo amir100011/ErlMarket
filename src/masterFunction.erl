@@ -11,12 +11,12 @@
 -behavior(gen_server).
 %% API
 %% API
--export([init/1, handle_call/3, handle_cast/2,
+-export([start/0, init/1, handle_call/3, handle_cast/2,
   handle_info/2, terminate/2, callFunc/1, castFunc/1]).
 -export([count/0, timerSuperviser/0, getTimeStamp/0, test/0, terminatorLoop/0, initCustomer/1, waitForCustomerToLeave/0]).
 -define(DEPARTMENT_LIST, [dairy, meat, bakery]).
 -define(LOGGER_FILE_PATH, "../Logger-masterFunction.txt").
--define(NUMBER_OF_ITERATIONS, 2).
+-define(NUMBER_OF_ITERATIONS, 200).
 -define(TIMER, timerSuperviserProcess).
 -define(TERMINATOR, terminator).
 -define(SECURITY1, security1).
@@ -82,8 +82,8 @@ handle_cast(customerOut, State) ->
   {noreply, State};
 
 handle_cast(terminate, State) ->
-  terminate(0,0),
-  {noreply, State}.
+  %terminate(0,0),
+  {stop, normal, State}.
 
 handle_info(Info, State) ->
   writeToLogger("masterFunction recieved: ", Info),

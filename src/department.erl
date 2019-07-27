@@ -71,13 +71,7 @@ handle_call({purchase, ListOfProducts}, _From, State) ->
 %% @doc handle_call is a asynchronic kind of call to the server where the sender doesn't wait for a reply,
 %% TODO in future work we want to execute each cast to the server with a thread to enhance performances and prevent starvation
 handle_cast({return, ListOfProduct}, State) ->
-  % a return shipment of products have been made, this function adds the products to the table,
-  % or update the amount of existing similar products
-  addProducts(ListOfProduct),
-  {noreply, State};
-
-handle_cast({restock, ListOfProduct}, State) ->
-  % a new shipment of products have been made, this function adds the products to the table,
+  % a return/new shipment of products have been made, this function adds the products to the table,
   % or update the amount of existing similar products
   addProducts(ListOfProduct),
   {noreply, State};
@@ -115,8 +109,8 @@ handle_cast(getProducts, State) ->
   {noreply, State};
 
 handle_cast(terminate, State) ->
-  terminate(0,0),
-  {noreply, State};
+  %terminate(0,0),
+  {stop, normal, State};
 
 handle_cast(_Request, State) ->
   {noreply, State}.
@@ -198,8 +192,7 @@ removeProducts([H|T], Ans) ->
       end,
   {atomic, ListAns} = mnesia:transaction(F),
   if
-    ListAns =:= [] -> writeToLogger("no products in system deadlock initialized if not implemented restock ability~n"),
-                      removeProducts([], noProducts); %removeProducts(T) ; % if inventory doesn't have the product move on to the next one
+    ListAns =:= [] -> removeProducts([], noProducts); %removeProducts(T) ; % if inventory doesn't have the product move on to the next one
     true ->
       ProductChosenRandomlyFromAvailableProducts = getRandomElement(ListAns),
       Product = updateAmountOrDeleteProduct(ProductChosenRandomlyFromAvailableProducts, RequestedAmount),

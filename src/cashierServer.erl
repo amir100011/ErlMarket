@@ -39,8 +39,8 @@ handle_call(_Request, _From, State) ->
 
 
 handle_cast(terminate, State) ->
-  terminate(0,0),
-  {noreply, State};
+  %terminate(0,0),
+  {stop, normal, State};
 
 %% @doc  checks if the customer can pay or not, if not pays to the maximum available, the rest are going back to the relevant department
 handle_cast({pay,ListOfProductsAndAmounts,CustomerBalance}, State) ->
