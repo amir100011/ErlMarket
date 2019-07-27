@@ -8,74 +8,99 @@
 %%%-------------------------------------------------------------------
 -module(masterFunction).
 -author("amir").
-
+-behavior(gen_server).
 %% API
--export([main/0, count/0, timerSuperviser/0, getTimeStamp/0, testTimer/0, test/0, terminatorLoop/0, initCustomer/1]).
--define(DEPARTMENT_LIST, inventory:getDepartments()).
+%% API
+-export([start/0, init/1, handle_call/3, handle_cast/2,
+  handle_info/2, terminate/2, callFunc/1, castFunc/1]).
+-export([count/0, timerSuperviser/0, getTimeStamp/0, test/0, terminatorLoop/0, initCustomer/1, waitForCustomerToLeave/0]).
+-define(DEPARTMENT_LIST, [dairy, meat, bakery]).
 -define(LOGGER_FILE_PATH, "../Logger-masterFunction.txt").
--define(NUMBER_OF_ITERATIONS, 2).
+-define(NUMBER_OF_ITERATIONS, 200).
 -define(TIMER, timerSuperviserProcess).
 -define(TERMINATOR, terminator).
 -define(SECURITY1, security1).
 -define(SECURITY2, security2).
--export([getNumberOfCustomers/0]).
+-define(SUPPLIER, supplierProc).
+-export([getNumberOfCustomers/0, periodicallyRestockInventory/0]).
 
 
-main() ->
+start()->
+  gen_server:start({global, ?MODULE}, ?MODULE, [], []).
+
+init(_Args) ->
   initErlMarketDataBase(),
   initErlMarketFunctionality().
-  %testDep().
- % register(cleaner, spawn(cleaner,[])).
+
 
 initErlMarketFunctionality() ->
+  put(numberOfCustomers,0),
   global:register_name(?TERMINATOR, spawn(?MODULE, terminatorLoop, [])),
   global:register_name(?TIMER, spawn(?MODULE, timerSuperviser, [])),
   globalRegisterMasterFunction(),
   writeToLogger("strating initialization"),
-  put(numberOfCustomers,0),
-  put(open, 1),
   initDepartments(?DEPARTMENT_LIST),
   initPurchaseDepartment(),
   initCashiers(),
-  %initSuppliers(),
-  global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 10) ])),
-  global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 10) ])),
-  waitingLoop().
+  global:register_name(?SUPPLIER, spawn(?MODULE, periodicallyRestockInventory, [])),
+  global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 100) ])),
+  %global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 100) ])),
+  {ok, normal}.
 
 globalRegisterMasterFunction() ->
   global:register_name(masterFunction, self()).
 
-
-waitingLoop() ->
+handle_call(getTimeStamp, _From, State) ->
+  global:send(?TIMER, {getTimeStamp, self()}),
   receive
-    {"customerOut"} -> updateNumberOfCustomers("terminate");
-    {"createCustomer"} -> updateNumberOfCustomers("create");
-    {"terminateMaster"} -> global:send(?TIMER, {terminate}),  exit(normal);
-    {"getNumberOfCustomers"} -> global:send(purchaseDepartment,{"numberOfCustomers", getNumberOfCustomers()});
-    Msg -> writeToLogger("masterFunction recieved: ", Msg)
-  end,
-  CurrentIteration =  getTimeStamp(),
-  if
-    CurrentIteration < ?NUMBER_OF_ITERATIONS ->
-      %initCustomer(),
-      waitingLoop();
+    {timeStamp, TimeStamp} -> {TimeStamp, ok, State}
+  end;
 
-    true ->
-      NumOfCustomers = getNumberOfCustomers(),
-      if
-        NumOfCustomers == 0 -> global:send(masterFunction, {"terminateMaster"}), waitingLoop();
-      % waiting for customers to leave the store before closing it
-        true ->
-          Open = get(open),
-          if
-            Open == 1 -> put(open, 0) ,global:send(?SECURITY1, {terminate}), global:send(?SECURITY1, {terminate});
-            true -> proceed
-          end,
-          waitingLoop()
-      end
 
-  end.
+handle_call(getNumberOfCustomers, _From, State) ->
+  writeToLogger("getNumberofCustomers reached"),
+  Reply = getNumberOfCustomers(),
+  {reply, Reply, State}.
 
+handle_cast(createCustomer, State) ->
+  updateNumberOfCustomers("create"),
+  {noreply, State};
+
+handle_cast(closeShop, State) ->
+  writeToLogger("im at close shop"),
+  global:send(?SECURITY1, {terminate}),
+  writeToLogger("im at close shop"),
+  %global:send(?SECURITY2, {terminate}),
+  writeToLogger("im at close shop"),
+  spawn(?MODULE, waitForCustomerToLeave, []),
+  writeToLogger("im at close shop"),
+  writeToLogger("exiting close shop"),
+  {noreply, State};
+
+handle_cast(customerOut, State) ->
+  updateNumberOfCustomers("terminate"),
+  {noreply, State};
+
+handle_cast(terminate, State) ->
+  %terminate(0,0),
+  {stop, normal, State}.
+
+handle_info(Info, State) ->
+  writeToLogger("masterFunction recieved: ", Info),
+  {noreply, State}.
+
+terminate(_Reason, _State) ->
+  writeToLogger("Master Function says Bye Bye"),
+  global:send(?TIMER, {terminate}),
+  ok.
+
+%% @doc interface function for using gen_server call
+callFunc(Message) ->
+  gen_server:call({global,?MODULE}, Message).
+
+%% @doc interface function for using gen_server cast
+castFunc(Message) ->
+  gen_server:cast({global, ?MODULE}, Message).
 
 
 initErlMarketDataBase() ->
@@ -93,6 +118,31 @@ terminateDepartments(DepartmentList) ->
                  department:castFunc(DepartmentName, terminate)
                 end, DepartmentList).
 
+waitForCustomerToLeave()->
+  timer:sleep(500),
+  NumberOfCustomers = callFunc(getNumberOfCustomers),
+  writeToLogger(variable, "Shop is closed: ~p  Customer remain ~n",[NumberOfCustomers]),
+  if
+    NumberOfCustomers == 0 ->  writeToLogger("Shop is closed: all customers left~n"),
+                               castFunc(terminate),
+                               exit(normal);
+    true -> waitForCustomerToLeave()
+  end.
+
+periodicallyRestockInventory()->
+  % TODO delete this functio and the supplier Process
+  receive
+    {terminate} -> writeToLogger("Supplier Out"),
+                   exit(normal);
+          MSG -> writeToLogger(variable,"Got Msg: ~p~n",[MSG])
+    after 2000 ->
+      writeToLogger("Restocking inventory"),
+      spawn(inventory, fillInventory, []),
+      periodicallyRestockInventory()
+  end.
+
+
+
 initPurchaseDepartment() ->
   writeToLogger("Initializaing Purchase Departments"),
   %register(purchasedepartment, spawn(purchaseDepartment,initPurchaseDepartment,[])). % why should we double register purchase department
@@ -108,13 +158,12 @@ initCustomer(DelayQ) ->
     {terminate} ->
       writeToLogger("Store is Closed: no new customers~n"),
       exit(normal)
+
     after DelayQ ->
       customer:initCustomer(),
-      global:send(masterFunction, {"createCustomer"}),
+      castFunc(createCustomer),
       customer:initCustomer(),
-      global:send(masterFunction, {"createCustomer"}),
-      customer:initCustomer(),
-      global:send(masterFunction, {"createCustomer"}),
+      castFunc(createCustomer),
       initCustomer(round(rand:uniform() * 10))
   end.
   %writeToLogger("Initializaing Customer"),
@@ -136,8 +185,12 @@ getNumberOfCustomers() ->
 
 count()->
   timer:sleep(1000),
-  ets:update_counter(timer, timestamp, {2, 1}),
+  CurrTimestamp = ets:update_counter(timer, timestamp, {2, 1}),
   global:send(?TERMINATOR, {running}),
+  if
+    CurrTimestamp == ?NUMBER_OF_ITERATIONS -> castFunc(closeShop);
+    true -> nothing
+  end,
   count().
 
 
@@ -155,7 +208,7 @@ timerSuperviserLoop()->
    {terminate} ->
      exit(get(timerPid), kill),
      ets:delete(timer),
-     writeToLogger("Timer is terminated ~n");
+     writeToLogger("Timer is terminated");
     {getTimeStamp, Pid} ->
                              [{timestamp, TimeStamp}] = ets:lookup(timer, timestamp),
                              Pid ! {timeStamp, TimeStamp},
@@ -163,21 +216,20 @@ timerSuperviserLoop()->
   end.
 
 getTimeStamp()->
-  global:send(?TIMER, {getTimeStamp, self()}),
-  receive
-    {timeStamp, TimeStamp} -> TimeStamp
-  end.
+  TimeStamp = callFunc(getTimeStamp).
+
 
 terminatorLoop()->
   receive
     {running} -> terminatorLoop()
-  after 10000 ->
+  after 5000 ->
     writeToLogger("Terminator decided program is dead"),
     global:send(purchaseDepartment,"terminate"),
     cashierServer:castFunc(terminate),
     terminateDepartments(inventory:getDepartments()),
-    global:send(?TIMER, "terminate"),
+    global:send(?SUPPLIER, {terminate}),
     deleteMnesia(),
+    %global:send(?TIMER, "terminate"),
     exit(normal)
   end.
 
@@ -187,12 +239,6 @@ deleteMnesia()->
   mnesia:delete_table(dairy),
   mnesia:delete_table(meat),
   mnesia:delete_table(bakery).
-%%initSuppliers() ->
-%%  DepartmentList = inventory:getDeparments(),
-%%  lists:foreach(fun(DepartmentName) ->
-%%    supplier:raiseSupplier(DepartmentName)
-%%                end, DepartmentList).
-
 
 
 %%------------------WRITING TO LOGGER------------------
@@ -213,31 +259,11 @@ writeToLogger(String) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s ~n",[String]),
   file:close(S).
+writeToLogger(variable, String, Variables) ->
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
+  io:format(S, String, Variables),
+  file:close(S).
 
-
-test()-> main().
-
-testTimer()->
-  main(),
-  TimeStamp = getTimeStamp(),
-  timer:sleep(1500),
-  TimeStamp1 = getTimeStamp(),
-  timer:sleep(1500),
-  TimeStamp2 = getTimeStamp(),
-  A = 5.
-
-testDep() ->
-  department:start(dairy),
-  List = department:callFunc(dairy, getTotalAmountOfValidProduct),
-  ListFormattedRight = purchaseDepartment:sumAmount(List, dairy),
-
-  purchaseDepartment:setInitialBudget(),
-  ErlMarketBudget =  10000,
-
-  RatioedList = purchaseDepartment:getRatio(ListFormattedRight, 1000),
-
-  file:write("../Log.txt",RatioedList),
-
-  purchaseDepartment:ratioToReserve(RatioedList, 1000, ErlMarketBudget),
-
-    A = 5.
+test()-> start().
+  %NumberOfCustomers = callFunc(getNumberOfCustomers),
+  %A = 5.
