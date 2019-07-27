@@ -1,0 +1,1239 @@
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,993},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      996}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,982},
+                                 {departmentProduct,dairy,"milk",5,40,985},
+                                 {departmentProduct,dairy,"cheese",10,60,991}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,989}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,982},
+                                 {departmentProduct,dairy,"milk",5,40,985},
+                                 {departmentProduct,dairy,"cheese",10,60,991}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,993},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      996}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,989},
+                                 {departmentProduct,dairy,"cheese",10,60,989},
+                                 {departmentProduct,dairy,"yogurt",3,40,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,992},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      988}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,980},
+                                {departmentProduct,meat,"steak",80,500,998}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,988},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      998}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,989},
+                                 {departmentProduct,dairy,"cheese",10,60,989},
+                                 {departmentProduct,dairy,"yogurt",3,40,989}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,983},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      963}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,982}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,958},
+                                 {departmentProduct,dairy,"cheese",10,60,969},
+                                 {departmentProduct,dairy,"milk",5,40,973}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,983},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      963}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,982}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,986}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,983},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      972}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,958},
+                                 {departmentProduct,dairy,"cheese",10,60,969},
+                                 {departmentProduct,dairy,"milk",5,40,973}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,992},
+                                {departmentProduct,meat,"chicken",40,500,990}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,993},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      980}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,958},
+                                 {departmentProduct,dairy,"milk",5,40,973},
+                                 {departmentProduct,dairy,"cheese",10,60,979}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,958},
+                                 {departmentProduct,dairy,"milk",5,40,973},
+                                 {departmentProduct,dairy,"cheese",10,60,985}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,964},
+                                 {departmentProduct,dairy,"cheese",10,60,964},
+                                 {departmentProduct,dairy,"yogurt",3,40,941}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,984},
+                                {departmentProduct,meat,"chicken",40,500,972}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,976},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      972}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,964},
+                                 {departmentProduct,dairy,"cheese",10,60,964},
+                                 {departmentProduct,dairy,"yogurt",3,40,941}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,984},
+                                {departmentProduct,meat,"chicken",40,500,972}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,976},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      972}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,941},
+                                 {departmentProduct,dairy,"cheese",10,60,974},
+                                 {departmentProduct,dairy,"milk",5,40,969}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,984},
+                                {departmentProduct,meat,"chicken",40,500,979}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,972},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      982}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,984},
+                                {departmentProduct,meat,"chicken",40,500,979}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,941},
+                                 {departmentProduct,dairy,"cheese",10,60,974},
+                                 {departmentProduct,dairy,"milk",5,40,969}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,972},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      982}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,995}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,959},
+                                 {departmentProduct,dairy,"cheese",10,60,969},
+                                 {departmentProduct,dairy,"yogurt",3,40,932}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,982},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      985}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,959},
+                                 {departmentProduct,dairy,"cheese",10,60,969},
+                                 {departmentProduct,dairy,"yogurt",3,40,932}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,985},
+                                {departmentProduct,meat,"steak",80,500,984}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,974},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      976}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,983},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      974}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,980},
+                                {departmentProduct,meat,"steak",80,500,994}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,951},
+                                 {departmentProduct,dairy,"yogurt",3,40,923},
+                                 {departmentProduct,dairy,"milk",5,40,946}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,996},
+                                {departmentProduct,meat,"chicken",40,500,982}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,983},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      974}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,913},
+                                 {departmentProduct,dairy,"cheese",10,60,954},
+                                 {departmentProduct,dairy,"milk",5,40,948}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,996},
+                                {departmentProduct,meat,"chicken",40,500,987}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,913},
+                                 {departmentProduct,dairy,"milk",5,40,948},
+                                 {departmentProduct,dairy,"cheese",10,60,959}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,982},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      992}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,996},
+                                {departmentProduct,meat,"chicken",40,500,990}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,982},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      992}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,968},
+                                 {departmentProduct,dairy,"yogurt",3,40,919},
+                                 {departmentProduct,dairy,"milk",5,40,958}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,982},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      978}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,903},
+                                 {departmentProduct,dairy,"cheese",10,60,959},
+                                 {departmentProduct,dairy,"milk",5,40,948}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,983},
+                                {departmentProduct,meat,"chicken",40,500,978}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,982},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      977}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,903},
+                                 {departmentProduct,dairy,"cheese",10,60,959},
+                                 {departmentProduct,dairy,"milk",5,40,948}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,983},
+                                {departmentProduct,meat,"chicken",40,500,978}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,989},
+                                {departmentProduct,meat,"steak",80,500,985}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,976},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      982}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,953},
+                                 {departmentProduct,dairy,"cheese",10,60,960},
+                                 {departmentProduct,dairy,"yogurt",3,40,903}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,989},
+                                {departmentProduct,meat,"steak",80,500,985}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,976},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      982}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,953},
+                                 {departmentProduct,dairy,"cheese",10,60,960},
+                                 {departmentProduct,dairy,"yogurt",3,40,903}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,955},
+                                 {departmentProduct,dairy,"yogurt",3,40,894},
+                                 {departmentProduct,dairy,"cheese",10,60,957}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,996},
+                                {departmentProduct,meat,"chicken",40,500,998}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,982},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      982}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,987},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      966}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,988}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,938},
+                                 {departmentProduct,dairy,"cheese",10,60,957},
+                                 {departmentProduct,dairy,"yogurt",3,40,888}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,983},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      965}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,987},
+                                {departmentProduct,meat,"steak",80,500,979}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,938},
+                                 {departmentProduct,dairy,"cheese",10,60,957},
+                                 {departmentProduct,dairy,"yogurt",3,40,888}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,938},
+                                 {departmentProduct,dairy,"cheese",10,60,957},
+                                 {departmentProduct,dairy,"yogurt",3,40,888}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,965},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      987}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,989},
+                                {departmentProduct,meat,"chicken",40,500,997}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,965},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      985}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,995},
+                                {departmentProduct,meat,"steak",80,500,995}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,955},
+                                 {departmentProduct,dairy,"yogurt",3,40,879},
+                                 {departmentProduct,dairy,"milk",5,40,921}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,985},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      960}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,995},
+                                {departmentProduct,meat,"steak",80,500,995}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,955},
+                                 {departmentProduct,dairy,"yogurt",3,40,879},
+                                 {departmentProduct,dairy,"milk",5,40,921}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,878},
+                                 {departmentProduct,dairy,"cheese",10,60,948},
+                                 {departmentProduct,dairy,"milk",5,40,924}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,979},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      948}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,984},
+                                {departmentProduct,meat,"steak",80,500,984}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,878},
+                                 {departmentProduct,dairy,"milk",5,40,924},
+                                 {departmentProduct,dairy,"cheese",10,60,954}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,979},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      955}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,990},
+                                {departmentProduct,meat,"chicken",40,500,992}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,982},
+                                {departmentProduct,meat,"chicken",40,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,970},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      950}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,875},
+                                 {departmentProduct,dairy,"milk",5,40,917},
+                                 {departmentProduct,dairy,"cheese",10,60,950}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,982},
+                                {departmentProduct,meat,"chicken",40,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,970},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      950}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,875},
+                                 {departmentProduct,dairy,"milk",5,40,917},
+                                 {departmentProduct,dairy,"cheese",10,60,950}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,994},
+                                {departmentProduct,meat,"chicken",40,500,987}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,924},
+                                 {departmentProduct,dairy,"cheese",10,60,952},
+                                 {departmentProduct,dairy,"yogurt",3,40,870}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,931},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      969}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,924},
+                                 {departmentProduct,dairy,"cheese",10,60,952},
+                                 {departmentProduct,dairy,"yogurt",3,40,870}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,994},
+                                {departmentProduct,meat,"chicken",40,500,987}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,931},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      969}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,992},
+                                {departmentProduct,meat,"chicken",40,500,991}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,932},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      969}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,906},
+                                 {departmentProduct,dairy,"yogurt",3,40,862},
+                                 {departmentProduct,dairy,"cheese",10,60,944}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,992},
+                                {departmentProduct,meat,"chicken",40,500,991}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,932},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      969}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,906},
+                                 {departmentProduct,dairy,"yogurt",3,40,862},
+                                 {departmentProduct,dairy,"cheese",10,60,944}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,920},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      960}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,970},
+                                {departmentProduct,meat,"chicken",40,500,948}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,862},
+                                 {departmentProduct,dairy,"milk",5,40,880},
+                                 {departmentProduct,dairy,"cheese",10,60,912}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,913},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      957}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,970},
+                                {departmentProduct,meat,"chicken",40,500,958}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,862},
+                                 {departmentProduct,dairy,"cheese",10,60,920},
+                                 {departmentProduct,dairy,"milk",5,40,889}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,913},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      957}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,970},
+                                {departmentProduct,meat,"chicken",40,500,958}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,862},
+                                 {departmentProduct,dairy,"cheese",10,60,920},
+                                 {departmentProduct,dairy,"milk",5,40,889}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,913},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      957}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,862},
+                                 {departmentProduct,dairy,"cheese",10,60,920},
+                                 {departmentProduct,dairy,"milk",5,40,889}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,970},
+                                {departmentProduct,meat,"chicken",40,500,958}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,917},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      960}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,862},
+                                 {departmentProduct,dairy,"milk",5,40,889},
+                                 {departmentProduct,dairy,"cheese",10,60,927}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,958},
+                                {departmentProduct,meat,"steak",80,500,980}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,917},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      966}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,862},
+                                 {departmentProduct,dairy,"milk",5,40,895},
+                                 {departmentProduct,dairy,"cheese",10,60,935}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,985},
+                                {departmentProduct,meat,"chicken",40,500,976}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,994},
+                                {departmentProduct,meat,"chicken",40,500,984}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,917},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      964}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,922},
+                                 {departmentProduct,dairy,"yogurt",3,40,853},
+                                 {departmentProduct,dairy,"milk",5,40,886}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,994},
+                                {departmentProduct,meat,"chicken",40,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,923},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      966}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,853},
+                                 {departmentProduct,dairy,"cheese",10,60,932},
+                                 {departmentProduct,dairy,"milk",5,40,896}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,932},
+                                 {departmentProduct,dairy,"yogurt",3,40,859},
+                                 {departmentProduct,dairy,"milk",5,40,893}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,989},
+                                {departmentProduct,meat,"steak",80,500,984}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,923},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      964}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,932},
+                                 {departmentProduct,dairy,"yogurt",3,40,859},
+                                 {departmentProduct,dairy,"milk",5,40,893}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,989},
+                                {departmentProduct,meat,"steak",80,500,984}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,923},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      964}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,859},
+                                 {departmentProduct,dairy,"cheese",10,60,918},
+                                 {departmentProduct,dairy,"milk",5,40,884}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,984},
+                                {departmentProduct,meat,"chicken",40,500,983}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,954},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      908}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,984},
+                                {departmentProduct,meat,"chicken",40,500,983}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,859},
+                                 {departmentProduct,dairy,"cheese",10,60,918},
+                                 {departmentProduct,dairy,"milk",5,40,884}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,954},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      908}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,989},
+                                {departmentProduct,meat,"steak",80,500,983}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,965},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      903}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,906},
+                                 {departmentProduct,dairy,"yogurt",3,40,847},
+                                 {departmentProduct,dairy,"milk",5,40,885}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,991},
+                                {departmentProduct,meat,"steak",80,500,990}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,965},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      903}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,906},
+                                 {departmentProduct,dairy,"yogurt",3,40,847},
+                                 {departmentProduct,dairy,"milk",5,40,885}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,847},
+                                 {departmentProduct,dairy,"cheese",10,60,914},
+                                 {departmentProduct,dairy,"milk",5,40,879}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,996},
+                                {departmentProduct,meat,"chicken",40,500,985}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,894},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      968}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,847},
+                                 {departmentProduct,dairy,"cheese",10,60,914},
+                                 {departmentProduct,dairy,"milk",5,40,879}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,985},
+                                {departmentProduct,meat,"steak",80,500,998}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,894},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      968}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,875},
+                                 {departmentProduct,dairy,"cheese",10,60,908},
+                                 {departmentProduct,dairy,"yogurt",3,40,827}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,989},
+                                {departmentProduct,meat,"chicken",40,500,988}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,962},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      878}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,875},
+                                 {departmentProduct,dairy,"cheese",10,60,908},
+                                 {departmentProduct,dairy,"yogurt",3,40,827}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,989},
+                                {departmentProduct,meat,"chicken",40,500,988}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,962},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      878}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,984}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,830},
+                                 {departmentProduct,dairy,"cheese",10,60,900},
+                                 {departmentProduct,dairy,"milk",5,40,875}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,963},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      879}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,984}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,830},
+                                 {departmentProduct,dairy,"cheese",10,60,900},
+                                 {departmentProduct,dairy,"milk",5,40,875}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,963},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      879}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,856},
+                                 {departmentProduct,dairy,"yogurt",3,40,828},
+                                 {departmentProduct,dairy,"cheese",10,60,900}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,980},
+                                {departmentProduct,meat,"steak",80,500,990}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,962},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      875}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,856},
+                                 {departmentProduct,dairy,"yogurt",3,40,828},
+                                 {departmentProduct,dairy,"cheese",10,60,900}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,980},
+                                {departmentProduct,meat,"steak",80,500,990}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,962},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      875}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,968},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      880}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,992}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,853},
+                                 {departmentProduct,dairy,"yogurt",3,40,818},
+                                 {departmentProduct,dairy,"cheese",10,60,883}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,990},
+                                {departmentProduct,meat,"chicken",40,500,988}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,968},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      880}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,853},
+                                 {departmentProduct,dairy,"yogurt",3,40,818},
+                                 {departmentProduct,dairy,"cheese",10,60,892}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,895},
+                                 {departmentProduct,dairy,"yogurt",3,40,811},
+                                 {departmentProduct,dairy,"milk",5,40,840}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,873},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      958}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,979},
+                                {departmentProduct,meat,"steak",80,500,989}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,895},
+                                 {departmentProduct,dairy,"yogurt",3,40,811},
+                                 {departmentProduct,dairy,"milk",5,40,840}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,873},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      965}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,989},
+                                {departmentProduct,meat,"chicken",40,500,987}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,825},
+                                 {departmentProduct,dairy,"cheese",10,60,885},
+                                 {departmentProduct,dairy,"yogurt",3,40,803}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,962},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      867}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,977},
+                                {departmentProduct,meat,"steak",80,500,991}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,825},
+                                 {departmentProduct,dairy,"cheese",10,60,885},
+                                 {departmentProduct,dairy,"yogurt",3,40,803}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,982},
+                                {departmentProduct,meat,"steak",80,500,995}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,962},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      875}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,982},
+                                {departmentProduct,meat,"steak",80,500,992}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,885},
+                                 {departmentProduct,dairy,"milk",5,40,806},
+                                 {departmentProduct,dairy,"yogurt",3,40,801}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,967},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      868}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,982},
+                                {departmentProduct,meat,"steak",80,500,992}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,885},
+                                 {departmentProduct,dairy,"milk",5,40,806},
+                                 {departmentProduct,dairy,"yogurt",3,40,801}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,967},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      868}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,862},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      953}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,791},
+                                 {departmentProduct,dairy,"cheese",10,60,894},
+                                 {departmentProduct,dairy,"milk",5,40,811}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,996},
+                                {departmentProduct,meat,"chicken",40,500,979}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,791},
+                                 {departmentProduct,dairy,"cheese",10,60,894},
+                                 {departmentProduct,dairy,"milk",5,40,811}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,862},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      958}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,982},
+                                {departmentProduct,meat,"steak",80,500,998}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,990},
+                                {departmentProduct,meat,"steak",80,500,992}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,892},
+                                 {departmentProduct,dairy,"yogurt",3,40,788},
+                                 {departmentProduct,dairy,"milk",5,40,811}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,857},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      958}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,990},
+                                {departmentProduct,meat,"steak",80,500,992}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,892},
+                                 {departmentProduct,dairy,"yogurt",3,40,788},
+                                 {departmentProduct,dairy,"milk",5,40,811}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,857},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      958}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,979},
+                                {departmentProduct,meat,"steak",80,500,981}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,853},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      957}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,780},
+                                 {departmentProduct,dairy,"milk",5,40,809},
+                                 {departmentProduct,dairy,"cheese",10,60,876}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,853},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      957}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,780},
+                                 {departmentProduct,dairy,"milk",5,40,809},
+                                 {departmentProduct,dairy,"cheese",10,60,876}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,979},
+                                {departmentProduct,meat,"steak",80,500,981}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,853},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      957}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,880},
+                                 {departmentProduct,dairy,"yogurt",3,40,787},
+                                 {departmentProduct,dairy,"milk",5,40,802}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,982},
+                                {departmentProduct,meat,"chicken",40,500,984}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,853},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      957}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,880},
+                                 {departmentProduct,dairy,"yogurt",3,40,787},
+                                 {departmentProduct,dairy,"milk",5,40,802}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,982},
+                                {departmentProduct,meat,"chicken",40,500,984}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,851},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      964}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,792},
+                                 {departmentProduct,dairy,"cheese",10,60,883},
+                                 {departmentProduct,dairy,"yogurt",3,40,774}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,979},
+                                {departmentProduct,meat,"steak",80,500,991}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,851},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      964}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,792},
+                                 {departmentProduct,dairy,"cheese",10,60,883},
+                                 {departmentProduct,dairy,"yogurt",3,40,774}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,985},
+                                {departmentProduct,meat,"steak",80,500,998}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,761},
+                                 {departmentProduct,dairy,"cheese",10,60,873},
+                                 {departmentProduct,dairy,"milk",5,40,784}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,979},
+                                {departmentProduct,meat,"steak",80,500,984}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,960},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      848}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,784},
+                                 {departmentProduct,dairy,"cheese",10,60,874},
+                                 {departmentProduct,dairy,"yogurt",3,40,768}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,983},
+                                {departmentProduct,meat,"steak",80,500,994}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,960},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      857}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,778},
+                                 {departmentProduct,dairy,"cheese",10,60,869},
+                                 {departmentProduct,dairy,"yogurt",3,40,758}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,851},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      955}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,992},
+                                {departmentProduct,meat,"chicken",40,500,984}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,851},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      955}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,778},
+                                 {departmentProduct,dairy,"cheese",10,60,869},
+                                 {departmentProduct,dairy,"yogurt",3,40,758}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,992},
+                                {departmentProduct,meat,"chicken",40,500,984}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,756},
+                                 {departmentProduct,dairy,"milk",5,40,772},
+                                 {departmentProduct,dairy,"cheese",10,60,865}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,994},
+                                {departmentProduct,meat,"chicken",40,500,985}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,840},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      942}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,994},
+                                {departmentProduct,meat,"chicken",40,500,986}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,756},
+                                 {departmentProduct,dairy,"milk",5,40,777},
+                                 {departmentProduct,dairy,"cheese",10,60,868}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,952},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      843}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,768},
+                                 {departmentProduct,dairy,"yogurt",3,40,749},
+                                 {departmentProduct,dairy,"cheese",10,60,861}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,990}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,935},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      834}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,990}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,749},
+                                 {departmentProduct,dairy,"cheese",10,60,861},
+                                 {departmentProduct,dairy,"milk",5,40,773}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,843},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      945}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,864},
+                                 {departmentProduct,dairy,"milk",5,40,769},
+                                 {departmentProduct,dairy,"yogurt",3,40,733}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,982},
+                                {departmentProduct,meat,"steak",80,500,995}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,940},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      837}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,864},
+                                 {departmentProduct,dairy,"milk",5,40,769},
+                                 {departmentProduct,dairy,"yogurt",3,40,733}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,982},
+                                {departmentProduct,meat,"steak",80,500,995}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,940},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      837}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,986},
+                                {departmentProduct,meat,"steak",80,500,983}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,741},
+                                 {departmentProduct,dairy,"cheese",10,60,845},
+                                 {departmentProduct,dairy,"milk",5,40,763}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,939},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      819}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,741},
+                                 {departmentProduct,dairy,"cheese",10,60,845},
+                                 {departmentProduct,dairy,"milk",5,40,763}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,986},
+                                {departmentProduct,meat,"steak",80,500,983}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,939},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      819}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,978}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,733},
+                                 {departmentProduct,dairy,"cheese",10,60,853},
+                                 {departmentProduct,dairy,"milk",5,40,752}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,931},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      837}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,978}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,733},
+                                 {departmentProduct,dairy,"cheese",10,60,853},
+                                 {departmentProduct,dairy,"milk",5,40,752}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,931},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      837}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,982},
+                                {departmentProduct,meat,"chicken",40,500,969}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,837},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      924}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,747},
+                                 {departmentProduct,dairy,"yogurt",3,40,729},
+                                 {departmentProduct,dairy,"cheese",10,60,859}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,982},
+                                {departmentProduct,meat,"chicken",40,500,969}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,837},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      924}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,747},
+                                 {departmentProduct,dairy,"yogurt",3,40,729},
+                                 {departmentProduct,dairy,"cheese",10,60,859}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,983}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,829},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      935}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,843},
+                                 {departmentProduct,dairy,"yogurt",3,40,716},
+                                 {departmentProduct,dairy,"milk",5,40,728}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,935},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      835}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,978}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,843},
+                                 {departmentProduct,dairy,"yogurt",3,40,716},
+                                 {departmentProduct,dairy,"milk",5,40,728}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,709},
+                                 {departmentProduct,dairy,"cheese",10,60,836},
+                                 {departmentProduct,dairy,"milk",5,40,723}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,980}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,831},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      920}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,998},
+                                {departmentProduct,meat,"chicken",40,500,980}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,723},
+                                 {departmentProduct,dairy,"yogurt",3,40,716},
+                                 {departmentProduct,dairy,"cheese",10,60,843}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,831},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      928}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,968},
+                                {departmentProduct,meat,"steak",80,500,988}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,694},
+                                 {departmentProduct,dairy,"cheese",10,60,824},
+                                 {departmentProduct,dairy,"milk",5,40,708}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,919},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      816}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,694},
+                                 {departmentProduct,dairy,"cheese",10,60,824},
+                                 {departmentProduct,dairy,"milk",5,40,708}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,969}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,694},
+                                 {departmentProduct,dairy,"cheese",10,60,824},
+                                 {departmentProduct,dairy,"milk",5,40,708}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,816},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      911}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,969}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,816},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      911}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,816},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      920}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,694},
+                                 {departmentProduct,dairy,"cheese",10,60,825},
+                                 {departmentProduct,dairy,"milk",5,40,703}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,976},
+                                {departmentProduct,meat,"steak",80,500,992}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,981},
+                                {departmentProduct,meat,"steak",80,500,988}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,693},
+                                 {departmentProduct,dairy,"yogurt",3,40,689},
+                                 {departmentProduct,dairy,"cheese",10,60,822}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,929},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      820}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,981},
+                                {departmentProduct,meat,"steak",80,500,988}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,693},
+                                 {departmentProduct,dairy,"yogurt",3,40,689},
+                                 {departmentProduct,dairy,"cheese",10,60,822}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,929},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      820}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,817},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      923}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,975},
+                                {departmentProduct,meat,"steak",80,500,986}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,686},
+                                 {departmentProduct,dairy,"cheese",10,60,817},
+                                 {departmentProduct,dairy,"milk",5,40,685}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,817},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      933}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,992},
+                                {departmentProduct,meat,"chicken",40,500,981}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,686},
+                                 {departmentProduct,dairy,"cheese",10,60,817},
+                                 {departmentProduct,dairy,"milk",5,40,685}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,680},
+                                 {departmentProduct,dairy,"cheese",10,60,811},
+                                 {departmentProduct,dairy,"yogurt",3,40,670}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,980},
+                                {departmentProduct,meat,"steak",80,500,987}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,804},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      931}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,811},
+                                 {departmentProduct,dairy,"yogurt",3,40,678},
+                                 {departmentProduct,dairy,"milk",5,40,685}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,804},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      931}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,992},
+                                {departmentProduct,meat,"chicken",40,500,984}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,976},
+                                {departmentProduct,meat,"steak",80,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,932},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      804}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,804},
+                                 {departmentProduct,dairy,"yogurt",3,40,670},
+                                 {departmentProduct,dairy,"milk",5,40,667}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,932},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      804}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,976},
+                                {departmentProduct,meat,"steak",80,500,989}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,804},
+                                 {departmentProduct,dairy,"yogurt",3,40,670},
+                                 {departmentProduct,dairy,"milk",5,40,667}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,792},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      921}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,794},
+                                 {departmentProduct,dairy,"yogurt",3,40,665},
+                                 {departmentProduct,dairy,"milk",5,40,668}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,964},
+                                {departmentProduct,meat,"steak",80,500,987}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,800},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      922}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,794},
+                                 {departmentProduct,dairy,"yogurt",3,40,665},
+                                 {departmentProduct,dairy,"milk",5,40,668}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,974}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,969}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,789},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      917}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,792},
+                                 {departmentProduct,dairy,"milk",5,40,666},
+                                 {departmentProduct,dairy,"yogurt",3,40,654}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,969}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,792},
+                                 {departmentProduct,dairy,"milk",5,40,666},
+                                 {departmentProduct,dairy,"yogurt",3,40,654}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,789},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      917}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,988},
+                                {departmentProduct,meat,"chicken",40,500,974}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,659},
+                                 {departmentProduct,dairy,"cheese",10,60,790},
+                                 {departmentProduct,dairy,"milk",5,40,667}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,790},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      918}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,988},
+                                {departmentProduct,meat,"chicken",40,500,974}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,659},
+                                 {departmentProduct,dairy,"cheese",10,60,790},
+                                 {departmentProduct,dairy,"milk",5,40,667}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,790},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      918}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,671},
+                                 {departmentProduct,dairy,"cheese",10,60,797},
+                                 {departmentProduct,dairy,"yogurt",3,40,660}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,910},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      783}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,977},
+                                {departmentProduct,meat,"steak",80,500,990}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,671},
+                                 {departmentProduct,dairy,"yogurt",3,40,660},
+                                 {departmentProduct,dairy,"cheese",10,60,801}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,990},
+                                {departmentProduct,meat,"chicken",40,500,980}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,916},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      785}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,989},
+                                {departmentProduct,meat,"chicken",40,500,974}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,793},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      921}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,800},
+                                 {departmentProduct,dairy,"yogurt",3,40,642},
+                                 {departmentProduct,dairy,"milk",5,40,654}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,793},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      921}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,989},
+                                {departmentProduct,meat,"chicken",40,500,974}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,800},
+                                 {departmentProduct,dairy,"yogurt",3,40,642},
+                                 {departmentProduct,dairy,"milk",5,40,654}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,979},
+                                {departmentProduct,meat,"chicken",40,500,951}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,639},
+                                 {departmentProduct,dairy,"milk",5,40,640},
+                                 {departmentProduct,dairy,"cheese",10,60,789}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,907},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      776}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,979},
+                                {departmentProduct,meat,"chicken",40,500,951}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,639},
+                                 {departmentProduct,dairy,"milk",5,40,640},
+                                 {departmentProduct,dairy,"cheese",10,60,789}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,907},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      776}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,982},
+                                {departmentProduct,meat,"chicken",40,500,961}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,783},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      914}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,639},
+                                 {departmentProduct,dairy,"milk",5,40,649},
+                                 {departmentProduct,dairy,"cheese",10,60,797}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,783},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      914}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,639},
+                                 {departmentProduct,dairy,"milk",5,40,649},
+                                 {departmentProduct,dairy,"cheese",10,60,797}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,970},
+                                {departmentProduct,meat,"steak",80,500,990}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,796},
+                                 {departmentProduct,dairy,"milk",5,40,639},
+                                 {departmentProduct,dairy,"yogurt",3,40,629}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,971}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,907},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      773}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,796},
+                                 {departmentProduct,dairy,"milk",5,40,639},
+                                 {departmentProduct,dairy,"yogurt",3,40,629}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,986},
+                                {departmentProduct,meat,"chicken",40,500,971}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,907},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      773}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,978},
+                                {departmentProduct,meat,"steak",80,500,990}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,782},
+                                 {departmentProduct,dairy,"milk",5,40,644},
+                                 {departmentProduct,dairy,"yogurt",3,40,628}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,769},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      911}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,978},
+                                {departmentProduct,meat,"steak",80,500,990}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,782},
+                                 {departmentProduct,dairy,"milk",5,40,644},
+                                 {departmentProduct,dairy,"yogurt",3,40,628}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,769},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      911}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,990},
+                                {departmentProduct,meat,"chicken",40,500,968}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,618},
+                                 {departmentProduct,dairy,"cheese",10,60,785},
+                                 {departmentProduct,dairy,"milk",5,40,641}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,763},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      914}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,618},
+                                 {departmentProduct,dairy,"cheese",10,60,785},
+                                 {departmentProduct,dairy,"milk",5,40,641}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,990},
+                                {departmentProduct,meat,"chicken",40,500,968}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,763},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      914}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,762},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      907}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,976}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,783},
+                                 {departmentProduct,dairy,"yogurt",3,40,610},
+                                 {departmentProduct,dairy,"milk",5,40,628}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,976}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,762},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      907}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,783},
+                                 {departmentProduct,dairy,"yogurt",3,40,610},
+                                 {departmentProduct,dairy,"milk",5,40,628}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,967},
+                                {departmentProduct,meat,"steak",80,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,754},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      897}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,637},
+                                 {departmentProduct,dairy,"yogurt",3,40,599},
+                                 {departmentProduct,dairy,"cheese",10,60,775}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,967},
+                                {departmentProduct,meat,"steak",80,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,754},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      897}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,637},
+                                 {departmentProduct,dairy,"yogurt",3,40,599},
+                                 {departmentProduct,dairy,"cheese",10,60,775}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,992},
+                                {departmentProduct,meat,"chicken",40,500,955}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,628},
+                                 {departmentProduct,dairy,"yogurt",3,40,597},
+                                 {departmentProduct,dairy,"cheese",10,60,763}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,736},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      913}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,992},
+                                {departmentProduct,meat,"chicken",40,500,955}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,628},
+                                 {departmentProduct,dairy,"yogurt",3,40,597},
+                                 {departmentProduct,dairy,"cheese",10,60,763}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,736},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      913}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,967},
+                                {departmentProduct,meat,"steak",80,500,986}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,743},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      906}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,967},
+                                {departmentProduct,meat,"steak",80,500,986}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,771},
+                                 {departmentProduct,dairy,"yogurt",3,40,590},
+                                 {departmentProduct,dairy,"milk",5,40,622}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,743},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      906}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,771},
+                                 {departmentProduct,dairy,"yogurt",3,40,590},
+                                 {departmentProduct,dairy,"milk",5,40,622}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,908},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      742}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,771},
+                                 {departmentProduct,dairy,"yogurt",3,40,571},
+                                 {departmentProduct,dairy,"milk",5,40,607}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,968},
+                                {departmentProduct,meat,"steak",80,500,980}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,908},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      742}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,771},
+                                 {departmentProduct,dairy,"milk",5,40,607},
+                                 {departmentProduct,dairy,"yogurt",3,40,580}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,989},
+                                {departmentProduct,meat,"chicken",40,500,974}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,966},
+                                {departmentProduct,meat,"steak",80,500,985}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,742},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      906}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,588},
+                                 {departmentProduct,dairy,"milk",5,40,605},
+                                 {departmentProduct,dairy,"cheese",10,60,759}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,966},
+                                {departmentProduct,meat,"steak",80,500,985}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,742},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      906}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,588},
+                                 {departmentProduct,dairy,"milk",5,40,605},
+                                 {departmentProduct,dairy,"cheese",10,60,759}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,973},
+                                {departmentProduct,meat,"steak",80,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,725},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      894}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,605},
+                                 {departmentProduct,dairy,"yogurt",3,40,576},
+                                 {departmentProduct,dairy,"cheese",10,60,755}] 
+Department meat Inventory is:  [{departmentProduct,meat,"chicken",40,500,973},
+                                {departmentProduct,meat,"steak",80,500,989}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,725},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      894}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,605},
+                                 {departmentProduct,dairy,"yogurt",3,40,576},
+                                 {departmentProduct,dairy,"cheese",10,60,755}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,572},
+                                 {departmentProduct,dairy,"milk",5,40,594},
+                                 {departmentProduct,dairy,"cheese",10,60,755}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,900},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      730}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,959}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,572},
+                                 {departmentProduct,dairy,"milk",5,40,594},
+                                 {departmentProduct,dairy,"cheese",10,60,755}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,730},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      906}] 
+Department meat Inventory is:  [{departmentProduct,meat,"steak",80,500,987},
+                                {departmentProduct,meat,"chicken",40,500,967}] 
+badTermination Reason: 
+ [{{bad_return_value,{0,ok,normal}},
+  {gen_server,call,[{global,masterFunction},getTimeStamp]}}].
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,578},
+                                 {departmentProduct,dairy,"cheese",10,60,737},
+                                 {departmentProduct,dairy,"yogurt",3,40,538}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,705},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      873}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,686},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      850}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,477},
+                                 {departmentProduct,dairy,"cheese",10,60,683},
+                                 {departmentProduct,dairy,"milk",5,40,534}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,818},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      667}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,468},
+                                 {departmentProduct,dairy,"milk",5,40,507},
+                                 {departmentProduct,dairy,"cheese",10,60,661}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,615},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      750}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,437},
+                                 {departmentProduct,dairy,"yogurt",3,40,426},
+                                 {departmentProduct,dairy,"cheese",10,60,623}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,426},
+                                 {departmentProduct,dairy,"milk",5,40,433},
+                                 {departmentProduct,dairy,"cheese",10,60,620}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,731},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      613}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,705},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      543}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,325},
+                                 {departmentProduct,dairy,"cheese",10,60,525},
+                                 {departmentProduct,dairy,"yogurt",3,40,314}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,325},
+                                 {departmentProduct,dairy,"cheese",10,60,501},
+                                 {departmentProduct,dairy,"yogurt",3,40,291}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,683},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      531}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,495},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      668}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"yogurt",3,40,245},
+                                 {departmentProduct,dairy,"cheese",10,60,469},
+                                 {departmentProduct,dairy,"milk",5,40,282}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,452},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      629}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,443},
+                                 {departmentProduct,dairy,"yogurt",3,40,212},
+                                 {departmentProduct,dairy,"milk",5,40,253}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"buns",20,120,624},
+                                  {departmentProduct,bakery,"bread",8,100,
+                                      437}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"milk",5,40,260},
+                                 {departmentProduct,dairy,"cheese",10,60,440},
+                                 {departmentProduct,dairy,"yogurt",3,40,200}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,432},
+                                 {departmentProduct,dairy,"milk",5,40,258},
+                                 {departmentProduct,dairy,"yogurt",3,40,187}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,430},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      622}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,358},
+                                 {departmentProduct,dairy,"yogurt",3,40,149},
+                                 {departmentProduct,dairy,"milk",5,40,176}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,367},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      554}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,312},
+                                 {departmentProduct,dairy,"milk",5,40,122},
+                                 {departmentProduct,dairy,"yogurt",3,40,122}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,347},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      536}] 
+Department dairy Inventory is:  [{departmentProduct,dairy,"cheese",10,60,285},
+                                 {departmentProduct,dairy,"milk",5,40,102},
+                                 {departmentProduct,dairy,"yogurt",3,40,107}] 
+Department bakery Inventory is:  [{departmentProduct,bakery,"bread",8,100,308},
+                                  {departmentProduct,bakery,"buns",20,120,
+                                      509}] 

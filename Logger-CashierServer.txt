@@ -1,0 +1,371 @@
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,3},
+                                  {departmentProduct,dairy,"milk",5,40,5},
+                                  {departmentProduct,dairy,"cheese",10,60,3}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,1},
+                                  {departmentProduct,bakery,"buns",20,120,4}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,9},
+                                  {departmentProduct,dairy,"milk",5,40,6},
+                                  {departmentProduct,bakery,"buns",20,120,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,8},
+                                  {departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,bakery,"bread",8,100,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,5},
+                                  {departmentProduct,dairy,"yogurt",3,40,8}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,2},
+                                  {departmentProduct,dairy,"milk",5,40,9},
+                                  {departmentProduct,dairy,"yogurt",3,40,9}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,2},
+                                  {departmentProduct,bakery,"bread",8,100,3},
+                                  {departmentProduct,dairy,"cheese",10,60,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,6},
+                                  {departmentProduct,dairy,"milk",5,40,1}] 
+Bought Products by Customer is : [{departmentProduct,meat,"steak",80,500,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,8},
+                                  {departmentProduct,dairy,"milk",5,40,1}] 
+Bought Products by Customer is : [{departmentProduct,meat,"steak",80,500,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,1},
+                                  {departmentProduct,dairy,"cheese",10,60,5}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,7},
+                                  {departmentProduct,dairy,"cheese",10,60,6},
+                                  {departmentProduct,bakery,"bread",8,100,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,3},
+                                  {departmentProduct,dairy,"cheese",10,60,3},
+                                  {departmentProduct,dairy,"yogurt",3,40,10}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,3}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,7}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,5},
+                                  {departmentProduct,dairy,"yogurt",3,40,10}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,6},
+                                  {departmentProduct,dairy,"yogurt",3,40,9}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,2},
+                                  {departmentProduct,bakery,"bread",8,100,10}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,4}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,3},
+                                  {departmentProduct,dairy,"yogurt",3,40,10}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,dairy,"cheese",10,60,1},
+                                  {departmentProduct,meat,"chicken",40,500,1},
+                                  {departmentProduct,bakery,"buns",20,120,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,7},
+                                  {departmentProduct,dairy,"cheese",10,60,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,5},
+                                  {departmentProduct,bakery,"bread",8,100,8}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,9},
+                                  {departmentProduct,dairy,"milk",5,40,10}] 
+Bought Products ~p ~n
+ [[{departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,bakery,"buns",20,120,2}]].
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,7}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,1},
+                                  {departmentProduct,bakery,"buns",20,120,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,4}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,6},
+                                  {departmentProduct,dairy,"yogurt",3,40,3}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,2},
+                                  {departmentProduct,bakery,"bread",8,100,9}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,10},
+                                  {departmentProduct,dairy,"yogurt",3,40,5}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,10}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,9}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,1},
+                                  {departmentProduct,dairy,"milk",5,40,10},
+                                  {departmentProduct,dairy,"yogurt",3,40,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,bakery,"bread",8,100,2}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,3}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,1},
+                                  {departmentProduct,dairy,"cheese",10,60,6},
+                                  {departmentProduct,dairy,"milk",5,40,5}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,10}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,3},
+                                  {departmentProduct,dairy,"cheese",10,60,8},
+                                  {departmentProduct,dairy,"milk",5,40,6}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,2}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,dairy,"cheese",10,60,5}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,1},
+                                  {departmentProduct,dairy,"milk",5,40,8},
+                                  {departmentProduct,bakery,"buns",20,120,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,10},
+                                  {departmentProduct,dairy,"milk",5,40,4},
+                                  {departmentProduct,bakery,"bread",8,100,6}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,dairy,"cheese",10,60,7},
+                                  {departmentProduct,bakery,"bread",8,100,8}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,6}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,8},
+                                  {departmentProduct,dairy,"milk",5,40,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,10}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,dairy,"cheese",10,60,1}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,6},
+                                  {departmentProduct,dairy,"yogurt",3,40,10}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,5},
+                                  {departmentProduct,dairy,"milk",5,40,10},
+                                  {departmentProduct,meat,"chicken",40,500,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,8}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,9},
+                                  {departmentProduct,dairy,"milk",5,40,10},
+                                  {departmentProduct,dairy,"yogurt",3,40,1},
+                                  {departmentProduct,dairy,"cheese",10,60,3}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,7},
+                                  {departmentProduct,dairy,"milk",5,40,10}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,5},
+                                  {departmentProduct,bakery,"bread",8,100,5},
+                                  {departmentProduct,dairy,"milk",5,40,2},
+                                  {departmentProduct,dairy,"yogurt",3,40,3}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,6},
+                                  {departmentProduct,dairy,"milk",5,40,7}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,1},
+                                  {departmentProduct,dairy,"milk",5,40,6}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,dairy,"milk",5,40,7},
+                                  {departmentProduct,dairy,"cheese",10,60,4}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,8},
+                                  {departmentProduct,dairy,"yogurt",3,40,6}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,9},
+                                  {departmentProduct,dairy,"yogurt",3,40,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,dairy,"milk",5,40,9}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,9},
+                                  {departmentProduct,dairy,"yogurt",3,40,8},
+                                  {departmentProduct,dairy,"cheese",10,60,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,4},
+                                  {departmentProduct,dairy,"cheese",10,60,2},
+                                  {departmentProduct,dairy,"yogurt",3,40,3}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,6}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,dairy,"milk",5,40,2}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,1},
+                                  {departmentProduct,dairy,"milk",5,40,1}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,dairy,"milk",5,40,6}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,5},
+                                  {departmentProduct,dairy,"milk",5,40,4},
+                                  {departmentProduct,bakery,"buns",20,120,2},
+                                  {departmentProduct,bakery,"bread",8,100,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,6},
+                                  {departmentProduct,dairy,"cheese",10,60,3},
+                                  {departmentProduct,dairy,"yogurt",3,40,8}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,bakery,"buns",20,120,5},
+                                  {departmentProduct,dairy,"yogurt",3,40,6},
+                                  {departmentProduct,dairy,"milk",5,40,8}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,5},
+                                  {departmentProduct,bakery,"buns",20,120,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,5}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,1},
+                                  {departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,dairy,"cheese",10,60,5},
+                                  {departmentProduct,dairy,"yogurt",3,40,5}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,1},
+                                  {departmentProduct,dairy,"milk",5,40,7},
+                                  {departmentProduct,dairy,"cheese",10,60,10}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,3}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,2},
+                                  {departmentProduct,bakery,"bread",8,100,8},
+                                  {departmentProduct,dairy,"milk",5,40,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,4}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,7},
+                                  {departmentProduct,dairy,"milk",5,40,4}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,5},
+                                  {departmentProduct,bakery,"bread",8,100,5}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,3},
+                                  {departmentProduct,dairy,"yogurt",3,40,1}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,8},
+                                  {departmentProduct,dairy,"milk",5,40,6}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,8},
+                                  {departmentProduct,dairy,"milk",5,40,2}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,2},
+                                  {departmentProduct,dairy,"milk",5,40,9},
+                                  {departmentProduct,bakery,"buns",20,120,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,4}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,5},
+                                  {departmentProduct,dairy,"yogurt",3,40,4},
+                                  {departmentProduct,bakery,"bread",8,100,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,10},
+                                  {departmentProduct,dairy,"yogurt",3,40,7},
+                                  {departmentProduct,dairy,"cheese",10,60,10}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,6},
+                                  {departmentProduct,dairy,"yogurt",3,40,6},
+                                  {departmentProduct,dairy,"milk",5,40,9},
+                                  {departmentProduct,bakery,"bread",8,100,2}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,4}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,6},
+                                  {departmentProduct,dairy,"cheese",10,60,3},
+                                  {departmentProduct,dairy,"milk",5,40,7}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,5},
+                                  {departmentProduct,dairy,"milk",5,40,10},
+                                  {departmentProduct,dairy,"yogurt",3,40,4},
+                                  {departmentProduct,bakery,"bread",8,100,2}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,2},
+                                  {departmentProduct,meat,"chicken",40,500,3},
+                                  {departmentProduct,dairy,"yogurt",3,40,5}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,9},
+                                  {departmentProduct,dairy,"yogurt",3,40,7}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,6},
+                                  {departmentProduct,dairy,"yogurt",3,40,5}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,3},
+                                  {departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,dairy,"cheese",10,60,1},
+                                  {departmentProduct,dairy,"milk",5,40,8}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,8},
+                                  {departmentProduct,dairy,"cheese",10,60,5},
+                                  {departmentProduct,bakery,"bread",8,100,2}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,bakery,"buns",20,120,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,3},
+                                  {departmentProduct,dairy,"cheese",10,60,3},
+                                  {departmentProduct,dairy,"milk",5,40,10}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,3}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,1},
+                                  {departmentProduct,dairy,"cheese",10,60,6},
+                                  {departmentProduct,dairy,"yogurt",3,40,8}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,8},
+                                  {departmentProduct,bakery,"bread",8,100,4}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,6},
+                                  {departmentProduct,bakery,"buns",20,120,1},
+                                  {departmentProduct,dairy,"cheese",10,60,7},
+                                  {departmentProduct,dairy,"yogurt",3,40,8}] 
+Bought Products by Customer is : [{departmentProduct,meat,"steak",80,500,2}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,5}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,3}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,6}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,7}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,1}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,6},
+                                  {departmentProduct,dairy,"yogurt",3,40,2}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,2},
+                                  {departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,9}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,8}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,6},
+                                  {departmentProduct,dairy,"cheese",10,60,3},
+                                  {departmentProduct,dairy,"milk",5,40,8},
+                                  {departmentProduct,dairy,"yogurt",3,40,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,3},
+                                  {departmentProduct,dairy,"cheese",10,60,1},
+                                  {departmentProduct,dairy,"milk",5,40,7}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,4},
+                                  {departmentProduct,dairy,"cheese",10,60,3}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,1},
+                                  {departmentProduct,bakery,"bread",8,100,7},
+                                  {departmentProduct,dairy,"cheese",10,60,1}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,7}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,6},
+                                  {departmentProduct,bakery,"bread",8,100,1}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,3},
+                                  {departmentProduct,dairy,"cheese",10,60,4},
+                                  {departmentProduct,dairy,"milk",5,40,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,5}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,6},
+                                  {departmentProduct,dairy,"yogurt",3,40,10},
+                                  {departmentProduct,dairy,"milk",5,40,5},
+                                  {departmentProduct,dairy,"cheese",10,60,1}] 
+Bought Products by Customer is : [{departmentProduct,meat,"steak",80,500,1},
+                                  {departmentProduct,dairy,"cheese",10,60,6},
+                                  {departmentProduct,dairy,"milk",5,40,6}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,4},
+                                  {departmentProduct,dairy,"yogurt",3,40,7},
+                                  {departmentProduct,dairy,"cheese",10,60,2},
+                                  {departmentProduct,meat,"chicken",40,500,1}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,7},
+                                  {departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,2},
+                                  {departmentProduct,dairy,"yogurt",3,40,7},
+                                  {departmentProduct,meat,"chicken",40,500,2}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,8},
+                                  {departmentProduct,dairy,"yogurt",3,40,4}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,3}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,9},
+                                  {departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,dairy,"cheese",10,60,8}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,2},
+                                  {departmentProduct,dairy,"milk",5,40,3},
+                                  {departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,bakery,"bread",8,100,10}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,2},
+                                  {departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,5},
+                                  {departmentProduct,dairy,"milk",5,40,3}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,7}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,3},
+                                  {departmentProduct,bakery,"bread",8,100,1},
+                                  {departmentProduct,meat,"chicken",40,500,1}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,1},
+                                  {departmentProduct,dairy,"milk",5,40,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,6},
+                                  {departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,dairy,"milk",5,40,8},
+                                  {departmentProduct,bakery,"buns",20,120,1}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,3},
+                                  {departmentProduct,dairy,"yogurt",3,40,3}] 
+Bought Products by Customer is : [{departmentProduct,meat,"chicken",40,500,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,9}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,1},
+                                  {departmentProduct,dairy,"milk",5,40,2},
+                                  {departmentProduct,dairy,"cheese",10,60,2},
+                                  {departmentProduct,bakery,"bread",8,100,5}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,3}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,2},
+                                  {departmentProduct,dairy,"cheese",10,60,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,bakery,"bread",8,100,5}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"buns",20,120,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,6},
+                                  {departmentProduct,dairy,"milk",5,40,9},
+                                  {departmentProduct,bakery,"bread",8,100,5}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,9},
+                                  {departmentProduct,dairy,"yogurt",3,40,4}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"milk",5,40,4},
+                                  {departmentProduct,dairy,"cheese",10,60,9},
+                                  {departmentProduct,bakery,"bread",8,100,4}] 
+Bought Products by Customer is : [] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,3},
+                                  {departmentProduct,dairy,"cheese",10,60,1},
+                                  {departmentProduct,dairy,"yogurt",3,40,4}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,9},
+                                  {departmentProduct,dairy,"milk",5,40,8},
+                                  {departmentProduct,dairy,"yogurt",3,40,8},
+                                  {departmentProduct,bakery,"bread",8,100,5}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"yogurt",3,40,1}] 
+Bought Products ~p ~n
+ [[{departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,dairy,"yogurt",3,40,6}]].
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,7},
+                                  {departmentProduct,dairy,"milk",5,40,2}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,3},
+                                  {departmentProduct,dairy,"yogurt",3,40,3},
+                                  {departmentProduct,dairy,"milk",5,40,3}] 
+Bought Products by Customer is : [{departmentProduct,dairy,"cheese",10,60,7},
+                                  {departmentProduct,dairy,"yogurt",3,40,2},
+                                  {departmentProduct,dairy,"milk",5,40,10},
+                                  {departmentProduct,bakery,"bread",8,100,5}] 
+Bought Products by Customer is : [{departmentProduct,bakery,"bread",8,100,8},
+                                  {departmentProduct,dairy,"milk",5,40,6}] 

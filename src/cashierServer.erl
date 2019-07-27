@@ -141,8 +141,7 @@ costOfSingleProduct({departmentProduct,_department,_productName,PriceForEach,_ex
   Amount * PriceForEach.
 
 updateErlMarketBalance(AmountToAdd) ->
-  global:send(purchaseDepartment, {"add", AmountToAdd}).
-%%  purchaseDepartment:setBalance("add", AmountToAdd).
+  gen_server:cast({global,purchaseDepartment}, {updateBalance, add, AmountToAdd}).
 
 %%------------------WRITING TO LOGGER------------------
 

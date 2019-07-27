@@ -1,0 +1,2484 @@
+customerID <0.237.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,3},
+  {departmentProduct,dairy,"milk",5,40,5},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"yogurt",3,40,9},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,meat,"chicken",40,500,10}] 
+ customerID <0.238.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,bakery,"buns",20,120,4},
+  {departmentProduct,bakery,"bread",8,100,4},
+  {departmentProduct,dairy,"yogurt",3,40,9},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"cheese",10,60,6}] 
+ customerID <0.294.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,9},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,bakery,"bread",8,100,6}] 
+ customerID <0.293.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,8},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,bakery,"bread",8,100,2},
+  {departmentProduct,bakery,"buns",20,120,4},
+  {departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,meat,"steak",80,500,2}] 
+ customerID <0.349.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,5},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,bakery,"bread",8,100,10},
+  {departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,meat,"steak",80,500,5},
+  {departmentProduct,meat,"chicken",40,500,4}] 
+ customerID <0.347.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,bakery,"buns",20,120,9},
+  {departmentProduct,bakery,"bread",8,100,2},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,dairy,"yogurt",3,40,9},
+  {departmentProduct,dairy,"cheese",10,60,10}] 
+ customerID <0.346.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,bakery,"bread",8,100,3},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"yogurt",3,40,6},
+  {departmentProduct,dairy,"milk",5,40,1}] 
+ customerID <0.348.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,1},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"milk",5,40,1}] 
+ customerID <0.459.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,1},
+  {departmentProduct,meat,"chicken",40,500,7},
+  {departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,dairy,"milk",5,40,5}] 
+ customerID <0.419.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,dairy,"milk",5,40,1},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,bakery,"buns",20,120,4}] 
+ customerID <0.418.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,bakery,"buns",20,120,7},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,meat,"steak",80,500,1},
+  {departmentProduct,meat,"chicken",40,500,2}] 
+ customerID <0.458.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,dairy,"milk",5,40,3},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"yogurt",3,40,10},
+  {departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,bakery,"buns",20,120,7}] 
+ customerID <0.528.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,meat,"steak",80,500,8},
+  {departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,bakery,"buns",20,120,8}] 
+ customerID <0.527.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,bakery,"bread",8,100,7}] 
+ customerID <0.584.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"milk",5,40,7}] 
+ customerID <0.585.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,meat,"chicken",40,500,5}] 
+ customerID <0.631.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"yogurt",3,40,6},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,meat,"chicken",40,500,3}] 
+ customerID <0.630.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,dairy,"milk",5,40,5},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,10}] 
+ customerID <0.710.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,9},
+  {departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,bakery,"buns",20,120,10}] 
+ customerID <0.709.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,bakery,"bread",8,100,10},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"milk",5,40,10}] 
+ customerID <0.743.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,10},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,dairy,"milk",5,40,5},
+  {departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,bakery,"buns",20,120,5}] 
+ customerID <0.744.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,3},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,4}] 
+ customerID <0.802.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,3},
+  {departmentProduct,dairy,"yogurt",3,40,10},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,bakery,"buns",20,120,6}] 
+ customerID <0.803.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,bakery,"bread",8,100,7}] 
+ customerID <0.865.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,7},
+  {departmentProduct,dairy,"cheese",10,60,4},
+  {departmentProduct,dairy,"yogurt",3,40,5},
+  {departmentProduct,meat,"steak",80,500,10},
+  {departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,bakery,"buns",20,120,4}] 
+ customerID <0.864.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,meat,"steak",80,500,9}] 
+ customerID <0.943.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,bakery,"buns",20,120,2}] 
+ customerID <0.942.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,meat,"steak",80,500,3},
+  {departmentProduct,dairy,"cheese",10,60,7},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"milk",5,40,7},
+  {departmentProduct,bakery,"bread",8,100,5}] 
+ customerID <0.992.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,bakery,"bread",8,100,7}] 
+ customerID <0.993.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,8},
+  {departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,bakery,"bread",8,100,10},
+  {departmentProduct,meat,"chicken",40,500,6},
+  {departmentProduct,meat,"steak",80,500,8}] 
+ customerID <0.1025.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,6},
+  {departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,meat,"steak",80,500,10},
+  {departmentProduct,meat,"chicken",40,500,7}] 
+ customerID <0.1024.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,2},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,dairy,"milk",5,40,7},
+  {departmentProduct,dairy,"cheese",10,60,2}] 
+ customerID <0.1105.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,10},
+  {departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,dairy,"yogurt",3,40,5}] 
+ customerID <0.1106.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,bakery,"buns",20,120,7},
+  {departmentProduct,meat,"chicken",40,500,5}] 
+ customerID <0.1156.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,9},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,dairy,"yogurt",3,40,6},
+  {departmentProduct,dairy,"cheese",10,60,7}] 
+ customerID <0.1157.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,bakery,"buns",20,120,6},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,meat,"chicken",40,500,5}] 
+ customerID <0.1186.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,dairy,"cheese",10,60,8},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,bakery,"bread",8,100,2}] 
+ customerID <0.1183.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,4},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"milk",5,40,5}] 
+ customerID <0.1219.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,meat,"steak",80,500,10},
+  {departmentProduct,bakery,"bread",8,100,4},
+  {departmentProduct,bakery,"buns",20,120,3},
+  {departmentProduct,dairy,"cheese",10,60,7}] 
+ customerID <0.1218.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,10},
+  {departmentProduct,bakery,"buns",20,120,6},
+  {departmentProduct,meat,"steak",80,500,3},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,dairy,"cheese",10,60,8}] 
+ customerID <0.1184.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,meat,"steak",80,500,8},
+  {departmentProduct,meat,"chicken",40,500,7}] 
+ customerID <0.1185.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,8},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,meat,"steak",80,500,5},
+  {departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,bakery,"bread",8,100,7}] 
+ customerID <0.1350.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,dairy,"milk",5,40,10}] 
+ customerID <0.1351.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,bakery,"buns",20,120,9},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"milk",5,40,7}] 
+ customerID <0.1434.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,bakery,"buns",20,120,9}] 
+ customerID <0.1433.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,bakery,"buns",20,120,2}] 
+ customerID <0.1481.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,meat,"chicken",40,500,2},
+  {departmentProduct,meat,"steak",80,500,9}] 
+ customerID <0.1482.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,9},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,dairy,"cheese",10,60,4},
+  {departmentProduct,dairy,"milk",5,40,5},
+  {departmentProduct,meat,"steak",80,500,5},
+  {departmentProduct,meat,"chicken",40,500,8}] 
+ customerID <0.1535.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,dairy,"cheese",10,60,7},
+  {departmentProduct,meat,"chicken",40,500,2},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,bakery,"bread",8,100,8}] 
+ customerID <0.1536.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,meat,"chicken",40,500,2},
+  {departmentProduct,meat,"steak",80,500,8},
+  {departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"yogurt",3,40,10},
+  {departmentProduct,dairy,"milk",5,40,4}] 
+ customerID <0.1590.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,dairy,"yogurt",3,40,10}] 
+ customerID <0.1589.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"milk",5,40,6}] 
+ customerID <0.1627.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"yogurt",3,40,10},
+  {departmentProduct,meat,"steak",80,500,3},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,bakery,"buns",20,120,7},
+  {departmentProduct,bakery,"bread",8,100,7}] 
+ customerID <0.1628.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,10},
+  {departmentProduct,bakery,"buns",20,120,4},
+  {departmentProduct,bakery,"bread",8,100,9}] 
+ customerID <0.1693.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,bakery,"buns",20,120,7},
+  {departmentProduct,bakery,"bread",8,100,9}] 
+ customerID <0.1694.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,bakery,"buns",20,120,3},
+  {departmentProduct,bakery,"bread",8,100,6}] 
+ customerID <0.1744.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,bakery,"bread",8,100,10}] 
+ customerID <0.1743.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"cheese",10,60,3}] 
+ customerID <0.1800.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"milk",5,40,10}] 
+ customerID <0.1801.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,8},
+  {departmentProduct,meat,"steak",80,500,8},
+  {departmentProduct,meat,"chicken",40,500,4}] 
+ customerID <0.1851.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"yogurt",3,40,6},
+  {departmentProduct,dairy,"milk",5,40,7},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,bakery,"buns",20,120,7}] 
+ customerID <0.1850.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,7},
+  {departmentProduct,bakery,"buns",20,120,3},
+  {departmentProduct,dairy,"cheese",10,60,4},
+  {departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,9}] 
+ customerID <0.1906.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,dairy,"milk",5,40,7},
+  {departmentProduct,dairy,"cheese",10,60,4},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,bakery,"bread",8,100,8}] 
+ customerID <0.1905.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,meat,"steak",80,500,3},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,dairy,"yogurt",3,40,6},
+  {departmentProduct,bakery,"buns",20,120,6},
+  {departmentProduct,bakery,"bread",8,100,5}] 
+ customerID <0.1962.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,bakery,"bread",8,100,3}] 
+ customerID <0.1963.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,dairy,"cheese",10,60,8},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,meat,"steak",80,500,6}] 
+ customerID <0.2013.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"buns",20,120,5}] 
+ customerID <0.2014.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"milk",5,40,5}] 
+ customerID <0.2066.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,bakery,"bread",8,100,5}] 
+ customerID <0.2067.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,1},
+  {departmentProduct,meat,"chicken",40,500,2},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,bakery,"buns",20,120,8}] 
+ customerID <0.2116.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,meat,"steak",80,500,8},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,bakery,"buns",20,120,3}] 
+ customerID <0.2117.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,meat,"steak",80,500,9},
+  {departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"cheese",10,60,10}] 
+ customerID <0.2149.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,bakery,"bread",8,100,7},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"milk",5,40,1},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,meat,"chicken",40,500,6}] 
+ customerID <0.2148.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,meat,"steak",80,500,9},
+  {departmentProduct,meat,"chicken",40,500,2}] 
+ customerID <0.2207.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,5},
+  {departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,meat,"chicken",40,500,6},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,bakery,"bread",8,100,2}] 
+ customerID <0.2206.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,7},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,bakery,"bread",8,100,7},
+  {departmentProduct,bakery,"buns",20,120,1}] 
+ customerID <0.2278.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,meat,"steak",80,500,10},
+  {departmentProduct,bakery,"bread",8,100,9}] 
+ customerID <0.2277.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,dairy,"yogurt",3,40,6},
+  {departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,meat,"steak",80,500,4}] 
+ customerID <0.2335.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,bakery,"buns",20,120,4},
+  {departmentProduct,dairy,"yogurt",3,40,5},
+  {departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,meat,"chicken",40,500,6}] 
+ customerID <0.2334.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,meat,"chicken",40,500,2},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,dairy,"yogurt",3,40,5}] 
+ customerID <0.2387.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"milk",5,40,5},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,bakery,"bread",8,100,3},
+  {departmentProduct,meat,"chicken",40,500,1}] 
+ customerID <0.2388.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"milk",5,40,7},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,meat,"chicken",40,500,6},
+  {departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,bakery,"buns",20,120,3}] 
+ customerID <0.2446.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"milk",5,40,5}] 
+ customerID <0.2445.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,2},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,dairy,"yogurt",3,40,4},
+  {departmentProduct,dairy,"cheese",10,60,7}] 
+ customerID <0.2497.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,dairy,"cheese",10,60,4},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,bakery,"bread",8,100,1}] 
+ customerID <0.2496.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,dairy,"yogurt",3,40,9},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,meat,"steak",80,500,1}] 
+ customerID <0.2550.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,3},
+  {departmentProduct,bakery,"bread",8,100,10},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,meat,"steak",80,500,8}] 
+ customerID <0.2549.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"milk",5,40,6}] 
+ customerID <0.2604.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,bakery,"buns",20,120,6},
+  {departmentProduct,meat,"steak",80,500,9},
+  {departmentProduct,meat,"chicken",40,500,10}] 
+ customerID <0.2603.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,2},
+  {departmentProduct,meat,"steak",80,500,3},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,bakery,"bread",8,100,1}] 
+ customerID <0.2658.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,dairy,"cheese",10,60,4}] 
+ customerID <0.2657.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,5},
+  {departmentProduct,dairy,"yogurt",3,40,4},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,meat,"steak",80,500,9},
+  {departmentProduct,meat,"chicken",40,500,10}] 
+ customerID <0.2709.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,meat,"chicken",40,500,5}] 
+ customerID <0.2710.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,6},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,bakery,"bread",8,100,2},
+  {departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,meat,"chicken",40,500,10}] 
+ customerID <0.2761.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"cheese",10,60,7}] 
+ customerID <0.2760.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,4},
+  {departmentProduct,bakery,"buns",20,120,9},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,dairy,"milk",5,40,5}] 
+ customerID <0.2806.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,6},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"milk",5,40,7},
+  {departmentProduct,meat,"steak",80,500,1},
+  {departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,bakery,"bread",8,100,7}] 
+ customerID <0.2808.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,2},
+  {departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,meat,"steak",80,500,5},
+  {departmentProduct,dairy,"yogurt",3,40,5},
+  {departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,dairy,"milk",5,40,3}] 
+ customerID <0.2809.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"yogurt",3,40,4},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,bakery,"bread",8,100,2},
+  {departmentProduct,bakery,"buns",20,120,9}] 
+ customerID <0.2807.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,bakery,"buns",20,120,9},
+  {departmentProduct,bakery,"bread",8,100,4},
+  {departmentProduct,meat,"steak",80,500,3},
+  {departmentProduct,meat,"chicken",40,500,8}] 
+ customerID <0.2849.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,meat,"steak",80,500,3},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"yogurt",3,40,5},
+  {departmentProduct,dairy,"cheese",10,60,3}] 
+ customerID <0.2848.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,3},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,meat,"steak",80,500,7}] 
+ customerID <0.2971.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,meat,"chicken",40,500,6},
+  {departmentProduct,bakery,"bread",8,100,2},
+  {departmentProduct,bakery,"buns",20,120,10}] 
+ customerID <0.2970.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"milk",5,40,10}] 
+ customerID <0.3027.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,5},
+  {departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,bakery,"bread",8,100,3},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,dairy,"milk",5,40,5}] 
+ customerID <0.3026.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,bakery,"bread",8,100,10},
+  {departmentProduct,bakery,"buns",20,120,2}] 
+ customerID <0.3080.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,dairy,"cheese",10,60,7},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,dairy,"milk",5,40,10}] 
+ customerID <0.3081.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,meat,"steak",80,500,9},
+  {departmentProduct,bakery,"bread",8,100,4}] 
+ customerID <0.3128.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,bakery,"buns",20,120,1}] 
+ customerID <0.3129.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,bakery,"bread",8,100,4},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,dairy,"yogurt",3,40,5},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,meat,"steak",80,500,9}] 
+ customerID <0.3184.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,meat,"steak",80,500,10},
+  {departmentProduct,meat,"chicken",40,500,7}] 
+ customerID <0.3183.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,dairy,"yogurt",3,40,8}] 
+ customerID <0.3243.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,7},
+  {departmentProduct,bakery,"bread",8,100,3},
+  {departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,8}] 
+ customerID <0.3244.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,4},
+  {departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,bakery,"buns",20,120,7},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"milk",5,40,10}] 
+ customerID <0.3302.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,4},
+  {departmentProduct,bakery,"buns",20,120,6},
+  {departmentProduct,bakery,"bread",8,100,2},
+  {departmentProduct,meat,"chicken",40,500,3}] 
+ customerID <0.3301.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,9},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,meat,"steak",80,500,6}] 
+ customerID <0.3355.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,dairy,"yogurt",3,40,9},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,meat,"chicken",40,500,1}] 
+ customerID <0.3354.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,meat,"steak",80,500,7},
+  {departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,dairy,"cheese",10,60,4},
+  {departmentProduct,dairy,"yogurt",3,40,9},
+  {departmentProduct,dairy,"milk",5,40,7}] 
+ customerID <0.3408.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,7},
+  {departmentProduct,bakery,"buns",20,120,7},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,dairy,"cheese",10,60,8},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,meat,"steak",80,500,3},
+  {departmentProduct,meat,"chicken",40,500,10}] 
+ customerID <0.3406.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,meat,"steak",80,500,8},
+  {departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,dairy,"yogurt",3,40,1}] 
+ customerID <0.3407.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,1},
+  {departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,bakery,"buns",20,120,4},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"milk",5,40,7}] 
+ customerID <0.3409.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,5},
+  {departmentProduct,meat,"chicken",40,500,4},
+  {departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,bakery,"bread",8,100,4},
+  {departmentProduct,dairy,"milk",5,40,7},
+  {departmentProduct,dairy,"cheese",10,60,3}] 
+ customerID <0.3518.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,bakery,"bread",8,100,7},
+  {departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"milk",5,40,8}] 
+ customerID <0.3519.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,10},
+  {departmentProduct,meat,"chicken",40,500,7},
+  {departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,bakery,"bread",8,100,7},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,dairy,"yogurt",3,40,10}] 
+ customerID <0.3573.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,6},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,bakery,"buns",20,120,2}] 
+ customerID <0.3572.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,bakery,"bread",8,100,3},
+  {departmentProduct,dairy,"cheese",10,60,4},
+  {departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,dairy,"yogurt",3,40,5}] 
+ customerID <0.3624.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,dairy,"yogurt",3,40,10},
+  {departmentProduct,dairy,"milk",5,40,5},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,meat,"steak",80,500,5},
+  {departmentProduct,meat,"chicken",40,500,1}] 
+ customerID <0.3625.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,9},
+  {departmentProduct,meat,"steak",80,500,1},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,bakery,"buns",20,120,9}] 
+ customerID <0.3651.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,bakery,"buns",20,120,9}] 
+ customerID <0.3652.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,7},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,meat,"chicken",40,500,1}] 
+ customerID <0.3701.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,dairy,"yogurt",3,40,7},
+  {departmentProduct,meat,"chicken",40,500,2},
+  {departmentProduct,meat,"steak",80,500,1}] 
+ customerID <0.3702.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,meat,"steak",80,500,5},
+  {departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,bakery,"buns",20,120,9},
+  {departmentProduct,dairy,"yogurt",3,40,4},
+  {departmentProduct,dairy,"cheese",10,60,6}] 
+ customerID <0.3781.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,meat,"chicken",40,500,10},
+  {departmentProduct,dairy,"cheese",10,60,10},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,bakery,"buns",20,120,3}] 
+ customerID <0.3782.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,dairy,"cheese",10,60,8},
+  {departmentProduct,bakery,"bread",8,100,9},
+  {departmentProduct,meat,"steak",80,500,1},
+  {departmentProduct,meat,"chicken",40,500,10}] 
+ customerID <0.3836.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,dairy,"milk",5,40,3},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,bakery,"bread",8,100,10},
+  {departmentProduct,bakery,"buns",20,120,5},
+  {departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,meat,"steak",80,500,2}] 
+ customerID <0.3835.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,dairy,"yogurt",3,40,5},
+  {departmentProduct,dairy,"milk",5,40,3},
+  {departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,7}] 
+ customerID <0.3890.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"steak",80,500,9},
+  {departmentProduct,meat,"chicken",40,500,6},
+  {departmentProduct,dairy,"milk",5,40,7},
+  {departmentProduct,dairy,"yogurt",3,40,9}] 
+ customerID <0.3889.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,3},
+  {departmentProduct,bakery,"bread",8,100,1},
+  {departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,meat,"steak",80,500,6},
+  {departmentProduct,dairy,"yogurt",3,40,10},
+  {departmentProduct,dairy,"milk",5,40,8}] 
+ customerID <0.3941.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,5},
+  {departmentProduct,meat,"steak",80,500,2},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"cheese",10,60,6}] 
+ customerID <0.3942.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,bakery,"buns",20,120,1},
+  {departmentProduct,meat,"chicken",40,500,3},
+  {departmentProduct,meat,"steak",80,500,8}] 
+ customerID <0.3993.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,10},
+  {departmentProduct,bakery,"buns",20,120,8},
+  {departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,meat,"steak",80,500,6}] 
+ customerID <0.3994.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,meat,"chicken",40,500,1},
+  {departmentProduct,bakery,"bread",8,100,7},
+  {departmentProduct,bakery,"buns",20,120,4},
+  {departmentProduct,dairy,"yogurt",3,40,9},
+  {departmentProduct,dairy,"cheese",10,60,7}] 
+ customerID <0.4045.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,meat,"chicken",40,500,8},
+  {departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,bakery,"buns",20,120,6}] 
+ customerID <0.4046.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,dairy,"cheese",10,60,5},
+  {departmentProduct,bakery,"bread",8,100,7},
+  {departmentProduct,meat,"steak",80,500,8},
+  {departmentProduct,meat,"chicken",40,500,6}] 
+ customerID <0.4133.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,bakery,"buns",20,120,10}] 
+ customerID <0.4195.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,dairy,"milk",5,40,1},
+  {departmentProduct,dairy,"cheese",10,60,6}] 
+ customerID <0.4240.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,bakery,"buns",20,120,5}] 
+ customerID <0.4335.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,9},
+  {departmentProduct,dairy,"yogurt",3,40,4},
+  {departmentProduct,dairy,"cheese",10,60,6},
+  {departmentProduct,bakery,"bread",8,100,2},
+  {departmentProduct,bakery,"buns",20,120,1}] 
+ customerID <0.4351.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,4},
+  {departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,bakery,"buns",20,120,10},
+  {departmentProduct,bakery,"bread",8,100,4}] 
+ customerID <0.4463.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,dairy,"cheese",10,60,2},
+  {departmentProduct,bakery,"bread",8,100,9}] 
+ customerID <0.4509.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"buns",20,120,6},
+  {departmentProduct,bakery,"bread",8,100,3},
+  {departmentProduct,dairy,"cheese",10,60,1},
+  {departmentProduct,dairy,"yogurt",3,40,4}] 
+ customerID <0.4554.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,9},
+  {departmentProduct,dairy,"milk",5,40,8},
+  {departmentProduct,dairy,"yogurt",3,40,8},
+  {departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,bakery,"buns",20,120,5}] 
+ customerID <0.4600.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,bakery,"buns",20,120,7},
+  {departmentProduct,dairy,"yogurt",3,40,1},
+  {departmentProduct,dairy,"milk",5,40,7}] 
+ customerID <0.4640.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,6},
+  {departmentProduct,dairy,"yogurt",3,40,6}] 
+ customerID <0.4653.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,7},
+  {departmentProduct,bakery,"buns",20,120,2},
+  {departmentProduct,dairy,"milk",5,40,2},
+  {departmentProduct,dairy,"yogurt",3,40,10}] 
+ customerID <0.4750.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,3},
+  {departmentProduct,dairy,"yogurt",3,40,3},
+  {departmentProduct,dairy,"milk",5,40,3},
+  {departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,bakery,"buns",20,120,9}] 
+ customerID <0.4792.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,dairy,"cheese",10,60,7},
+  {departmentProduct,dairy,"yogurt",3,40,2},
+  {departmentProduct,dairy,"milk",5,40,10},
+  {departmentProduct,bakery,"bread",8,100,5},
+  {departmentProduct,bakery,"buns",20,120,8}] 
+ customerID <0.4842.0> has AvailableProductsToPurchase: 
+ [{departmentProduct,bakery,"bread",8,100,8},
+  {departmentProduct,bakery,"buns",20,120,4},
+  {departmentProduct,dairy,"milk",5,40,6},
+  {departmentProduct,dairy,"yogurt",3,40,8}] 
+ noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  
+noProducts: this will cause dead lock without implementing suppliers ~n  

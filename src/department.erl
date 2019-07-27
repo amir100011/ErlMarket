@@ -52,7 +52,7 @@ handle_call(getProducts, _From, State) ->
 
 handle_call(getTotalAmountOfValidProduct, _From, State) ->
   % returns the valid Products in the department
-  TimeStamp = masterFunction:getTimeStamp(),
+  TimeStamp =gen_server:call({global,masterFunction},getTimeStamp),
   F = fun() ->
     Q = qlc:q([[E#departmentProduct.product_name, E#departmentProduct.price, E#departmentProduct.amount]
       || E <- mnesia:table(get(server_name)), E#departmentProduct.expiry_time >= TimeStamp]),
@@ -118,8 +118,9 @@ handle_cast(_Request, State) ->
 handle_info(_Info, State) ->
   {noreply, State}.
 
-terminate(_Reason, _State) ->
+terminate(Reason, _State) ->
   io:fwrite("~p says bye bye ~n",[get(server_name)]),
+  writeToLogger("badTermination Reason: ", [Reason]),
   ok.
 
 code_change(_OldVsn, State, _Extra) ->

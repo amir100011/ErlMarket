@@ -1,0 +1,401 @@
+setInitialBudget 1000000
+ setBalance: [add,115]
+ OldBalance: 1000000
+ updateBalance: OldBalance: 1000000 NewBalance:1000115 
+setBalance: [add,120]
+ OldBalance: 1000115
+ updateBalance: OldBalance: 1000115 NewBalance:1000235 
+setBalance: [add,77]
+ OldBalance: 1000235
+ updateBalance: OldBalance: 1000235 NewBalance:1000312 
+setBalance: [add,102]
+ OldBalance: 1000312
+ updateBalance: OldBalance: 1000312 NewBalance:1000414 
+setBalance: [add,49]
+ OldBalance: 1000414
+ updateBalance: OldBalance: 1000414 NewBalance:1000463 
+setBalance: [add,88]
+ OldBalance: 1000463
+ updateBalance: OldBalance: 1000463 NewBalance:1000551 
+setBalance: [add,97]
+ OldBalance: 1000551
+ updateBalance: OldBalance: 1000551 NewBalance:1000648 
+setBalance: [add,109]
+ OldBalance: 1000648
+ updateBalance: OldBalance: 1000648 NewBalance:1000757 
+setBalance: [add,80]
+ OldBalance: 1000757
+ updateBalance: OldBalance: 1000757 NewBalance:1000837 
+setBalance: [add,55]
+ OldBalance: 1000837
+ updateBalance: OldBalance: 1000837 NewBalance:1000892 
+setBalance: [add,89]
+ OldBalance: 1000892
+ updateBalance: OldBalance: 1000892 NewBalance:1000981 
+setBalance: [add,75]
+ OldBalance: 1000981
+ updateBalance: OldBalance: 1000981 NewBalance:1001056 
+setBalance: [add,6]
+ OldBalance: 1001056
+ updateBalance: OldBalance: 1001056 NewBalance:1001062 
+setBalance: [add,10]
+ OldBalance: 1001062
+ updateBalance: OldBalance: 1001062 NewBalance:1001072 
+setBalance: [add,9]
+ OldBalance: 1001072
+ updateBalance: OldBalance: 1001072 NewBalance:1001081 
+setBalance: [add,41]
+ OldBalance: 1001081
+ updateBalance: OldBalance: 1001081 NewBalance:1001122 
+setBalance: [add,55]
+ OldBalance: 1001122
+ updateBalance: OldBalance: 1001122 NewBalance:1001177 
+setBalance: [add,87]
+ OldBalance: 1001177
+ updateBalance: OldBalance: 1001177 NewBalance:1001264 
+setBalance: [add,120]
+ OldBalance: 1001264
+ updateBalance: OldBalance: 1001264 NewBalance:1001384 
+setBalance: [add,12]
+ OldBalance: 1001384
+ updateBalance: OldBalance: 1001384 NewBalance:1001396 
+setBalance: [add,45]
+ OldBalance: 1001396
+ updateBalance: OldBalance: 1001396 NewBalance:1001441 
+setBalance: [add,76]
+ OldBalance: 1001441
+ updateBalance: OldBalance: 1001441 NewBalance:1001517 
+setBalance: [add,154]
+ OldBalance: 1001517
+ updateBalance: OldBalance: 1001517 NewBalance:1001671 
+setBalance: [add,122]
+ OldBalance: 1001671
+ updateBalance: OldBalance: 1001671 NewBalance:1001793 
+setBalance: [add,109]
+ OldBalance: 1001793
+ updateBalance: OldBalance: 1001793 NewBalance:1001902 
+setBalance: [add,21]
+ OldBalance: 1001902
+ updateBalance: OldBalance: 1001902 NewBalance:1001923 
+setBalance: [add,23]
+ OldBalance: 1001923
+ updateBalance: OldBalance: 1001923 NewBalance:1001946 
+setBalance: [add,20]
+ OldBalance: 1001946
+ updateBalance: OldBalance: 1001946 NewBalance:1001966 
+setBalance: [add,57]
+ OldBalance: 1001966
+ updateBalance: OldBalance: 1001966 NewBalance:1002023 
+setBalance: [add,152]
+ OldBalance: 1002023
+ updateBalance: OldBalance: 1002023 NewBalance:1002175 
+setBalance: [add,95]
+ OldBalance: 1002175
+ updateBalance: OldBalance: 1002175 NewBalance:1002270 
+setBalance: [add,100]
+ OldBalance: 1002270
+ updateBalance: OldBalance: 1002270 NewBalance:1002370 
+setBalance: [add,180]
+ OldBalance: 1002370
+ updateBalance: OldBalance: 1002370 NewBalance:1002550 
+setBalance: [add,66]
+ OldBalance: 1002550
+ updateBalance: OldBalance: 1002550 NewBalance:1002616 
+setBalance: [add,22]
+ OldBalance: 1002616
+ updateBalance: OldBalance: 1002616 NewBalance:1002638 
+setBalance: [add,120]
+ OldBalance: 1002638
+ updateBalance: OldBalance: 1002638 NewBalance:1002758 
+setBalance: [add,120]
+ OldBalance: 1002758
+ updateBalance: OldBalance: 1002758 NewBalance:1002878 
+setBalance: [add,80]
+ OldBalance: 1002878
+ updateBalance: OldBalance: 1002878 NewBalance:1002958 
+setBalance: [add,119]
+ OldBalance: 1002958
+ updateBalance: OldBalance: 1002958 NewBalance:1003077 
+setBalance: [add,6]
+ OldBalance: 1003077
+ updateBalance: OldBalance: 1003077 NewBalance:1003083 
+setBalance: [add,58]
+ OldBalance: 1003083
+ updateBalance: OldBalance: 1003083 NewBalance:1003141 
+setBalance: [add,10]
+ OldBalance: 1003141
+ updateBalance: OldBalance: 1003141 NewBalance:1003151 
+setBalance: [add,83]
+ OldBalance: 1003151
+ updateBalance: OldBalance: 1003151 NewBalance:1003234 
+setBalance: [add,168]
+ OldBalance: 1003234
+ updateBalance: OldBalance: 1003234 NewBalance:1003402 
+setBalance: [add,140]
+ OldBalance: 1003402
+ updateBalance: OldBalance: 1003402 NewBalance:1003542 
+setBalance: [add,48]
+ OldBalance: 1003542
+ updateBalance: OldBalance: 1003542 NewBalance:1003590 
+setBalance: [add,114]
+ OldBalance: 1003590
+ updateBalance: OldBalance: 1003590 NewBalance:1003704 
+setBalance: [add,18]
+ OldBalance: 1003704
+ updateBalance: OldBalance: 1003704 NewBalance:1003722 
+setBalance: [add,90]
+ OldBalance: 1003722
+ updateBalance: OldBalance: 1003722 NewBalance:1003812 
+setBalance: [add,140]
+ OldBalance: 1003812
+ updateBalance: OldBalance: 1003812 NewBalance:1003952 
+setBalance: [add,24]
+ OldBalance: 1003952
+ updateBalance: OldBalance: 1003952 NewBalance:1003976 
+setBalance: [add,155]
+ OldBalance: 1003976
+ updateBalance: OldBalance: 1003976 NewBalance:1004131 
+setBalance: [add,71]
+ OldBalance: 1004131
+ updateBalance: OldBalance: 1004131 NewBalance:1004202 
+setBalance: [add,159]
+ OldBalance: 1004202
+ updateBalance: OldBalance: 1004202 NewBalance:1004361 
+setBalance: [add,63]
+ OldBalance: 1004361
+ updateBalance: OldBalance: 1004361 NewBalance:1004424 
+setBalance: [add,33]
+ OldBalance: 1004424
+ updateBalance: OldBalance: 1004424 NewBalance:1004457 
+setBalance: [add,81]
+ OldBalance: 1004457
+ updateBalance: OldBalance: 1004457 NewBalance:1004538 
+setBalance: [add,58]
+ OldBalance: 1004538
+ updateBalance: OldBalance: 1004538 NewBalance:1004596 
+setBalance: [add,78]
+ OldBalance: 1004596
+ updateBalance: OldBalance: 1004596 NewBalance:1004674 
+setBalance: [add,51]
+ OldBalance: 1004674
+ updateBalance: OldBalance: 1004674 NewBalance:1004725 
+setBalance: [add,106]
+ OldBalance: 1004725
+ updateBalance: OldBalance: 1004725 NewBalance:1004831 
+setBalance: [add,49]
+ OldBalance: 1004831
+ updateBalance: OldBalance: 1004831 NewBalance:1004880 
+setBalance: [add,5]
+ OldBalance: 1004880
+ updateBalance: OldBalance: 1004880 NewBalance:1004885 
+setBalance: [add,60]
+ OldBalance: 1004885
+ updateBalance: OldBalance: 1004885 NewBalance:1004945 
+setBalance: [add,18]
+ OldBalance: 1004945
+ updateBalance: OldBalance: 1004945 NewBalance:1004963 
+setBalance: [add,28]
+ OldBalance: 1004963
+ updateBalance: OldBalance: 1004963 NewBalance:1004991 
+setBalance: [add,38]
+ OldBalance: 1004991
+ updateBalance: OldBalance: 1004991 NewBalance:1005029 
+setBalance: [add,91]
+ OldBalance: 1005029
+ updateBalance: OldBalance: 1005029 NewBalance:1005120 
+setBalance: [add,84]
+ OldBalance: 1005120
+ updateBalance: OldBalance: 1005120 NewBalance:1005204 
+setBalance: [add,166]
+ OldBalance: 1005204
+ updateBalance: OldBalance: 1005204 NewBalance:1005370 
+setBalance: [add,135]
+ OldBalance: 1005370
+ updateBalance: OldBalance: 1005370 NewBalance:1005505 
+setBalance: [add,93]
+ OldBalance: 1005505
+ updateBalance: OldBalance: 1005505 NewBalance:1005598 
+setBalance: [add,3]
+ OldBalance: 1005598
+ updateBalance: OldBalance: 1005598 NewBalance:1005601 
+setBalance: [add,138]
+ OldBalance: 1005601
+ updateBalance: OldBalance: 1005601 NewBalance:1005739 
+setBalance: [add,9]
+ OldBalance: 1005739
+ updateBalance: OldBalance: 1005739 NewBalance:1005748 
+setBalance: [add,176]
+ OldBalance: 1005748
+ updateBalance: OldBalance: 1005748 NewBalance:1005924 
+setBalance: [add,81]
+ OldBalance: 1005924
+ updateBalance: OldBalance: 1005924 NewBalance:1006005 
+setBalance: [add,140]
+ OldBalance: 1006005
+ updateBalance: OldBalance: 1006005 NewBalance:1006145 
+setBalance: [add,63]
+ OldBalance: 1006145
+ updateBalance: OldBalance: 1006145 NewBalance:1006208 
+setBalance: [add,190]
+ OldBalance: 1006208
+ updateBalance: OldBalance: 1006208 NewBalance:1006398 
+setBalance: [add,44]
+ OldBalance: 1006398
+ updateBalance: OldBalance: 1006398 NewBalance:1006442 
+setBalance: [add,165]
+ OldBalance: 1006442
+ updateBalance: OldBalance: 1006442 NewBalance:1006607 
+setBalance: [add,40]
+ OldBalance: 1006607
+ updateBalance: OldBalance: 1006607 NewBalance:1006647 
+setBalance: [add,45]
+ OldBalance: 1006647
+ updateBalance: OldBalance: 1006647 NewBalance:1006692 
+setBalance: [add,171]
+ OldBalance: 1006692
+ updateBalance: OldBalance: 1006692 NewBalance:1006863 
+setBalance: [add,139]
+ OldBalance: 1006863
+ updateBalance: OldBalance: 1006863 NewBalance:1007002 
+setBalance: [add,32]
+ OldBalance: 1007002
+ updateBalance: OldBalance: 1007002 NewBalance:1007034 
+setBalance: [add,83]
+ OldBalance: 1007034
+ updateBalance: OldBalance: 1007034 NewBalance:1007117 
+setBalance: [add,128]
+ OldBalance: 1007117
+ updateBalance: OldBalance: 1007117 NewBalance:1007245 
+setBalance: [add,151]
+ OldBalance: 1007245
+ updateBalance: OldBalance: 1007245 NewBalance:1007396 
+setBalance: [add,111]
+ OldBalance: 1007396
+ updateBalance: OldBalance: 1007396 NewBalance:1007507 
+setBalance: [add,63]
+ OldBalance: 1007507
+ updateBalance: OldBalance: 1007507 NewBalance:1007570 
+setBalance: [add,118]
+ OldBalance: 1007570
+ updateBalance: OldBalance: 1007570 NewBalance:1007688 
+setBalance: [add,106]
+ OldBalance: 1007688
+ updateBalance: OldBalance: 1007688 NewBalance:1007794 
+setBalance: [add,117]
+ OldBalance: 1007794
+ updateBalance: OldBalance: 1007794 NewBalance:1007911 
+setBalance: [add,24]
+ OldBalance: 1007911
+ updateBalance: OldBalance: 1007911 NewBalance:1007935 
+setBalance: [add,124]
+ OldBalance: 1007935
+ updateBalance: OldBalance: 1007935 NewBalance:1008059 
+setBalance: [add,162]
+ OldBalance: 1008059
+ updateBalance: OldBalance: 1008059 NewBalance:1008221 
+setBalance: [add,72]
+ OldBalance: 1008221
+ updateBalance: OldBalance: 1008221 NewBalance:1008293 
+setBalance: [add,160]
+ OldBalance: 1008293
+ updateBalance: OldBalance: 1008293 NewBalance:1008453 
+setBalance: [add,47]
+ OldBalance: 1008453
+ updateBalance: OldBalance: 1008453 NewBalance:1008500 
+setBalance: [add,9]
+ OldBalance: 1008500
+ updateBalance: OldBalance: 1008500 NewBalance:1008509 
+setBalance: [add,48]
+ OldBalance: 1008509
+ updateBalance: OldBalance: 1008509 NewBalance:1008557 
+setBalance: [add,140]
+ OldBalance: 1008557
+ updateBalance: OldBalance: 1008557 NewBalance:1008697 
+setBalance: [add,40]
+ OldBalance: 1008697
+ updateBalance: OldBalance: 1008697 NewBalance:1008737 
+setBalance: [add,36]
+ OldBalance: 1008737
+ updateBalance: OldBalance: 1008737 NewBalance:1008773 
+setBalance: [add,75]
+ OldBalance: 1008773
+ updateBalance: OldBalance: 1008773 NewBalance:1008848 
+setBalance: [add,24]
+ OldBalance: 1008848
+ updateBalance: OldBalance: 1008848 NewBalance:1008872 
+setBalance: [add,121]
+ OldBalance: 1008872
+ updateBalance: OldBalance: 1008872 NewBalance:1008993 
+setBalance: [add,54]
+ OldBalance: 1008993
+ updateBalance: OldBalance: 1008993 NewBalance:1009047 
+setBalance: [add,190]
+ OldBalance: 1009047
+ updateBalance: OldBalance: 1009047 NewBalance:1009237 
+setBalance: [add,106]
+ OldBalance: 1009237
+ updateBalance: OldBalance: 1009237 NewBalance:1009343 
+setBalance: [add,56]
+ OldBalance: 1009343
+ updateBalance: OldBalance: 1009343 NewBalance:1009399 
+setBalance: [add,26]
+ OldBalance: 1009399
+ updateBalance: OldBalance: 1009399 NewBalance:1009425 
+setBalance: [add,99]
+ OldBalance: 1009425
+ updateBalance: OldBalance: 1009425 NewBalance:1009524 
+setBalance: [add,113]
+ OldBalance: 1009524
+ updateBalance: OldBalance: 1009524 NewBalance:1009637 
+setBalance: [add,170]
+ OldBalance: 1009637
+ updateBalance: OldBalance: 1009637 NewBalance:1009807 
+setBalance: [add,101]
+ OldBalance: 1009807
+ updateBalance: OldBalance: 1009807 NewBalance:1009908 
+setBalance: [add,151]
+ OldBalance: 1009908
+ updateBalance: OldBalance: 1009908 NewBalance:1010059 
+setBalance: [add,121]
+ OldBalance: 1010059
+ updateBalance: OldBalance: 1010059 NewBalance:1010180 
+setBalance: [add,76]
+ OldBalance: 1010180
+ updateBalance: OldBalance: 1010180 NewBalance:1010256 
+setBalance: [add,60]
+ OldBalance: 1010256
+ updateBalance: OldBalance: 1010256 NewBalance:1010316 
+setBalance: [add,131]
+ OldBalance: 1010316
+ updateBalance: OldBalance: 1010316 NewBalance:1010447 
+setBalance: [add,121]
+ OldBalance: 1010447
+ updateBalance: OldBalance: 1010447 NewBalance:1010568 
+setBalance: [add,78]
+ OldBalance: 1010568
+ updateBalance: OldBalance: 1010568 NewBalance:1010646 
+setBalance: [add,35]
+ OldBalance: 1010646
+ updateBalance: OldBalance: 1010646 NewBalance:1010681 
+setBalance: [add,108]
+ OldBalance: 1010681
+ updateBalance: OldBalance: 1010681 NewBalance:1010789 
+setBalance: [add,30]
+ OldBalance: 1010789
+ updateBalance: OldBalance: 1010789 NewBalance:1010819 
+setBalance: [add,126]
+ OldBalance: 1010819
+ updateBalance: OldBalance: 1010819 NewBalance:1010945 
+setBalance: [add,39]
+ OldBalance: 1010945
+ updateBalance: OldBalance: 1010945 NewBalance:1010984 
+setBalance: [add,67]
+ OldBalance: 1010984
+ updateBalance: OldBalance: 1010984 NewBalance:1011051 
+setBalance: [add,73]
+ OldBalance: 1011051
+ updateBalance: OldBalance: 1011051 NewBalance:1011124 
+setBalance: [add,9]
+ OldBalance: 1011124
+ updateBalance: OldBalance: 1011124 NewBalance:1011133 
+handle_info 

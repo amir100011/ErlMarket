@@ -1,0 +1,586 @@
+timerSupervisor 
+strating initialization 
+timerSupervisorLoop 
+Initializaing Departments 
+Initializaing Purchase Departments 
+Initializaing CahsierServer 
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",5].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",5].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",6].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",5].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",5].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",4].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",3].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["create",2].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",1].
+updateNumberOfCustomers:UpdatedStatus 
+ ["terminate",0].
+getNumberofCustomers reached 
+timerSupervisorLoop 
+Master Function says Bye Bye 
+Timer is terminated 

@@ -18,4 +18,7 @@ compiler()->
   io:fwrite("~p~n", [compile:file(purchaseDepartment, debug_info)]),
   io:fwrite("~p~n", [compile:file(masterFunction, debug_info)]),
   io:fwrite("~p~n", [compile:file(customer, debug_info)]),
-  io:fwrite("~p~n", [compile:file(department, debug_info)]).
+  io:fwrite("~p~n", [compile:file(department, debug_info)]),
+  io:fwrite("~p~n", [compile:file(interface, debug_info)]),
+  inventory:initInventory(node()),
+  interface:start().

@@ -12,12 +12,12 @@
 -define(SAVING_RATIO, 0.9).
 -define(LOGGER_FILE_PATH, "../Logger-PurchaseDepartment.txt").
 -define(DEPARTMENT_LIST, inventory:getDepartments()).
--define(INTERVAL, 5000). % Five Seconds
+-define(INTERVAL, 500). % 500 milliSeconds
 -behavior(gen_server).
 -author("amir").
 
 %% API
--export([init/1, handle_call/3, handle_cast/2, start/0]).
+-export([init/1, handle_call/3, handle_cast/2, start/0, handle_info/2]).
 -export([setBalance/2]).
 -export([setInitialBudget/0]).
 -export([testReservation/0]).
@@ -34,7 +34,8 @@
 start() ->
   gen_server:start({global, ?MODULE}, ?MODULE, [], []).
 
-init(Args) ->
+init(_Args) ->
+  setInitialBudget(),
   erlang:send_after(?INTERVAL, self(), trigger),
   {ok, []}.
 
@@ -45,7 +46,8 @@ handle_info(trigger,State) ->
   ListOfValidProductsToReserve = getListOfProductsToReserve(?DEPARTMENT_LIST),
   ListOfValidProductsWithRatio = checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers),
   ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers,ErlMarketBudget),
-  erlang:send_after(?INTERVAL, self(), trigger). %% define new timer
+  erlang:send_after(?INTERVAL, self(), trigger), %% define new timer
+  {noreply,State}.
 
 
 handle_call(_Request, _From, State) ->
@@ -114,7 +116,7 @@ getRatioSingleElement({departmentProduct,Department, Product_name, Price, _Expir
   [Department,Product_name,Price,AmountToOrder].
 
 reserve(ListOfValidProductsWithRatio, CostOfReservation) ->
-  setBalance("deduce", CostOfReservation),
+  setBalance(deduce, CostOfReservation),
   lists:foreach(
     fun(N) ->
       ListOfProductsToAddToDepartment = addProducts(N,ListOfValidProductsWithRatio,[]),
@@ -189,7 +191,8 @@ sumAmountInternal([H|T], Dict) ->
 
 %% @doc returns the current number of customers in ErlMarket
 getNumberOfCustomers() ->
-    masterFunction:castFunc(getNumberOfCustomers).
+  gen_server:call({global,masterFunction}, getNumberOfCustomers).
+%%    masterFunction:castFunc(getNumberOfCustomers).
   % global:send(masterFunction,{"getNumberOfCustomers"}).
 
 getListOfProductsToReserveInternal(DepartmentName) ->
@@ -247,48 +250,50 @@ writeToLogger(String) ->
 
 testReservation() ->
 
-  department:start(meat),
-  department:start(dairy),
-  department:start(bakery),
+  purchaseDepartment:start().
 
-  ListOfProductsToReserve =
-    [[dairy, "milk", 5, 5, 50],
-    [dairy, "yogurt", 1, 5, 3],
-    [dairy, "cheese", 100, 5, 25],
-    [meat, "steak", 17, 5, 33],
-    [meat, "chicken", 9, 5, 7],
-    [bakery, "bread", 9, 5, 77]],
-
-
-
-  reserveTmp(ListOfProductsToReserve).
-
-reserveTmp(RatioedList)->
-  lists:foreach(
-    fun(N) ->
-      List = addProductsAMIR(N,RatioedList,[]),
-      sendProductsToDepartment(N,List)
-    end, ?DEPARTMENT_LIST).
-
-addProductsAMIR(DepartmentName,[H|T],CallList) ->
-  CallListToAdd = addProductsToCallListAMIR(DepartmentName,H,CallList),
-  addProductsAMIR(DepartmentName,T,CallListToAdd);
-addProductsAMIR(_DepartmentName,[],CallList) -> CallList.
-
-
-addProductsToCallListAMIR(DepartmentName,[Department,Product,Price,Expiry,Amount], CallList) ->
-
-  if Department =:= DepartmentName ->
-    ProductToAdd = [#departmentProduct{department = DepartmentName,
-    product_name = Product,
-    price = Price,
-    expiry_time = Expiry,
-    amount = Amount}],
-    CallList++ProductToAdd;
-
-    true -> CallList
-  end.
+%%  department:start(meat),
+%%  department:start(dairy),
+%%  department:start(bakery),
 %%
+%%  ListOfProductsToReserve =
+%%    [[dairy, "milk", 5, 5, 50],
+%%    [dairy, "yogurt", 1, 5, 3],
+%%    [dairy, "cheese", 100, 5, 25],
+%%    [meat, "steak", 17, 5, 33],
+%%    [meat, "chicken", 9, 5, 7],
+%%    [bakery, "bread", 9, 5, 77]],
+%%
+%%
+%%
+%%  reserveTmp(ListOfProductsToReserve).
+%%
+%%reserveTmp(RatioedList)->
+%%  lists:foreach(
+%%    fun(N) ->
+%%      List = addProductsAMIR(N,RatioedList,[]),
+%%      sendProductsToDepartment(N,List)
+%%    end, ?DEPARTMENT_LIST).
+%%
+%%addProductsAMIR(DepartmentName,[H|T],CallList) ->
+%%  CallListToAdd = addProductsToCallListAMIR(DepartmentName,H,CallList),
+%%  addProductsAMIR(DepartmentName,T,CallListToAdd);
+%%addProductsAMIR(_DepartmentName,[],CallList) -> CallList.
+%%
+%%
+%%addProductsToCallListAMIR(DepartmentName,[Department,Product,Price,Expiry,Amount], CallList) ->
+%%
+%%  if Department =:= DepartmentName ->
+%%    ProductToAdd = [#departmentProduct{department = DepartmentName,
+%%    product_name = Product,
+%%    price = Price,
+%%    expiry_time = Expiry,
+%%    amount = Amount}],
+%%    CallList++ProductToAdd;
+%%
+%%    true -> CallList
+%%  end.
+%%%%
 %%addProductsDor([]) -> done;
 %%addProductsDor([H|T]) ->
 %%  Product_Name = H#departmentProduct.product_name,
