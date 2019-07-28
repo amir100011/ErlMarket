@@ -16,7 +16,7 @@
 -define(LOGGER_FILE_PATH, "../Logger-Customer.txt").
 -record(customer, {customer_id, budget, shopping_list}).
 -define(MAXIMUM_BUDGET, 600).
--define(MAXITERATIONS, 10).
+-define(MAXITERATIONS, 5).
 
 
 %%----------------PRIMARY FUNCTION-------------------------
@@ -156,7 +156,6 @@ getBudget()->
 
 terminate() ->
   masterFunction:castFunc(customerOut).
-  %global:send(masterFunction,{customerOut}).
 
 
 
