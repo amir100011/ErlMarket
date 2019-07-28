@@ -16,8 +16,9 @@
 
 
 getDepartments()->
-  mnesia:dirty_all_keys(product). % no problem
-  %mnesia:all_keys(product). % problem
+  Fun = fun() -> mnesia:all_keys(product) end,
+  {atomic, Ans} = mnesia:transaction(Fun),
+  Ans.
 
 test_mnesia()->
   Node = node(),

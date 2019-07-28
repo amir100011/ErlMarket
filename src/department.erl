@@ -197,12 +197,14 @@ getRandomElement([H|T]) ->
 updateAmountOrDeleteProduct(Product, RequestedAmount)->
   DepartmentName = Product#departmentProduct.department,
   ProductAmountInDepartment = Product#departmentProduct.amount,
-  mnesia:dirty_delete_object(DepartmentName, Product),
+  %mnesia:dirty_delete_object(DepartmentName, Product),
+  mnesia:transaction(fun() -> mnesia:delete_object(DepartmentName, Product, write) end),
   RemovedProduct = Product#departmentProduct{amount = RequestedAmount},
   if
     RequestedAmount == ProductAmountInDepartment -> done;
     RequestedAmount < ProductAmountInDepartment ->   New = Product#departmentProduct{amount = ProductAmountInDepartment - RequestedAmount},
-      mnesia:dirty_write(DepartmentName, New) % TODO what to do with dirty
+                                                     mnesia:transaction(fun()-> mnesia:write(DepartmentName, New, write) end)
+      %mnesia:dirty_write(DepartmentName, New)
   end,
   RemovedProduct.
 
@@ -261,10 +263,12 @@ addProducts([H|T]) ->
                         Product = hd(ProductTmp),
                         CurrentAmount = Product#departmentProduct.amount,
                         UpdateProduct = Product#departmentProduct{amount = CurrentAmount + RequestedAmount},
-                        mnesia:dirty_delete_object(get(server_name), Product) ;
+                        mnesia:transaction(fun() -> mnesia:delete_object(get(server_name), Product, write) end);
+                        %mnesia:dirty_delete_object(get(server_name), Product) ;
     true -> UpdateProduct = H
   end,
-  mnesia:dirty_write(get(server_name), UpdateProduct),
+  mnesia:transaction(fun() -> mnesia:write(get(server_name), UpdateProduct, write)  end),
+  %mnesia:dirty_write(get(server_name), UpdateProduct),
   addProducts(T).
 
 
