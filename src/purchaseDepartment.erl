@@ -9,7 +9,7 @@
 -module(purchaseDepartment).
 -include_lib("records.hrl").
 -define(DESIRED_RATIO, 2).
--define(SAVING_RATIO, 0.7).
+-define(SAVING_RATIO, 0.8).
 -define(LOGGER_FILE_PATH, "../Logger-PurchaseDepartment.txt").
 -define(DEPARTMENT_LIST, [dairy,meat,bakery]).
 -define(INTERVAL, 2000). % 5000 milliSeconds
@@ -235,8 +235,9 @@ setBalance(Amount) ->
   OldBalance = get(erlMarketBudget),
   NewBalance = OldBalance + Amount,
   ets:insert(budget,{erlMarketBudget, NewBalance}),
-  writeToLogger("SetBalance",[OldBalance, Amount, NewBalance]),
-  put(erlMarketBudget, NewBalance).
+  writeToLogger("SetBalance",[OldBalance, Amount, ets:lookup(budget,erlMarketBudget)]),
+  put(erlMarketBudget, NewBalance),
+  put(erlMarketBudgetChanges, 0).
 
 %% @doc updates the total amount of change in the ErlMarket's budget
 accumulateChanges(TypeOfAction , Amount) ->

@@ -43,6 +43,7 @@ initErlMarketFunctionality() ->
   initPurchaseDepartment(),
   initCashiers(),
   global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50) ])),
+  global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50) ])),
   {ok, normal}.
 
 globalRegisterMasterFunction() ->
@@ -67,7 +68,7 @@ handle_cast(createCustomer, State) ->
 handle_cast(closeShop, State) ->
   writeToLogger("im at close shop"),
   global:send(?SECURITY1, {terminate}),
-  %global:send(?SECURITY2, {terminate}),
+  global:send(?SECURITY2, {terminate}),
   spawn(?MODULE, waitForCustomerToLeave, []),
   writeToLogger("exiting close shop"),
   {noreply, State};
@@ -115,7 +116,7 @@ terminateDepartments(DepartmentList) ->
                 end, DepartmentList).
 
 waitForCustomerToLeave()->
-  timer:sleep(500),
+  timer:sleep(2500),
   NumberOfCustomers = callFunc(getNumberOfCustomers),
   writeToLogger(variable, "Shop is closed: ~p  Customer remain ~n",[NumberOfCustomers]),
   if
@@ -125,19 +126,6 @@ waitForCustomerToLeave()->
                                exit(normal);
     true -> waitForCustomerToLeave()
   end.
-
-%%periodicallyRestockInventory()->
-%%  % TODO delete this functio and the supplier Process
-%%  receive
-%%    {terminate} -> writeToLogger("Supplier Out"),
-%%                   exit(normal);
-%%          MSG -> writeToLogger(variable,"Got Msg: ~p~n",[MSG])
-%%    after 2000 ->
-%%      writeToLogger("Restocking inventory"),
-%%      spawn(inventory, fillInventory, []),
-%%      periodicallyRestockInventory()
-%%  end.
-
 
 
 initPurchaseDepartment() ->
@@ -159,7 +147,7 @@ initCustomer(DelayQ) ->
       castFunc(createCustomer),
       customer:initCustomer(),
       castFunc(createCustomer),
-      initCustomer(round(rand:uniform() * 50))
+      initCustomer(round(rand:uniform() * 20))
   end.
   %writeToLogger("Initializaing Customer"),
 
@@ -214,8 +202,13 @@ timerSupervisorLoop()->
   end.
 
 getTimeStamp()->
-  TimeStamp = callFunc(getTimeStamp).
+  callFunc(getTimeStamp).
 
+waitForPurchaseDepartment() ->
+  case global:whereis_name(purchaseDepartment) of
+    undefined -> continue;
+    _ -> waitForPurchaseDepartment()
+  end.
 
 terminatorLoop()->
   receive
@@ -223,12 +216,11 @@ terminatorLoop()->
   after 5000 ->
     writeToLogger("Terminator decided program is dead"),
     gen_server:cast({global, purchaseDepartment},terminate),
-    timer:sleep(2500), % wait for trigger to close down purchase department
+    waitForPurchaseDepartment(),
     cashierServer:castFunc(terminate),
     terminateDepartments(inventory:getDepartments()),
     castFunc(terminate),
     deleteMnesia(),
-    %global:send(?TIMER, "terminate"),
     exit(normal)
   end.
 
