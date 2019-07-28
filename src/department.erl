@@ -18,17 +18,16 @@
 -export([init/1, handle_call/3, handle_cast/2,
   handle_info/2, terminate/2, code_change/3]).
 
--export([start/1, callFunc/2, castFunc/2]).
+-export([start/1,callFunc/2, castFunc/2]).
 
 %% @doc create a global gen_server process that deals with the department backend
-
 start(Name) ->
   gen_server:start({global, Name}, ?MODULE, Name, []).
 
 
 %% @doc the gen_server process preforms this initalization
 init(_Args) ->
-  inventory:initInventory([node()]), % TODO once we have nodes we should initialize the Inventory once for all nodes, so in future design we delete this line
+ % inventory:initInventory([node()]), % TODO once we have nodes we should initialize the Inventory once for all nodes, so in future design we delete this line
   put(server_name, _Args), % for future reference to the department mnesia table
   {ok, normal}.
 
@@ -162,9 +161,8 @@ executeSale([H|T], Discount)  when Discount < 1 ->
   NewPriceInt = round(NewPrice),
   New = H#departmentProduct{price = NewPriceInt},
   Department = H#departmentProduct.department,
-  Fun = fun() ->   mnesia:delete_object(Department, H, write),
-                   mnesia:write(Department, New, write) end,
-  mnesia:transaction(Fun),
+  mnesia:dirty_delete_object(Department, H),
+  mnesia:dirty_write(Department, New),
   executeSale(T, Discount).
 
 
@@ -179,9 +177,8 @@ cancelSale([H|T]) ->
   {atomic, [NormalPrice]} = mnesia:transaction(F),
   Department = H#departmentProduct.department,
   New = H#departmentProduct{price = NormalPrice},
-  Fun = fun() ->   mnesia:delete_object(Department, H, write),
-                   mnesia:write(Department, New, write) end,
-  mnesia:transaction(Fun),
+  mnesia:dirty_delete_object(Department, H),
+  mnesia:dirty_write(Department, New),
   cancelSale(T).
 
 % a helper function to get a random element from a list
@@ -200,14 +197,12 @@ getRandomElement([H|T]) ->
 updateAmountOrDeleteProduct(Product, RequestedAmount)->
   DepartmentName = Product#departmentProduct.department,
   ProductAmountInDepartment = Product#departmentProduct.amount,
-  Fun = fun() ->   mnesia:delete_object(DepartmentName, Product, write) end,
-  mnesia:transaction(Fun),
+  mnesia:dirty_delete_object(DepartmentName, Product),
   RemovedProduct = Product#departmentProduct{amount = RequestedAmount},
   if
     RequestedAmount == ProductAmountInDepartment -> done;
     RequestedAmount < ProductAmountInDepartment ->   New = Product#departmentProduct{amount = ProductAmountInDepartment - RequestedAmount},
-    Fun = fun() ->   mnesia:write(DepartmentName, New, write) end,
-    mnesia:transaction(Fun)
+      mnesia:dirty_write(DepartmentName, New) % TODO what to do with dirty
   end,
   RemovedProduct.
 
@@ -266,12 +261,10 @@ addProducts([H|T]) ->
                         Product = hd(ProductTmp),
                         CurrentAmount = Product#departmentProduct.amount,
                         UpdateProduct = Product#departmentProduct{amount = CurrentAmount + RequestedAmount},
-                        Fun = fun() ->  mnesia:delete_object(get(server_name), Product, write) end,
-                        mnesia:transaction(Fun);
+                        mnesia:dirty_delete_object(get(server_name), Product) ;
     true -> UpdateProduct = H
   end,
-  Fun = fun() -> mnesia:write(get(server_name), UpdateProduct, write) end,
-  mnesia:transaction(Fun),
+  mnesia:dirty_write(get(server_name), UpdateProduct),
   addProducts(T).
 
 
