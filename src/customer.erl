@@ -10,33 +10,36 @@
 -author("dorliv").
 
 %% API
--export([testInit/0, initCustomer/0, getBudget/0,goShopping/1]).
+-export([testInit/0, initCustomer/0, getBudget/0,goShopping/0]).
 -include_lib("records.hrl").
 -define(DEPARTMENT_LIST, inventory:getDepartments()).
 -define(LOGGER_FILE_PATH, "../Logger-Customer.txt").
 -record(customer, {customer_id, budget, shopping_list}).
--define(MAXIMUM_BUDGET, 10000).
-
+-define(MAXIMUM_BUDGET, 200).
+-define(MAXITERATIONS, 10).
 
 
 %%----------------PRIMARY FUNCTION-------------------------
 
 %% @doc initialize the customer and spawn a customer process that shops in ErlMarket
 initCustomer() ->
- %% inventory:initInventory([node()]), % TODO once we have nodes we should initialize the Inventory once for all nodes, so in future design we delete this line
-  Customer = #customer{customer_id = self(), budget = initBudget(), shopping_list = createShuffledShoppingList()},
-  spawn(customer, goShopping, [Customer]).
+  spawn(customer, goShopping, []).
 
 %% @doc the life cycle of a customer
-goShopping(Customer)->
-  writeToLogger("reached to goShopping"),
+goShopping()->
+  timer:sleep(100),
+  %writeToLogger("reached to goShopping"),
+  Customer = #customer{customer_id = self(), budget = initBudget(), shopping_list = createShuffledShoppingList()},
   put(customerInfo, Customer),
-  writeToLogger("customerInfo: ", Customer),
+  %writeToLogger("customerInfo: ", Customer),
   UniqueShuffledDepartmentList = shuffleList(?DEPARTMENT_LIST),
   OrderShoppingListByDepartments = getProductsFromDepartments(Customer#customer.shopping_list,UniqueShuffledDepartmentList),
+  put(requesIteration, 0),
   AvailableProductsToPurchase = takeTheProductsFromTheDifferentDepartments(OrderShoppingListByDepartments, UniqueShuffledDepartmentList),
-  writeToLogger("customerInfo - AvailableProductsToPurchase: ", AvailableProductsToPurchase),
+  writeToLogger(variable, "customerID ~p has AvailableProductsToPurchase: ~n ~p ~n ", [self(), AvailableProductsToPurchase]),
+  %{AvailableProductsToPurchase, Customer}.
   pay(AvailableProductsToPurchase,Customer#customer.budget),
+  lists:foreach(fun(E) -> department:castFunc(E, getProducts) end, ?DEPARTMENT_LIST),
   terminate().
 
 
@@ -47,7 +50,7 @@ goShopping(Customer)->
 %% @doc create a shoppinglist element for the customer's shopping list
 createShoppingListEle(H)->
  % {RandomAmount, State} = random:uniform_s(10,random:seed()),
-  RandomAmount = rand:uniform(10),
+  RandomAmount = rand:uniform(4),
   Element = #shoppinlistelement{department_name = H#product.department,
                                 product_name = H#product.product_name,
                                 price = H#product.price,
@@ -93,9 +96,10 @@ shuffleList(ShoppingList) ->
   [X||{_,X} <- lists:sort([ {rand:uniform(), N} || N <- ShoppingList])].
 
 %% @doc returns available purchasable products from all departments according to the shopping list
+getProductsFromDepartments(_ShoppingList,[]) -> [];
 getProductsFromDepartments(ShoppingList, [H|T]) ->
-  [getAllProductsInShoppingListThatBelongToDepartment(ShoppingList, H)]++getProductsFromDepartments(ShoppingList,T);
-getProductsFromDepartments(_ShoppingList,[]) -> [].
+  [getAllProductsInShoppingListThatBelongToDepartment(ShoppingList, H)]++getProductsFromDepartments(ShoppingList,T).
+
 
 
 %% @doc this function should be used by the customer process before shopping at a certain department
@@ -112,16 +116,31 @@ getAllProductsInShoppingListThatBelongToDepartment([],_DepartmentName) -> [].
 takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T]) ->
   LastElementInList =  lists:nth(1,OrderedShoppingList),
   NewList = lists:delete(LastElementInList,OrderedShoppingList),
-  if LastElementInList =:= [] -> takeTheProductsFromTheDifferentDepartments(NewList, T);
+  RequestIterations = get(requesIteration),
+  if
+    LastElementInList =:= [] ->
+      takeTheProductsFromTheDifferentDepartments(NewList, T);
+    RequestIterations >= ?MAXITERATIONS ->  % To avoid deadlock
+       AnsFromServer = gen_server:call({global,H},{purchaseandleave,LastElementInList}), % buy what ever is able and leave
+       AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T); % products found
     true ->
-      gen_server:call({global,H},{purchase,LastElementInList}) ++
-      takeTheProductsFromTheDifferentDepartments(NewList, T)
+       AnsFromServer = gen_server:call({global,H},{purchase,LastElementInList}),
+       if
+         AnsFromServer == noProducts ->
+                  put(requesIteration, RequestIterations + 1),
+                 % if products were not found in department wait for them to restock,
+                  timer:sleep(2500),
+                  takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T]); % try again
+         true ->  put(requesIteration, 0),
+                  AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T) % products found
+       end
   end;
+
 takeTheProductsFromTheDifferentDepartments(_OrderedShoppingList, []) -> [].
 
 
 pay(AvailableProductsToPurchase, Balance) ->
-  writeToLogger("i'm paying"),
+  %writeToLogger("i'm paying"),
   gen_server:cast({global,cashierServer}, {pay, AvailableProductsToPurchase,Balance}).
 
 
@@ -136,7 +155,8 @@ getBudget()->
 
 
 terminate() ->
-  global:send(masterFunction,{"customerOut"}).
+  masterFunction:castFunc(customerOut).
+  %global:send(masterFunction,{customerOut}).
 
 
 
@@ -156,6 +176,11 @@ writeToLogger(String, List) ->
   io:format(S,"~s~n ",[String]),
   file:close(S),
   file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
+
+writeToLogger(variable, String, Variables) ->
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
+  io:format(S, String, Variables),
+  file:close(S).
 
 writeToLogger(String) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),

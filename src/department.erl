@@ -39,6 +39,18 @@ callFunc(ServerName, Message) ->
 castFunc(ServerName, Message) ->
   gen_server:cast({global, ServerName}, Message).
 
+
+getProductList(_, [], Ans) -> Ans;
+getProductList(ListAns, [H|T], Ans) ->
+  ProductName = H#product.product_name,
+  Pred = fun(E) -> lists:nth(1, E) == ProductName end,  % checking if product exist
+  List = lists:filter(Pred, ListAns),
+  if
+    List == [] -> NewElem = [ProductName, H#product.price, 0], % no product so we create a new element
+                  getProductList(ListAns, T, Ans ++ [NewElem]);
+    true ->       getProductList(ListAns, T, Ans)
+  end.
+
 %% @doc handle_call is a synchronic kind of call to the server where the sender waits for a reply,
 %% TODO in future work we want to execute each call to the server with a thread to enhance performances and prevent starvation
 handle_call(getProducts, _From, State) ->
@@ -50,34 +62,43 @@ handle_call(getProducts, _From, State) ->
   {atomic, ListAns} = mnesia:transaction(F),
   {reply, ListAns, State};
 
-handle_call(getTotalAmountOfValidProduct, _From, State) ->
+handle_call({getTotalAmountOfValidProduct, TimeStamp}, _From, State) ->
   % returns the valid Products in the department
-  TimeStamp = 50, %  TODO get timestamp
   F = fun() ->
     Q = qlc:q([[E#departmentProduct.product_name, E#departmentProduct.price, E#departmentProduct.amount]
       || E <- mnesia:table(get(server_name)), E#departmentProduct.expiry_time >= TimeStamp]),
     qlc:e(Q)
       end,
   {atomic, ListAns} = mnesia:transaction(F),
-  {reply, ListAns, State};
+  writeToLogger(variable, "Test : Before adding non exisiting ~p~n",[ListAns]),
+  {atomic, DepartmentProd} = inventory:getProductsFromDepartment(get(server_name)),
+  ProductList = getProductList(ListAns, DepartmentProd, ListAns),
+  writeToLogger(variable, "Test : After adding non exisiting ~p~n",[ProductList]),
+  {reply, ProductList, State};
 
 
 handle_call({purchase, ListOfProducts}, _From, State) ->
   % a purchase request has been made, the department removes the products that exist in the inventory
-  writeToLogger("got to handle call with the following list: ", ListOfProducts),
-  RemovedProducts = removeProducts(ListOfProducts),
+  RemovedProducts = removeProducts(ListOfProducts, [], false),
   {reply, RemovedProducts, State};
 
-
-handle_call(_, _, _) ->
-  % debugging purposes % TODO delete before submisson
-  io:fwrite("why imm here?").
+handle_call({purchaseandleave, ListOfProducts}, _From, State) ->
+  % a purchase request has been made, the department removes the products that exist in the inventory
+  RemovedProducts = removeProducts(ListOfProducts, [], true),
+  {reply, RemovedProducts, State}.
 
 %% @doc handle_call is a asynchronic kind of call to the server where the sender doesn't wait for a reply,
 %% TODO in future work we want to execute each cast to the server with a thread to enhance performances and prevent starvation
 handle_cast({return, ListOfProduct}, State) ->
-  % a return/new shipment of products have been made, this function adds the products to the table,
+  % a return shipment of products have been made, this function adds the products to the table,
   % or update the amount of existing similar products
+  addProducts(ListOfProduct),
+  {noreply, State};
+
+handle_cast({restock, ListOfProduct}, State) ->
+  % a new shipment of products have been made, this function adds the products to the table,
+  % or update the amount of existing similar products
+  writeToLogger("restock ",[?MODULE,ListOfProduct]),
   addProducts(ListOfProduct),
   {noreply, State};
 
@@ -103,11 +124,19 @@ handle_cast(cancelSale, State)->
   cancelSale(ListAns),
   {noreply, normal};
 
-
+handle_cast(getProducts, State) ->
+  % get Products that are currently in
+  F = fun() ->
+    Q = qlc:q([E || E <- mnesia:table(get(server_name))]),
+    qlc:e(Q)
+      end,
+  {atomic, ListAns} = mnesia:transaction(F),
+  writeToLogger(variable, "Department ~p Inventory is:  ~p ~n", [get(server_name) , ListAns]),
+  {noreply, State};
 
 handle_cast(terminate, State) ->
-  terminate(0,0),
-  {noreply, State};
+  %terminate(0,0),
+  {stop, normal, State};
 
 handle_cast(_Request, State) ->
   {noreply, State}.
@@ -115,8 +144,9 @@ handle_cast(_Request, State) ->
 handle_info(_Info, State) ->
   {noreply, State}.
 
-terminate(_Reason, _State) ->
-  io:fwrite("~p says bye bye ~n",[atom_to_list(server_name)]),
+terminate(Reason, _State) ->
+  io:fwrite("~p says bye bye ~n",[get(server_name)]),
+  writeToLogger("badTermination Reason: ", [Reason]),
   ok.
 
 code_change(_OldVsn, State, _Extra) ->
@@ -170,16 +200,16 @@ updateAmountOrDeleteProduct(Product, RequestedAmount)->
   mnesia:dirty_delete_object(DepartmentName, Product),
   RemovedProduct = Product#departmentProduct{amount = RequestedAmount},
   if
-    RequestedAmount =:= ProductAmountInDepartment -> done;
+    RequestedAmount == ProductAmountInDepartment -> done;
     RequestedAmount < ProductAmountInDepartment ->   New = Product#departmentProduct{amount = ProductAmountInDepartment - RequestedAmount},
-      mnesia:dirty_write(DepartmentName, New)
+      mnesia:dirty_write(DepartmentName, New) % TODO what to do with dirty
   end,
   RemovedProduct.
 
 
 %% @doc this function is used when a purchase is made and we need to update the department wares
-removeProducts([]) -> [];
-removeProducts([H|T]) ->
+removeProducts([], Ans, _) -> Ans;
+removeProducts([H|T], Ans, FlagToBuyWhatThereIs) when FlagToBuyWhatThereIs == false ->
   Product_Name = H#shoppinlistelement.product_name,
   RequestedAmount = H#shoppinlistelement.amount,
   F = fun() ->
@@ -189,11 +219,28 @@ removeProducts([H|T]) ->
       end,
   {atomic, ListAns} = mnesia:transaction(F),
   if
-    ListAns =:= [] -> removeProducts(T) ;
+    ListAns =:= [] -> removeProducts([], noProducts, FlagToBuyWhatThereIs); % send the customer a delay message to wait for product
     true ->
       ProductChosenRandomlyFromAvailableProducts = getRandomElement(ListAns),
       Product = updateAmountOrDeleteProduct(ProductChosenRandomlyFromAvailableProducts, RequestedAmount),
-      removeProducts(T) ++ [Product]
+      removeProducts(T, Ans ++ [Product], FlagToBuyWhatThereIs)
+  end;
+
+removeProducts([H|T], Ans, FlagToBuyWhatThereIs) when FlagToBuyWhatThereIs == true ->
+  Product_Name = H#shoppinlistelement.product_name,
+  RequestedAmount = H#shoppinlistelement.amount,
+  F = fun() ->
+    Q = qlc:q([E || E <- mnesia:table(get(server_name)), E#departmentProduct.product_name =:= Product_Name,
+      E#departmentProduct.amount >= RequestedAmount ]),
+    qlc:e(Q)
+      end,
+  {atomic, ListAns} = mnesia:transaction(F),
+  if
+    ListAns =:= [] -> removeProducts(T, Ans, FlagToBuyWhatThereIs);
+    true ->
+      ProductChosenRandomlyFromAvailableProducts = getRandomElement(ListAns),
+      Product = updateAmountOrDeleteProduct(ProductChosenRandomlyFromAvailableProducts, RequestedAmount),
+      removeProducts(T, Ans ++ [Product], FlagToBuyWhatThereIs)
   end.
 
 
@@ -234,7 +281,10 @@ writeToLogger(String, List) ->
   io:format(S,"~s~n ",[String]),
   file:close(S),
   file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
-
+writeToLogger(variable, String, Variables) ->
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
+  io:format(S, String, Variables),
+  file:close(S).
 writeToLogger(String) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s ~n",[String]),
