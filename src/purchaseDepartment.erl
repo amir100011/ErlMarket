@@ -8,59 +8,97 @@
 %%%-------------------------------------------------------------------
 -module(purchaseDepartment).
 -include_lib("records.hrl").
--define(DESIRED_RATIO, 0.5).
--define(SAVING_RATIO, 0.9).
+-define(DESIRED_RATIO, 2).
+-define(SAVING_RATIO, 0.8).
 -define(LOGGER_FILE_PATH, "../Logger-PurchaseDepartment.txt").
--define(DEPARTMENT_LIST, inventory:getDepartments()).
+-define(DEPARTMENT_LIST, [dairy,meat,bakery]).
+-define(INTERVAL, 2000). % 5000 milliSeconds
+-define(MAX_NUMBER_OF_REQUESTS, 1000).
+-behavior(gen_server).
 -author("amir").
 
 %% API
--export([initPurchaseDepartment/0]).
--export([setBalance/2]).
+-export([init/1, handle_call/3, handle_cast/2, start/0, handle_info/2]).
+-export([setBalance/1]).
 -export([setInitialBudget/0]).
 -export([testReservation/0]).
 -export([sumAmount/2]).
--export([getRatio/2,ratioToReserve/3]).
--export([initPurchaseDepartmentData/0]).
--export([writeToLogger/2]).
+-export([getRatio/2,ratioToReserve/4]).
+-export([writeToLogger/2, castFunc/1, terminate/2]).
 
 
+%%---------------------------------------------------------
+%%                  GEN_SERVER FUNCTIONS
+%%---------------------------------------------------------
 
-%%----------------PRIMARY FUNCTION-------------------------
-initPurchaseDepartment() ->
-  global:register_name(purchaseDepartment,spawn(purchaseDepartment, initPurchaseDepartmentData, [])).
+start() ->
+  gen_server:start({global, ?MODULE}, ?MODULE, [], []).
 
-
-%%----------------INTERNAL FUNCTIONS-------------------------
-initPurchaseDepartmentData()->
+init(_Args) ->
   setInitialBudget(),
-  purchaseDepartmentRecursiveLoop().
+  resetIterationCounter(),
+  erlang:send_after(?INTERVAL, self(), trigger),
+  {ok, 0}.
 
-%% @doc Forever loop that checks with each department if it has some products that need to be reserved from supplier.
-purchaseDepartmentRecursiveLoop() ->
-  writeToLogger("got to recursive loop"),
-  receive
-    {"add", AmountToAdd} ->
-      setBalance("add",AmountToAdd), purchaseDepartmentRecursiveLoop();
-    {"deduce",AmountToDeduct} ->
-      setBalance("deduce",AmountToDeduct), purchaseDepartmentRecursiveLoop();
-    {getBudget} -> io:fwrite("Budget is : ~p~n",[getBalance()]), purchaseDepartmentRecursiveLoop();
-    "terminate" -> writeToLogger("purchaseDeartment terminated"), exit(normal)
-  after 5000 ->
-  %getNumberOfCustomers(), % Doesnt work without masterfunction thread
-    receive
-      {"numberOfCustomers",ReturnedNumberOfCustomers} ->
-        NumberOfCustomers = ReturnedNumberOfCustomers,
-        ErlMarketBudget = get(erlMarketBudget),
-        ListOfValidProductsToReserve = getListOfProductsToReserve(?DEPARTMENT_LIST),
-        ListOfValidProductsWithRatio = checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers),
-        ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers,ErlMarketBudget)
-    after 1000 ->
-      purchaseDepartmentRecursiveLoop()
-    end,
+%% @doc interface function for using gen_server cast
+castFunc(Message) ->
+  gen_server:cast({global, ?MODULE}, Message).
 
-    purchaseDepartmentRecursiveLoop()
-  end.
+handle_info(trigger, State) when is_integer(State)->
+  writeToLogger("handle_info"),
+  Time = State,
+  NumberOfCustomers = getNumberOfCustomers(),
+  [{_Budget, ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget),
+  ListOfValidProductsToReserve = getListOfProductsToReserve(?DEPARTMENT_LIST, Time),
+  ListOfValidProductsWithRatio = checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers),
+  ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers,ErlMarketBudget),
+  erlang:send_after(?INTERVAL, self(), trigger), %% define new timer
+  {noreply, State};
+
+handle_info(trigger, State) when is_atom(State)->
+  writeToLogger("trigger shut down"),
+  castFunc(terminate),
+  {noreply, State}.
+
+handle_call(_Request, _From, State) ->
+  {reply, ok, State}.
+
+
+handle_cast({updateTime,Time}, _) ->
+  {noreply, Time};
+handle_cast({updateBalance,Action,Amount}, State) ->
+  writeToLogger("handleCast balance", [Action, Amount]),
+  CurrentIteration = updateIterationCounter(),
+  if CurrentIteration < 1000 -> accumulateChanges(Action,Amount);
+    true -> resetIterationCounter(), setBalance(Amount)
+  end,
+
+  {noreply,State};
+
+handle_cast(terminate, State) when is_integer(State) ->
+  writeToLogger("purchaseDepartment begin termination sequence"),
+  {noreply, stoptrigger};
+
+handle_cast(terminate, State) when is_atom(State) ->
+  writeToLogger("purchaseDepartment terminated"),
+  {stop, normal, State}.
+
+
+
+terminate(Reason, _State) ->
+  io:fwrite("~p says bye bye ~n",[?MODULE]),
+  ets:delete(budget),
+  writeToLogger("purchaseDepartment Termination Reason: ", [Reason]),
+  ok.
+%%---------------------------------------------------------
+%%                  PRIMARY FUNCTION
+%%---------------------------------------------------------
+
+%% @doc returns List of records %[{departmentProduct,department, product_name, price, expiry_time, amount}].
+getListOfProductsToReserve([H|T], Time) ->
+  getListOfProductsToReserveInternal(H, Time) ++ getListOfProductsToReserve(T, Time);
+getListOfProductsToReserve([], _) -> [].
+
 
 %% @doc checks the ratio for each product (customer / number of products valid in depatment)
 checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers) ->
@@ -69,57 +107,82 @@ checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers) ->
   writeToLogger("checkProductStatus:ListOfValidProductsWithRatio  - ",ListOfValidProductsWithRatio),
   ListOfValidProductsWithRatio.
 
+
+ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers, ErlMarketBudget) ->
+  CostOfReservation = priceOfReservation(ListOfValidProductsWithRatio),
+  if CostOfReservation =< ErlMarketBudget ->
+    writeToLogger("ratioToReserve Success: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
+    reserve(ListOfValidProductsWithRatio, Time, CostOfReservation),
+    writeToLogger("reserve - ", ListOfValidProductsWithRatio);
+    %%[{_Budget, ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget); %FIXME change to mneasia red
+    true ->
+      writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
+      DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,
+      ListOfValidProductsWithNewRatio =  editRatio(ListOfValidProductsWithRatio,DeltaRatio),
+      ratioToReserve(ListOfValidProductsWithNewRatio, Time, NumberOfCustomers, ErlMarketBudget)
+  end.
+
+%%---------------------------------------------------------
+%%                  SECONDARY FUNCTIONS
+%%---------------------------------------------------------
+
 getRatio([H|T],NumberOfCustomers)->
   [getRatioSingleElement(H,NumberOfCustomers)] ++ getRatio(T,NumberOfCustomers);
 getRatio([],_NumberOfCustomers)->[].
 
 getRatioSingleElement({departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers) ->
   writeToLogger("getRatioSingleElement",[{departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers]),
-  NumberOfProductsToOrder = (NumberOfCustomers * ?DESIRED_RATIO) - Amount,
-  if  NumberOfProductsToOrder =< 0 -> AmountToOrder = 0;
+  NumberOfProductsToOrder = round((NumberOfCustomers * ?DESIRED_RATIO) - Amount) + 1,
+  if  NumberOfProductsToOrder =< 1 -> AmountToOrder = 0;
     true -> AmountToOrder = NumberOfProductsToOrder
   end,
   [Department,Product_name,Price,AmountToOrder].
 
+reserve(ListOfValidProductsWithRatio, Time, CostOfReservation) ->
+  updateIterationCounter(),
+  accumulateChanges(deduce,CostOfReservation/2),
+  lists:foreach(
+    fun(N) ->
+      ListOfProductsToAddToDepartment = addProducts(N,Time,ListOfValidProductsWithRatio,[]),
+      sendProductsToDepartment(N,ListOfProductsToAddToDepartment)
+    end, ?DEPARTMENT_LIST).
 
+addProducts(DepartmentName,Time,[H|T],CallList) ->
+  CallListToAdd = addProductsToCallList(DepartmentName,Time,H,CallList),
+  addProducts(DepartmentName,Time,T,CallListToAdd);
+addProducts(_DepartmentName,_Time,[],CallList) -> CallList.
 
-ratioToReserve(ListOfValidProductsWithRatio, NumberOfCustomers, ErlMarketBudget) ->
-  CostOfReservation = priceOfReservation(ListOfValidProductsWithRatio),
-    if CostOfReservation =< ErlMarketBudget ->
-      writeToLogger("ratioToReserve Success: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
-     %% reserve(ListOfValidProductsWithRatio, CostOfReservation),
-%%      {A1,A2,A3} = now(),
-%%      random:seed(A1, A2, A3),
-%%      timer:sleep(timer:seconds(random:uniform())); %%THE PROCESS IS SLEEPING FOR RANDOM TIME SEED SAVES ITS DICTIONARY
-      reserve(ListOfValidProductsWithRatio,CostOfReservation),
-      ErlMarketBudget = get(erlMarketBudget);
-      true ->
-        writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
-        DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,
-        ListOfValidProductsWithNewRatio =  editRatio(ListOfValidProductsWithRatio,DeltaRatio),
-        ratioToReserve(ListOfValidProductsWithNewRatio, NumberOfCustomers, ErlMarketBudget)
-    end.
-
+%%---------------------------------------------------------
+%%                  INTERNAL FUNCTIONS
+%%---------------------------------------------------------
 
 editRatio([H|T],DeltaRatio) ->
   [editRatio(H,DeltaRatio,1)] ++ editRatio(T,DeltaRatio);
 editRatio([],_DeltaRatio) -> [].
 
 editRatio([Department,Product_name,Price,AmountToOrder], DeltaRatio, 1) ->
-  [Department,Product_name,Price,round(AmountToOrder*DeltaRatio)].
+  [Department,Product_name,Price,round(AmountToOrder*DeltaRatio) + 1].
 
 priceOfReservation([H|T]) ->
-  priceOfReservation(H,1) + priceOfReservation(T);
+  priceOfReservationSingleElement(H) + priceOfReservation(T);
 priceOfReservation([]) -> 0.
 
-priceOfReservation([_Department,_Product_name,Price,AmountToOrder], 1) ->
+priceOfReservationSingleElement([_Department,_Product_name,Price,AmountToOrder]) ->
   Price * AmountToOrder.
 
+addProductsToCallList(DepartmentName,Time,[Department,Product,Price,Amount], CallList) ->
 
-reserve(_ListOfProductsToReserve, CostOfReservation) ->
-  setBalance("deduce", CostOfReservation).
-  %gen_server:call({global,supplierServer},{reserveation,  ListOfProductsToReserve}). %List [{product_name,amount,price}]
-
+  if Department =:= DepartmentName andalso  Amount > 0 ->
+    ProductToAdd =
+      [#departmentProduct{
+        department = DepartmentName,
+        product_name = Product,
+        price = Price,
+        expiry_time =  Time + round(500*rand:uniform()),
+        amount = Amount}],
+    CallList++ProductToAdd;
+    true -> CallList
+  end.
 
 %% @doc sumAmount return a list of departmentProducts where each product has the amount of all valid products of the same name
 sumAmount(List, Department) ->
@@ -147,42 +210,62 @@ sumAmountInternal([H|T], Dict) ->
   sumAmountInternal(T, UpdatedDictToReturn).
 
 
-
-
-%%----------------------GETTERS/SETTERS----------------------
+%%---------------------------------------------------------
+%%            GETTERS AND SETTERS FUNCTIONS
+%%---------------------------------------------------------
 
 %% @doc returns the current number of customers in ErlMarket
 getNumberOfCustomers() ->
-    masterFunction:castFunc(getNumberOfCustomers).
-  % global:send(masterFunction,{"getNumberOfCustomers"}).
+  masterFunction:callFunc(getNumberOfCustomers).
 
-%% @doc returns List of records %[{departmentProduct,department, product_name, price, expiry_time, amount}].
-getListOfProductsToReserve([H|T]) ->
-  getListOfProductsToReserveInternal(H) ++ getListOfProductsToReserve(T);
-getListOfProductsToReserve([]) -> [].
-
-getListOfProductsToReserveInternal(DepartmentName) ->
-  ListNotOrganized = gen_server:call({global,DepartmentName},getTotalAmountOfValidProduct),
+getListOfProductsToReserveInternal(DepartmentName, Time) ->
+  ListNotOrganized = gen_server:call({global,DepartmentName}, {getTotalAmountOfValidProduct, Time}),
   sumAmount(ListNotOrganized, DepartmentName).
 
+%% @doc initialize process's dictionary fields and creates ETS table for the budget
 setInitialBudget() ->
-  put(erlMarketBudget,10000),
-  writeToLogger("setInitialBudget ", get(erlMarketBudget)).
+  put(erlMarketBudgetChanges,0),
+  put(erlMarketBudget,1000000),
+  ets:new(budget,[set, public, named_table]),
+  ets:insert(budget,{erlMarketBudget, 1000000}),
+  writeToLogger("setInitialBudget ", get(erlMarketBudgetChanges)).
 
-setBalance(TypeOfAction , Amount) ->
-  writeToLogger("setBalance: ", [TypeOfAction,Amount]),
+%% @doc updates the ErlMarket budget in ETS table and also in process dictionary
+setBalance(Amount) ->
   OldBalance = get(erlMarketBudget),
-  writeToLogger("OldBalance: ", OldBalance),
+  NewBalance = OldBalance + Amount,
+  ets:insert(budget,{erlMarketBudget, NewBalance}),
+  writeToLogger("SetBalance",[OldBalance, Amount, ets:lookup(budget,erlMarketBudget)]),
+  put(erlMarketBudget, NewBalance),
+  put(erlMarketBudgetChanges, 0).
+
+%% @doc updates the total amount of change in the ErlMarket's budget
+accumulateChanges(TypeOfAction , Amount) ->
+  writeToLogger("accumulateChanges: ", [TypeOfAction,Amount]),
+  OldBalance = get(erlMarketBudgetChanges),
   case TypeOfAction of
-    "add" -> put(erlMarketBudget, OldBalance + Amount);
-    "deduce" -> put(erlMarketBudget, OldBalance - Amount);
+    add -> put(erlMarketBudgetChanges, OldBalance + Amount);
+    deduce -> put(erlMarketBudgetChanges, OldBalance - Amount);
   _TypeOfAction -> writeToLogger("wierd got: ",TypeOfAction)
   end,
-  NewBalance = get(erlMarketBudget),
+  NewBalance = get(erlMarketBudgetChanges),
   writeToLogger("updateBalance: OldBalance: ",OldBalance, " NewBalance:",NewBalance).
 
-getBalance()-> get(erlMarketBudget).
-%%------------------WRITING TO LOGGER------------------
+sendProductsToDepartment(Department, DepartmentAndList)->
+  writeToLogger("restock ",DepartmentAndList),
+  gen_server:cast({global,Department},{restock, DepartmentAndList}).
+
+resetIterationCounter() ->
+  put(iterationCounter , 0).
+
+updateIterationCounter() ->
+  put(iterationCounter , get(iterationCounter) + 1).
+
+
+%%---------------------------------------------------------
+%%                 WRITE TO LOGGER FUNCTIONS
+%%---------------------------------------------------------
+
 
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
 writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
@@ -200,22 +283,77 @@ writeToLogger(String) ->
   io:format(S,"~s ~n",[String]),
   file:close(S).
 
+%%---------------------------------------------------------
+%%                 TEST FUNCTIONS
+%%---------------------------------------------------------
+
 
 testReservation() ->
+  setInitialBudget(),
+  setBalance(100),
+  setBalance(-150),
+  writeToLogger("reserveTest",[node(),nodes()]),
+  ets:lookup(budget,erlMarketBudget).
+%%  purchaseDepartment:start().
 
-%%  ListOfProductsToReserve =  [{departmentProduct,diary, milk, 5, 5, 50},
-%%    {departmentProduct,meat, "chicken", 9, 5, 7},
-%%    {departmentProduct,bakery, "bread", 9, 5, 77},
-%%    {departmentProduct,diary, "yogurt", 1, 5, 3},
-%%    {departmentProduct,diary, "cheese", 100, 5, 25},
-%%    {departmentProduct,meat, "steak", 17, 5, 33}],
+
+
 %%  department:start(meat),
 %%  department:start(dairy),
 %%  department:start(bakery),
-  initPurchaseDepartment().
+%%
+%%  ListOfProductsToReserve =
+%%    [[dairy, "milk", 5, 5, 50],
+%%    [dairy, "yogurt", 1, 5, 3],
+%%    [dairy, "cheese", 100, 5, 25],
+%%    [meat, "steak", 17, 5, 33],
+%%    [meat, "chicken", 9, 5, 7],
+%%    [bakery, "bread", 9, 5, 77]],
+%%
+%%
+%%
+%%  reserveTmp(ListOfProductsToReserve).
+%%
+%%reserveTmp(RatioedList)->
+%%  lists:foreach(
+%%    fun(N) ->
+%%      List = addProductsAMIR(N,RatioedList,[]),
+%%      sendProductsToDepartment(N,List)
+%%    end, ?DEPARTMENT_LIST).
+%%
+%%addProductsAMIR(DepartmentName,[H|T],CallList) ->
+%%  CallListToAdd = addProductsToCallListAMIR(DepartmentName,H,CallList),
+%%  addProductsAMIR(DepartmentName,T,CallListToAdd);
+%%addProductsAMIR(_DepartmentName,[],CallList) -> CallList.
+%%
+%%
+%%addProductsToCallListAMIR(DepartmentName,[Department,Product,Price,Expiry,Amount], CallList) ->
+%%
+%%  if Department =:= DepartmentName ->
+%%    ProductToAdd = [#departmentProduct{department = DepartmentName,
+%%    product_name = Product,
+%%    price = Price,
+%%    expiry_time = Expiry,
+%%    amount = Amount}],
+%%    CallList++ProductToAdd;
+%%
+%%    true -> CallList
+%%  end.
+%%%%
+%%addProductsDor([]) -> done;
+%%addProductsDor([H|T]) ->
+%%  Product_Name = H#departmentProduct.product_name,
+%%  RequestedAmount = H#departmentProduct.amount,
+%%  ExpiryTime = H#departmentProduct.expiry_time,
+%%  addProductsDor(T).
+%%
+%%
+%%
+
+
+%%   RatioedList = getRatio(Tmp, 1000),
+%%  initPurchaseDepartment().
 %%  ErlMarketBudget = get(erlMarketBudget),
 %%  purchaseDepartment ! {"add",5}.
-
-%%  RatioedList = getRatio(ListOfProductsToReserve, 1000),
 %%  ratioToReserve(RatioedList, 1000, ErlMarketBudget).
 

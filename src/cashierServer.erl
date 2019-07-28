@@ -39,8 +39,8 @@ handle_call(_Request, _From, State) ->
 
 
 handle_cast(terminate, State) ->
-  terminate(0,0),
-  {noreply, State};
+  %terminate(0,0),
+  {stop, normal, State};
 
 %% @doc  checks if the customer can pay or not, if not pays to the maximum available, the rest are going back to the relevant department
 handle_cast({pay,ListOfProductsAndAmounts,CustomerBalance}, State) ->
@@ -141,8 +141,7 @@ costOfSingleProduct({departmentProduct,_department,_productName,PriceForEach,_ex
   Amount * PriceForEach.
 
 updateErlMarketBalance(AmountToAdd) ->
-  global:send(purchaseDepartment, {"add", AmountToAdd}).
-%%  purchaseDepartment:setBalance("add", AmountToAdd).
+  gen_server:cast({global,purchaseDepartment}, {updateBalance, add, AmountToAdd}).
 
 %%------------------WRITING TO LOGGER------------------
 
