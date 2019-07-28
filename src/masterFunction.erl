@@ -21,7 +21,6 @@
 -define(TERMINATOR, terminator).
 -define(SECURITY1, security1).
 -define(SECURITY2, security2).
--define(SUPPLIER, supplierProc).
 -export([getNumberOfCustomers/0]).
 %%-export([periodicallyRestockInventory/0]).
 
@@ -43,9 +42,7 @@ initErlMarketFunctionality() ->
   initDepartments(?DEPARTMENT_LIST),
   initPurchaseDepartment(),
   initCashiers(),
-  %%global:register_name(?SUPPLIER, spawn(?MODULE, periodicallyRestockInventory, [])),
-  global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 100) ])),
-  %global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 100) ])),
+  global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50) ])),
   {ok, normal}.
 
 globalRegisterMasterFunction() ->
@@ -54,7 +51,7 @@ globalRegisterMasterFunction() ->
 handle_call(getTimeStamp, _From, State) ->
   global:send(?TIMER, {getTimeStamp, self()}),
   receive
-    {timeStamp, TimeStamp} -> {TimeStamp, ok, State}
+    {timeStamp, TimeStamp} -> {reply, TimeStamp, State}
   end;
 
 
@@ -70,11 +67,8 @@ handle_cast(createCustomer, State) ->
 handle_cast(closeShop, State) ->
   writeToLogger("im at close shop"),
   global:send(?SECURITY1, {terminate}),
-  writeToLogger("im at close shop"),
   %global:send(?SECURITY2, {terminate}),
-  writeToLogger("im at close shop"),
   spawn(?MODULE, waitForCustomerToLeave, []),
-  writeToLogger("im at close shop"),
   writeToLogger("exiting close shop"),
   {noreply, State};
 
@@ -84,6 +78,7 @@ handle_cast(customerOut, State) ->
 
 handle_cast(terminate, State) ->
   %terminate(0,0),
+  writeToLogger("master function reached terminate"),
   {stop, normal, State}.
 
 handle_info(Info, State) ->
@@ -92,7 +87,7 @@ handle_info(Info, State) ->
 
 terminate(_Reason, _State) ->
   writeToLogger("Master Function says Bye Bye"),
-  global:send(?TIMER, {terminate}),
+  %global:send(?TIMER, {terminate}),
   ok.
 
 %% @doc interface function for using gen_server call
@@ -125,7 +120,8 @@ waitForCustomerToLeave()->
   writeToLogger(variable, "Shop is closed: ~p  Customer remain ~n",[NumberOfCustomers]),
   if
     NumberOfCustomers == 0 ->  writeToLogger("Shop is closed: all customers left~n"),
-                               castFunc(terminate),
+                               global:send(?TIMER, {terminate}),
+                               %castFunc(terminate),
                                exit(normal);
     true -> waitForCustomerToLeave()
   end.
@@ -156,15 +152,14 @@ initCashiers() ->
 initCustomer(DelayQ) ->
   receive
     {terminate} ->
-      writeToLogger("Store is Closed: no new customers~n"),
+      writeToLogger("Store is Closed: no new customers"),
       exit(normal)
-
     after DelayQ ->
       customer:initCustomer(),
       castFunc(createCustomer),
       customer:initCustomer(),
       castFunc(createCustomer),
-      initCustomer(round(rand:uniform() * 10))
+      initCustomer(round(rand:uniform() * 50))
   end.
   %writeToLogger("Initializaing Customer"),
 
@@ -187,6 +182,7 @@ count()->
   timer:sleep(1000),
   CurrTimestamp = ets:update_counter(timer, timestamp, {2, 1}),
   global:send(?TERMINATOR, {running}),
+  gen_server:cast({global,purchaseDepartment}, {updateTime, CurrTimestamp}),
   if
     CurrTimestamp == ?NUMBER_OF_ITERATIONS -> castFunc(closeShop);
     true -> nothing
@@ -226,10 +222,11 @@ terminatorLoop()->
     {running} -> terminatorLoop()
   after 5000 ->
     writeToLogger("Terminator decided program is dead"),
-    gen_server:cast({global,purchaseDepartment},terminate),
+    gen_server:cast({global, purchaseDepartment},terminate),
+    timer:sleep(2500), % wait for trigger to close down purchase department
     cashierServer:castFunc(terminate),
     terminateDepartments(inventory:getDepartments()),
-    global:send(?SUPPLIER, {terminate}),
+    castFunc(terminate),
     deleteMnesia(),
     %global:send(?TIMER, "terminate"),
     exit(normal)

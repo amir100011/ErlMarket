@@ -16,7 +16,7 @@
 -define(LOGGER_FILE_PATH, "../Logger-Customer.txt").
 -record(customer, {customer_id, budget, shopping_list}).
 -define(MAXIMUM_BUDGET, 200).
-
+-define(MAXITERATIONS, 10).
 
 
 %%----------------PRIMARY FUNCTION-------------------------
@@ -30,12 +30,14 @@ initCustomer() ->
 
 %% @doc the life cycle of a customer
 goShopping()->
+  timer:sleep(100),
   %writeToLogger("reached to goShopping"),
   Customer = #customer{customer_id = self(), budget = initBudget(), shopping_list = createShuffledShoppingList()},
   put(customerInfo, Customer),
   %writeToLogger("customerInfo: ", Customer),
   UniqueShuffledDepartmentList = shuffleList(?DEPARTMENT_LIST),
   OrderShoppingListByDepartments = getProductsFromDepartments(Customer#customer.shopping_list,UniqueShuffledDepartmentList),
+  put(requesIteration, 0),
   AvailableProductsToPurchase = takeTheProductsFromTheDifferentDepartments(OrderShoppingListByDepartments, UniqueShuffledDepartmentList),
   writeToLogger(variable, "customerID ~p has AvailableProductsToPurchase: ~n ~p ~n ", [self(), AvailableProductsToPurchase]),
   %{AvailableProductsToPurchase, Customer}.
@@ -51,7 +53,7 @@ goShopping()->
 %% @doc create a shoppinglist element for the customer's shopping list
 createShoppingListEle(H)->
  % {RandomAmount, State} = random:uniform_s(10,random:seed()),
-  RandomAmount = rand:uniform(10),
+  RandomAmount = rand:uniform(4),
   Element = #shoppinlistelement{department_name = H#product.department,
                                 product_name = H#product.product_name,
                                 price = H#product.price,
@@ -117,20 +119,26 @@ getAllProductsInShoppingListThatBelongToDepartment([],_DepartmentName) -> [].
 takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T]) ->
   LastElementInList =  lists:nth(1,OrderedShoppingList),
   NewList = lists:delete(LastElementInList,OrderedShoppingList),
-  if LastElementInList =:= [] -> takeTheProductsFromTheDifferentDepartments(NewList, T);
+  RequestIterations = get(requesIteration),
+  if
+    LastElementInList =:= [] ->
+      takeTheProductsFromTheDifferentDepartments(NewList, T);
+    RequestIterations == ?MAXITERATIONS ->  % To avoid deadlock
+      AnsFromServer = gen_server:call({global,H},{purchaseandleave,LastElementInList}); % buy what ever is able and leave
     true ->
        AnsFromServer = gen_server:call({global,H},{purchase,LastElementInList}),
        if
          AnsFromServer == noProducts ->
+                  put(requesIteration, RequestIterations + 1),
                  % if products were not found in department wait for them to restock,
                  % TODO this will cause dead lock without implementing suppliers
                   writeToLogger("noProducts: this will cause dead lock without implementing suppliers ~n "),
-                  timer:sleep(200),
+                  timer:sleep(2500),
                   takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T]);
          true -> AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T) % products found
        end
-
   end;
+
 takeTheProductsFromTheDifferentDepartments(_OrderedShoppingList, []) -> [].
 
 
