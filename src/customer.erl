@@ -15,7 +15,7 @@
 -define(DEPARTMENT_LIST, inventory:getDepartments()).
 -define(LOGGER_FILE_PATH, "../Logger-Customer.txt").
 -record(customer, {customer_id, budget, shopping_list}).
--define(MAXIMUM_BUDGET, 200).
+-define(MAXIMUM_BUDGET, 600).
 -define(MAXITERATIONS, 10).
 
 
@@ -27,7 +27,7 @@ initCustomer() ->
 
 %% @doc the life cycle of a customer
 goShopping()->
-  timer:sleep(100),
+  timer:sleep(round(rand:uniform() * 2000)),
   %writeToLogger("reached to goShopping"),
   Customer = #customer{customer_id = self(), budget = initBudget(), shopping_list = createShuffledShoppingList()},
   put(customerInfo, Customer),
@@ -50,7 +50,7 @@ goShopping()->
 %% @doc create a shoppinglist element for the customer's shopping list
 createShoppingListEle(H)->
  % {RandomAmount, State} = random:uniform_s(10,random:seed()),
-  RandomAmount = rand:uniform(4),
+  RandomAmount = rand:uniform(6),
   Element = #shoppinlistelement{department_name = H#product.department,
                                 product_name = H#product.product_name,
                                 price = H#product.price,

@@ -235,8 +235,9 @@ setBalance(Amount) ->
   OldBalance = get(erlMarketBudget),
   NewBalance = OldBalance + Amount,
   ets:insert(budget,{erlMarketBudget, NewBalance}),
-  writeToLogger("SetBalance",[OldBalance, Amount, NewBalance]),
-  put(erlMarketBudget, NewBalance).
+  writeToLogger("SetBalance",[OldBalance, Amount, ets:lookup(budget,erlMarketBudget)]),
+  put(erlMarketBudget, NewBalance),
+  put(erlMarketBudgetChanges, 0).
 
 %% @doc updates the total amount of change in the ErlMarket's budget
 accumulateChanges(TypeOfAction , Amount) ->
