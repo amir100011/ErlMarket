@@ -6,7 +6,7 @@ QueueErlang = Queue()  # communication channel between erlang and the plot proce
 Products = {'dairy': ['cheese', 'milk', 'yogurt'],
             'meat': ['steak', 'chicken'],
             'bakery': ['bread', 'buns'],
-            'unified': ['cheese', 'milk', 'yogurt', 'steak', 'chicken', 'bread', 'buns']}
+            'unified': ['cheese', 'milk', 'yogurt','steak', 'chicken','bread', 'buns' ]}
 
 
 def processDepartmentDataFromErlang(title: List, productList: List):

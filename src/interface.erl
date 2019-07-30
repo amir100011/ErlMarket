@@ -10,23 +10,34 @@
 -author("dorliv").
 -include_lib("wx/include/wx.hrl").
 -define(SIZE,{1028, 1028}).
-
+-define(LOGGER_FILE_PATH, "../Logger_interface.txt").
 -behaviour(gen_server).
 
 %% API
--export([start/0, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1]).
+-export([start/1, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1]).
+-define(HISTOGRAM_PATH, "/home/amir/IdeaProjects/ErlMarket/src/drawHistogram.py").
 -define(STARTBUTTON, 1).
 -define(COUNTERBOX,2).
 -define(DRAWBUTTON, 3).
--define(INTERVALBETWEENPLOTS, 2500).  % should be long because doc warn not to over use the python instance to avoid OS take over
+-define(INTERVALBETWEENPLOTS, 2000).  % should be long because doc warn not to over use the python instance to avoid OS take over
 -record(state, {counter, button, start, histogramProcess, histogram, histogramButton}).
 
 
-start()->
-  gen_server:start({global, ?MODULE}, ?MODULE, [], []).
+start(WatchdogPID)->
+  writeToLogger ("Server: Starting up.",[node()]),
+  Exists = global:whereis_name(?MODULE),
+  case Exists of
+    undefined ->
+      writeToLogger("undefined");
+    _defined ->
+      writeToLogger("defined"),
+      global:unregister_name(?MODULE) %FIXME add continue from previous state implementation
+  end,
+  gen_server:start({global, ?MODULE}, ?MODULE, WatchdogPID, []).  %FIXME delete after addition of continuation from previous state implementation
 
-init([])->
-      Wx = wx:new(),
+init(WatchdogPID)->
+  erlang:monitor(process,WatchdogPID),
+  Wx = wx:new(),
       Frame = wxFrame:new(Wx, ?wxID_ANY, "ErlMarket",[{size, ?SIZE}]),
       Counter = wxTextCtrl:new(Frame, ?COUNTERBOX, [{value, "0"}]),
       Label = wxStaticText:new(Frame, ?wxID_ANY, "Number of Customers:"),
@@ -60,19 +71,26 @@ init([])->
       wxButton:connect(DrawHistogramOfDepartmentProduct, command_button_clicked),
       wxFrame:connect(Frame, close_window),
       wxFrame:show(Frame),
-      {ok, P} = python:start([{python_path, "/home/dorliv/Desktop/Erlang/histogram"},{python, "python3"}]), % initialize a python instance
+      {ok, P} = python:start([{python_path, ?HISTOGRAM_PATH},{python, "python3"}]), % initialize a python instance
       {ok, #state{counter = Counter, button = StartButton, start = false,
         histogramProcess = P, histogram = false, histogramButton = DrawHistogramOfDepartmentProduct}}.
 
 
-handle_call(_Request, _From, State) ->
-  Reply = ok,
+handle_call(pid, _From, State) ->
+  Reply = self(),
   {reply, Reply, State}.
 handle_cast(_Msg, State) ->
   {noreply, State}.
 
 
 
+
+handle_info({'DOWN', _MonitorRef, _Type, _Object, _Info},State) ->
+  writeToLogger("handle info raised"),
+  Nodes = shuffleNodes(nodes()),
+  %Nodes = shuffleList(nodes()),
+  erlang:monitor(process,spawn(lists:nth(1,Nodes),watchdog,raise,[self(),?MODULE])),
+  {noreply, State};
 
 
 handle_info(#wx{obj = DepartmentScrollButton, event = #wxCommand{type = command_combobox_selected}}, State) ->
@@ -201,3 +219,31 @@ terminate(_Reason, #state{histogramProcess = P, histogram = false} = State) ->
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%           HELPER FUNCTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+shuffleList(ShoppingList) ->
+  [X||{_,X} <- lists:sort([ {rand:uniform(), N} || N <- ShoppingList])].
+
+
+shuffleNodes([]) -> [node()];
+shuffleNodes(NodeList) ->
+  shuffleList(NodeList).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%       WRITE TO LOGGER FUNCTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+writeToLogger(String) ->
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
+  io:format(S,"~s ~n",[String]),
+  file:close(S).
+
+writeToLogger(String, List) ->
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
+  io:format(S,"~s~n ",[String]),
+  file:close(S),
+  file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
