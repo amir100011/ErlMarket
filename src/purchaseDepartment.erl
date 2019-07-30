@@ -59,9 +59,10 @@ handle_info(trigger, State) when is_atom(State)->
   castFunc(terminate),
   {noreply, State}.
 
-handle_call(_Request, _From, State) ->
-  {reply, ok, State}.
-
+%% @doc returns its own PID for watchdog monitoring
+handle_call(pid, _From, State) ->
+  Reply= self(),
+  {reply, Reply, State}.
 
 handle_cast({updateTime,Time}, _) ->
   {noreply, Time};

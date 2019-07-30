@@ -33,8 +33,10 @@ callFunc(ListOfProductsAndAmounts, CustomerBalance) ->
 castFunc(Message) ->
   gen_server:cast({global, ?MODULE}, Message).
 
-handle_call(_Request, _From, State) ->
-  {reply, ok, State}.
+%% @doc returns its own PID for watchdog monitoring
+handle_call(pid, _From, State) ->
+  Reply= self(),
+  {reply, Reply, State}.
 
 
 handle_cast(terminate, State) ->

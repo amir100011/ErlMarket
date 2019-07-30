@@ -50,6 +50,7 @@ initInventory(NodeList)->
     {record_name, departmentProduct},
     {attributes,record_info(fields,departmentProduct)}]
  ),
+  mnesia:create_table(nodeList,[{type, set}]),
   fillInventory().
 
 

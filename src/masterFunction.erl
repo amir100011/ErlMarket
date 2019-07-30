@@ -8,6 +8,9 @@
 %%%-------------------------------------------------------------------
 -module(masterFunction).
 -author("amir").
+-define(PURCHASE_DEPARTMENT_NODE, 'tmp@amir-Inspiron-5559').
+-define(CASHIER_SERVER_NODE, 'tmp@amir-Inspiron-5559').
+-define(DEPARTMENTS_NODE, 'departments@amir-Inspiron-5559').
 -behavior(gen_server).
 %% API
 %% API
@@ -35,19 +38,22 @@ init(_Args) ->
 
 initErlMarketFunctionality() ->
   put(numberOfCustomers,0),
-  global:register_name(?TERMINATOR, spawn(?MODULE, terminatorLoop, [])),
-  global:register_name(?TIMER, spawn(?MODULE, timerSupervisor, [])),
+  global:register_name(?TERMINATOR, spawn(?MODULE, terminatorLoop, [])),%TODO add monitoring for this
+  global:register_name(?TIMER, spawn(?MODULE, timerSupervisor, [])),%TODO add monitoring for this
   globalRegisterMasterFunction(),
   writeToLogger("strating initialization"),
-  initDepartments(?DEPARTMENT_LIST),
-  initPurchaseDepartment(),
-  initCashiers(),
+  ListOfModulesToNodes = buildListForWatchDogToInitialize(),
   global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   {ok, normal}.
 
 globalRegisterMasterFunction() ->
   global:register_name(masterFunction, self()).
+
+buildListForWatchDogToInitialize() ->
+  DepartmentListOfModulesToNodes = initDepartments(?DEPARTMENT_LIST,[]),
+  DepartmentListOfModulesToNodes ++ [?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]] ++ [?CASHIER_SERVER_NODE,cashierServer,[]].
+
 
 
 handle_call(getTimeStamp, _From, State) ->
@@ -101,11 +107,12 @@ castFunc(Message) ->
 initErlMarketDataBase() ->
   inventory:initInventory(node()).
 
-initDepartments(DepartmentList) ->
-  writeToLogger("Initializaing Departments"),
-  lists:foreach(fun(DepartmentName) ->
-    department:start(DepartmentName)
-                end, DepartmentList).
+initDepartments([H|T],List) ->
+  initDepartments(T,List) ++ [initDepartmentsInternal(H,List)];
+initDepartments([],List) -> List.
+
+initDepartmentsInternal(DepartmentName,List) ->
+  List ++ [?DEPARTMENTS_NODE, department, DepartmentName].
 
 terminateDepartments(DepartmentList) ->
   writeToLogger("terminating Departments"),
@@ -259,6 +266,7 @@ writeToLogger(variable, String, Variables) ->
   io:format(S, String, Variables),
   file:close(S).
 
-test()-> start().
+test()-> watchdog:monitorNewProcess(initDepartments([dairy,meat,bakery],[]) ++ [[?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE,cashierServer,[]]]).
+ % initDepartments([dairy,meat,bakery],[]).
   %NumberOfCustomers = callFunc(getNumberOfCustomers),
   %A = 5.

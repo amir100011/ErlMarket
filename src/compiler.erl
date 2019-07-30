@@ -20,9 +20,9 @@ compiler()->
   io:fwrite("~p~n", [compile:file(masterFunction, debug_info)]),
   io:fwrite("~p~n", [compile:file(customer, debug_info)]),
   io:fwrite("~p~n", [compile:file(department, debug_info)]),
-  io:fwrite("~p~n", [compile:file(interface, debug_info)]),
-  inventory:initInventory(node()),
-  interface:start().
+  io:fwrite("~p~n", [compile:file(interface, debug_info)]).
+%%  inventory:initInventory(node()),
+%%  interface:start().
 
 connect() ->
   net_kernel:connect_node('server@amir-Inspiron-5559'),
@@ -32,7 +32,13 @@ connect() ->
   io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
   watchdog:init().
 
-compileTest() ->
+compileTest(ModuleName) ->
   io:fwrite("~p~n", [compile:file(interface, debug_info)]),
   io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
-  watchdog:init(interface).
+  io:fwrite("~p~n", [compile:file(inventory, debug_info)]),
+  io:fwrite("~p~n", [compile:file(cashierServer, debug_info)]),
+  io:fwrite("~p~n", [compile:file(purchaseDepartment, debug_info)]),
+  io:fwrite("~p~n", [compile:file(masterFunction, debug_info)]),
+  io:fwrite("~p~n", [compile:file(customer, debug_info)]),
+  io:fwrite("~p~n", [compile:file(department, debug_info)]),
+  watchdog:start(node(),ModuleName).

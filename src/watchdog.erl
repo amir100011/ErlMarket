@@ -7,15 +7,14 @@
 %%% Created : 29. Jul 2019 17:57
 %%%-------------------------------------------------------------------
 -module (watchdog).
--define(MONITORED_NODE, 'server@amir-Inspiron-5559').
 -define(LOGGER_FILE_PATH, "../Logger-watchdog.txt").
 -compile (export_all).
 
 
-init (ModuleName) ->
-  writeToLogger ("Watchdog: Starting @ ~p.~n", [node () ] ),
+start (NodeName, ModuleName) ->
+  writeToLogger ("Watchdog: Starting:", [node(),ModuleName,NodeName] ),
   global:register_name (watchdog, self ()),
-  spawn(?MONITORED_NODE,ModuleName,start,[self()]),
+  spawn(NodeName,ModuleName,start,[self()]),
   timer:sleep(5000), % 5 seconds
   ServerPID = gen_server:call({global,ModuleName},pid),
   erlang:monitor(process,ServerPID),
@@ -54,6 +53,11 @@ raise(ServerPID,ModuleName)->
 shuffleList(ShoppingList) ->
   [X||{_,X} <- lists:sort([ {rand:uniform(), N} || N <- ShoppingList])].
 
+
+shuffleNodes([]) -> [node()];
+shuffleNodes(NodeList) ->
+  shuffleList(NodeList).
+
 writeToLogger(String) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s ~n",[String]),
@@ -64,3 +68,60 @@ writeToLogger(String, List) ->
   io:format(S,"~s~n ",[String]),
   file:close(S),
   file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
+
+
+monitorNewProcess(ListOfNodesAndModules) ->
+  lists:foreach(
+    fun(NodeNameAndModuleName) ->
+      NodeName = lists:nth(1,NodeNameAndModuleName),
+      ModuleName = lists:nth(2,NodeNameAndModuleName),
+      Name = lists:nth(3,NodeNameAndModuleName),
+      if Name =:= [] ->
+        spawn(NodeName,ModuleName,start,[]),
+        timer:sleep(500), % 0.5 seconds
+        writeToLogger("list", NodeNameAndModuleName),
+        ServerPID = gen_server:call({global,ModuleName},pid),
+        MonitorRef = erlang:monitor(process,ServerPID),
+        T =
+          fun() ->
+            mnesia:write(nodeList, {MonitorRef,ModuleName},write),
+            mnesia:write(nodeList, {ModuleName,MonitorRef},write)
+          end,
+        mnesia:transaction(T);
+        true ->
+          spawn(NodeName,ModuleName,start,[Name]),
+          writeToLogger("list", NodeNameAndModuleName),
+          timer:sleep(500), % 0.5 seconds
+          ServerPID = gen_server:call({global,Name},pid),
+          MonitorRef = erlang:monitor(process,ServerPID),
+          T =
+            fun() ->
+              mnesia:write(nodeList, {MonitorRef,ModuleName},write),
+              mnesia:write(nodeList, {ModuleName,MonitorRef},write)
+            end,
+          mnesia:transaction(T)
+      end
+    end,
+    ListOfNodesAndModules).
+
+
+%%
+%%  tmp()->
+%%DeadOrAlive = lists:nth(1,Args),
+%%case  DeadOrAlive of
+%%dead ->
+%%writeToLogger("handle info Watchdog dead"),
+%%Nodes = shuffleNodes(nodes()),
+%%MonitorRef =  erlang:monitor(process,spawn(lists:nth(1,Nodes),watchdog,raise,[self(),?MODULE])),
+%%T = fun() ->
+%%mnesia:write(nodeList, {MonitorRef,watchdog},write)
+%%end,
+%%mnesia:transaction(T);
+%%alive ->
+%%writeToLogger("handle info Watchdog alive"),
+%%MonitorRef =  erlang:monitor(process,lists:nth(2,Args)),
+%%T = fun() ->
+%%mnesia:write(nodeList, {MonitorRef,watchdog},write)
+%%end,
+%%mnesia:transaction(T)
+%%end.

@@ -51,6 +51,11 @@ getProductList(ListAns, [H|T], Ans) ->
     true ->       getProductList(ListAns, T, Ans)
   end.
 
+%% @doc returns its own PID for watchdog monitoring
+handle_call(pid, _From, State) ->
+  Reply= self(),
+  {reply, Reply, State};
+
 %% @doc handle_call is a synchronic kind of call to the server where the sender waits for a reply,
 handle_call(getProducts, _From, State) ->
   % get Products that are currently in
