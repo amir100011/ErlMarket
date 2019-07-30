@@ -13,8 +13,8 @@
 %% API
 -export([start/0, init/1, handle_call/3, handle_cast/2,
   handle_info/2, terminate/2, callFunc/1, castFunc/1]).
--export([count/0, timerSupervisor/0, getTimeStamp/0, test/0, terminatorLoop/0, initCustomer/1, waitForCustomerToLeave/0]).
--define(DEPARTMENT_LIST, [dairy, meat, bakery]).
+-export([count/0, timerSupervisor/0, getTimeStamp/0, test/0, terminatorLoop/0, initCustomer/2, waitForCustomerToLeave/0]).
+-include_lib("records.hrl").
 -define(LOGGER_FILE_PATH, "../Logger-masterFunction.txt").
 -define(NUMBER_OF_ITERATIONS, 1000000).
 -define(TIMER, timerSuperviserProcess).
@@ -42,19 +42,17 @@ initErlMarketFunctionality() ->
   initDepartments(?DEPARTMENT_LIST),
   initPurchaseDepartment(),
   initCashiers(),
-  global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50) ])),
-  global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50) ])),
+  global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
+  global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   {ok, normal}.
 
 globalRegisterMasterFunction() ->
   global:register_name(masterFunction, self()).
 
-handle_call(getTimeStamp, _From, State) ->
-  global:send(?TIMER, {getTimeStamp, self()}),
-  receive
-    {timeStamp, TimeStamp} -> {reply, TimeStamp, State}
-  end;
 
+handle_call(getTimeStamp, _From, State) ->
+  TimeStamp = getTimeStampFromClock(),
+  {reply, TimeStamp, State};
 
 handle_call(getNumberOfCustomers, _From, State) ->
   writeToLogger("getNumberofCustomers reached"),
@@ -137,17 +135,18 @@ initCashiers() ->
   cashierServer:start().
 
 
-initCustomer(DelayQ) ->
+initCustomer(DelayQ, TimeStamp) ->
   receive
     {terminate} ->
       writeToLogger("Store is Closed: no new customers"),
-      exit(normal)
+      exit(normal);
+    {updateTime, CurrTimestamp} -> initCustomer(round(rand:uniform() * 20), CurrTimestamp)
     after DelayQ ->
-      customer:initCustomer(),
+      customer:initCustomer(TimeStamp),
       castFunc(createCustomer),
-      customer:initCustomer(),
+      customer:initCustomer(TimeStamp),
       castFunc(createCustomer),
-      initCustomer(round(rand:uniform() * 20))
+      initCustomer(round(rand:uniform() * 20), TimeStamp)
   end.
   %writeToLogger("Initializaing Customer"),
 
@@ -231,6 +230,11 @@ deleteMnesia()->
   mnesia:delete_table(meat),
   mnesia:delete_table(bakery).
 
+getTimeStampFromClock()->
+  global:send(?TIMER, {getTimeStamp, self()}),
+  receive
+    {timeStamp, TimeStamp} -> TimeStamp
+  end.
 
 %%------------------WRITING TO LOGGER------------------
 

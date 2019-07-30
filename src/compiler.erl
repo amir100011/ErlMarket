@@ -22,3 +22,4 @@ compiler()->
   io:fwrite("~p~n", [compile:file(interface, debug_info)]),
   inventory:initInventory(node()),
   interface:start().
+  %masterFunction:start().

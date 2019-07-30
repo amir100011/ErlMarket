@@ -11,4 +11,5 @@
 -record(product, {department, product_name, price, expiry_time}).
 -record(department, {department_name, department_pid}).
 -record(shoppinlistelement, {department_name, product_name, price, amount}).
+-define(DEPARTMENT_LIST, [dairy, meat, bakery]).
 -include_lib("stdlib/include/qlc.hrl").

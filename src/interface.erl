@@ -33,7 +33,7 @@ init([])->
       Font = wxFont:new(16, ?wxFONTFAMILY_DEFAULT, ?wxFONTSTYLE_NORMAL, ?wxFONTWEIGHT_BOLD),
       wxTextCtrl:setFont(Counter, Font),
       StartButton = wxButton:new(Frame, ?STARTBUTTON, [{label, "Start"}]),
-      DepartmentScrollButton = wxComboBox:new(Frame, ?wxID_ANY, [{choices,["dairy","meat","bakery"]}]),
+      DepartmentScrollButton = wxComboBox:new(Frame, ?wxID_ANY, [{choices,["dairy","meat","bakery", "unified"]}]),
       wxComboBox:setValue(DepartmentScrollButton, "dairy"),
       put(department, dairy),
       DrawHistogramOfDepartmentProduct = wxButton:new(Frame, ?DRAWBUTTON, [{label, "Draw Histogram"}]),
@@ -102,7 +102,7 @@ handle_info(#wx{id = ?DRAWBUTTON ,obj = Button, event = #wxCommand{type = comman
   {noreply, State#state{histogram = true}};
 
 handle_info(#wx{id = ?DRAWBUTTON ,obj = Button, event = #wxCommand{type = command_button_clicked}},
-    #state{start = true, histogramProcess = P, histogram = true} = State) ->
+    #state{histogramProcess = P, histogram = true} = State) ->
   python:call(P, drawHistogram, plotProcessStop, []), % closes plotProcess
   wxButton:setLabel(Button, "Draw Histogram"),
   {noreply, State#state{histogram = false}};
@@ -115,10 +115,15 @@ handle_info(#wx{id = ?DRAWBUTTON, event = #wxCommand{type = command_button_click
 
 
 handle_info(updateCounter, #state{counter = Counter, start = true} = State) ->
-    NumberOfCustomers = masterFunction:callFunc(getNumberOfCustomers),
-    wxTextCtrl:setValue(Counter, integer_to_list(NumberOfCustomers)),
-    erlang:send_after(1000, self(), updateCounter),  % update every second
-    {noreply, State};
+    try masterFunction:callFunc(getNumberOfCustomers) of
+      NumberOfCustomers-> wxTextCtrl:setValue(Counter, integer_to_list(NumberOfCustomers)),
+                          erlang:send_after(1000, self(), updateCounter),  % update every second
+                          {noreply, State}
+    catch
+      exit:_ -> erlang:send_after(1000, self(), updateCounter),  % update every second
+                {noreply, State}
+    end;
+
 
 
 handle_info(updateCounter, #state{button = Button, counter = Counter, start = false, histogram = false} = State) ->
@@ -154,7 +159,7 @@ handle_info(updateCounter, #state{button = Button, counter = Counter, start = fa
 
 handle_info(plotHistogram, #state{histogram = true , histogramProcess = P} = State) ->
   DepartmentName = get(department),
-  try department:callFunc(DepartmentName, getProducts) of  % if the department gets turned off before the histogram status was changed
+  try department:getProductsForDrawingHistogram(DepartmentName) of  % if the department gets turned off before the histogram status was changed
     ProductFromDepartment ->  python:call(P, drawHistogram, processDepartmentDataFromErlang, [atom_to_list(DepartmentName), ProductFromDepartment]),
                               erlang:send_after(?INTERVALBETWEENPLOTS, self(), plotHistogram),  % update plot every interval
                               {noreply, State}

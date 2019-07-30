@@ -11,7 +11,6 @@
 -define(DESIRED_RATIO, 2).
 -define(SAVING_RATIO, 0.8).
 -define(LOGGER_FILE_PATH, "../Logger-PurchaseDepartment.txt").
--define(DEPARTMENT_LIST, [dairy,meat,bakery]).
 -define(INTERVAL, 2000). % 5000 milliSeconds
 -define(MAX_NUMBER_OF_REQUESTS, 1000).
 -behavior(gen_server).
