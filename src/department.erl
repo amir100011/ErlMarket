@@ -83,7 +83,11 @@ handle_call({purchase, ListOfProducts, TimeStamp}, _From, State) ->
 handle_call({purchaseandleave, ListOfProducts, TimeStamp}, _From, State) ->
   % a purchase request has been made, the department removes the products that exist in the inventory
   RemovedProducts = removeProducts(ListOfProducts, [], true, TimeStamp),
-  {reply, RemovedProducts, State}.
+  {reply, RemovedProducts, State};
+
+handle_call(pid, _From, State) ->
+  Reply= self(),
+  {reply, Reply, State}.
 
 %% @doc handle_call is a asynchronic kind of call to the server where the sender doesn't wait for a reply,
 handle_cast({return, ListOfProduct}, State) ->

@@ -21,6 +21,9 @@
 -define(TERMINATOR, terminator).
 -define(SECURITY1, security1).
 -define(SECURITY2, security2).
+-define(PURCHASE_DEPARTMENT_NODE, 'amir@amir-Inspiron-5559').
+-define(CASHIER_SERVER_NODE, 'amir@amir-Inspiron-5559').
+-define(DEPARTMENTS_NODE, 'amir@amir-Inspiron-5559').
 -export([getNumberOfCustomers/0]).
 %%-export([periodicallyRestockInventory/0]).
 
@@ -39,15 +42,29 @@ initErlMarketFunctionality() ->
   global:register_name(?TIMER, spawn(?MODULE, timerSupervisor, [])),
   globalRegisterMasterFunction(),
   writeToLogger("strating initialization"),
-  initDepartments(?DEPARTMENT_LIST),
-  initPurchaseDepartment(),
-  initCashiers(),
+  ListOfModulesToNodes = buildListForWatchDogToInitialize(),
+  watchdog:start(ListOfModulesToNodes),
+%%  initDepartments(?DEPARTMENT_LIST),
+%%  initPurchaseDepartment(),
+%%  initCashiers(),
   global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   {ok, normal}.
 
 globalRegisterMasterFunction() ->
   global:register_name(masterFunction, self()).
+
+buildListForWatchDogToInitialize() ->
+  DepartmentListOfModulesToNodes = initDepartmentsForWatchdog(?DEPARTMENT_LIST,[]),
+  DepartmentListOfModulesToNodes ++ [[?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE,cashierServer,[]]].
+
+
+initDepartmentsForWatchdog([H|T],List) ->
+  initDepartmentsForWatchdog(T,List) ++ [initDepartmentsForWatchdogInternal(H,List)];
+initDepartmentsForWatchdog([],List) -> List.
+
+initDepartmentsForWatchdogInternal(DepartmentName,List) ->
+  List ++ [?DEPARTMENTS_NODE, department, DepartmentName].
 
 
 handle_call(getTimeStamp, _From, State) ->

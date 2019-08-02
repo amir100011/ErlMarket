@@ -11,10 +11,10 @@
 -include_lib("records.hrl").
 -compile (export_all).
 
-start(ListOfNodesAndModules) ->
-  spawn(?MODULE, startInternal, [ListOfNodesAndModules]).
+start (ListOfNodesAndModules) ->
+  spawn(?MODULE,startWatchdog,[ListOfNodesAndModules]).
 
-startInternal (ListOfNodesAndModules) ->
+startWatchdog (ListOfNodesAndModules) ->
   writeToLogger ("Watchdog: Starting:", node()),
   global:register_name (watchdog, self ()),
   monitorNewProcess (ListOfNodesAndModules),
@@ -100,7 +100,6 @@ getModuleNameAndProcessName(MonitorRef) ->
   {lists:nth(3,ReplyAsList),lists:nth(4,ReplyAsList)}.
 
 getParameters(NodeNameAndModuleName) ->
-  io:fwrite("getParameters: ~p~n", [NodeNameAndModuleName]),
   {lists:nth(1,NodeNameAndModuleName), lists:nth(2,NodeNameAndModuleName), lists:nth(3,NodeNameAndModuleName)}.
 
 
