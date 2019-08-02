@@ -51,11 +51,6 @@ getProductList(ListAns, [H|T], Ans) ->
     true ->       getProductList(ListAns, T, Ans)
   end.
 
-%% @doc returns its own PID for watchdog monitoring
-handle_call(pid, _From, State) ->
-  Reply= self(),
-  {reply, Reply, State};
-
 %% @doc handle_call is a synchronic kind of call to the server where the sender waits for a reply,
 handle_call(getProducts, _From, State) ->
   % get Products that are currently in
@@ -115,9 +110,8 @@ handle_cast({sale, Discount}, State)->
   executeSale(ListAns, Discount),
   {noreply, onSale};
 
-handle_cast(cancelSale, State) when State =:= normal -> {noreply, State};
-% a request to stop sthe sale in the department
-handle_cast(cancelSale, State)->
+
+handle_cast(cancelSale, onSale)->
   F = fun() ->
     Q = qlc:q([E || E <- mnesia:table(get(server_name))]),
     qlc:e(Q)
@@ -125,6 +119,8 @@ handle_cast(cancelSale, State)->
   {atomic, ListAns} = mnesia:transaction(F),
   cancelSale(ListAns),
   {noreply, normal};
+handle_cast(cancelSale, State) when State =:= normal -> {noreply, normal};
+
 
 handle_cast(getProducts, State) ->
   % get Products that are currently in
@@ -155,20 +151,22 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 %% @doc change the price value of each product during sale
-executeSale([],_) -> done;
+executeSale([],_) -> done; % TODO change at amir all the funciton
 executeSale([H|T], Discount)  when Discount < 1 ->
   Price = H#departmentProduct.price,
   NewPrice = (1 - Discount) * Price,
   NewPriceInt = round(NewPrice),
   New = H#departmentProduct{price = NewPriceInt},
   Department = H#departmentProduct.department,
-  mnesia:dirty_delete_object(Department, H),
-  mnesia:dirty_write(Department, New),
+  %mnesia:dirty_delete_object(Department, H),
+  %mnesia:dirty_write(Department, New),
+  F = fun() -> mnesia:delete_object(Department, H , write), mnesia:write(Department, New, write) end,
+  mnesia:transaction(F),
   executeSale(T, Discount).
 
 
 %% @doc return the normal price of each product from the inventory product mnesia table
-cancelSale([]) -> done;
+cancelSale([]) -> done;  % TODO change at amir all the funciton
 cancelSale([H|T]) ->
   F = fun() ->
     Q = qlc:q([E#product.price || E <- mnesia:table(product),
@@ -178,8 +176,8 @@ cancelSale([H|T]) ->
   {atomic, [NormalPrice]} = mnesia:transaction(F),
   Department = H#departmentProduct.department,
   New = H#departmentProduct{price = NormalPrice},
-  mnesia:dirty_delete_object(Department, H),
-  mnesia:dirty_write(Department, New),
+  F2 = fun() -> mnesia:delete_object(Department, H , write), mnesia:write(Department, New, write) end,
+  mnesia:transaction(F),
   cancelSale(T).
 
 % a helper function to get a random element from a list
@@ -233,7 +231,7 @@ removeProducts([H|T], Ans, FlagToBuyWhatThereIs, TimeStamp) when FlagToBuyWhatTh
   Product_Name = H#shoppinlistelement.product_name,
   RequestedAmount = H#shoppinlistelement.amount,
   F = fun() ->
-    Q = qlc:q([E || E <- mnesia:table(get(server_name)), E#departmentProduct.product_name =:= Product_Name,
+    Q = qlc:q([E || E <- mnesia:table(get(server_name)), E#departmentProduct.product_name == Product_Name,
       E#departmentProduct.amount >= RequestedAmount, E#departmentProduct.expiry_time > TimeStamp]),
     qlc:e(Q)
       end,

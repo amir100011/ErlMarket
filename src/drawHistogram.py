@@ -2,11 +2,27 @@ import matplotlib.pyplot as plt
 from erlport.erlterms import List
 from collections import defaultdict
 from multiprocessing import Process, Queue
+import tensorflow as tf
+import os
+
+
+first = 1
+log_dir = r"logdir/"
 QueueErlang = Queue()  # communication channel between erlang and the plot process
 Products = {'dairy': ['cheese', 'milk', 'yogurt'],
             'meat': ['steak', 'chicken'],
             'bakery': ['bread', 'buns'],
-            'unified': ['cheese', 'milk', 'yogurt','steak', 'chicken','bread', 'buns' ]}
+            'unified': ['cheese', 'milk', 'yogurt', 'steak', 'chicken', 'bread', 'buns']}
+
+
+def processStopHistogram():
+    QueueErlang.put(["stopHistogram"])
+
+
+def processBudgetVsExpenceFromErlang(income, expence):
+    messageToPlotProcess = ["plot", income, expence]
+    QueueErlang.put(messageToPlotProcess)
+
 
 
 def processDepartmentDataFromErlang(title: List, productList: List):
@@ -43,7 +59,7 @@ def drawHistogramHelper(QueueData:Queue):
 
 
 def plotProcessStart():
-    plotProcess = Process(target=plotProcessLoop, args=())
+    plotProcess = Process(target=preplotProcessLoop, args=())
     plotProcess.start()
 
 
@@ -51,7 +67,17 @@ def plotProcessStop():
     QueueErlang.put(["terminate"])
 
 
-def plotProcessLoop(drawHistogramProcess=None):
+def preplotProcessLoop():
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    summaryWriter = tf.summary.create_file_writer(log_dir)
+    plotProcessLoop(summaryWriter)
+
+def startTB():
+    os.system("tensorboard --logdir=logdir")
+
+def plotProcessLoop(summaryWriter: tf.summary.SummaryWriter, drawHistogramProcess=None, iteration=0, TBProcess = None):
+    global first
     item = QueueErlang.get()
     if item[0] == "histogram":
             [_, title, dataDict] = item
@@ -62,12 +88,33 @@ def plotProcessLoop(drawHistogramProcess=None):
             drawHistogramProcess.start()
             QueueData.put(title)
             QueueData.put(dataDict)
-            plotProcessLoop(drawHistogramProcess)  # recursive call for further instructions
+            plotProcessLoop(summaryWriter, drawHistogramProcess, iteration, TBProcess)  # recursive call for further instructions
+    if item[0] =="stopHistogram":
+        print("got to terminate draw histogram")
+        if drawHistogramProcess is not None:
+            drawHistogramProcess.terminate()  # it can only be a living process from a previous iteration
+        else:
+            print("From python: i shouldn't be here.....")
+        plotProcessLoop(summaryWriter, None, iteration, TBProcess)
+    if item[0] == "plot":
+        [_, income, expence] = item
+        with summaryWriter.as_default():
+            tf.summary.scalar('income', income, step=iteration)
+            tf.summary.scalar('expence', expence, step=iteration)
+        if first:
+            TBProcess = Process(target=startTB, args=())
+            TBProcess.start()
+            first = 0
+        plotProcessLoop(summaryWriter, drawHistogramProcess, iteration + 1, TBProcess)
     if item[0] == "terminate":
         print("I got to terminate")
         if drawHistogramProcess is not None:
                 drawHistogramProcess.terminate()  # it can only be a living process from a previous iteration
-
+        if TBProcess is not None:
+            TBProcess.terminate()  # it can only be a living process from a previous iteration
+    else:
+        print("From Python: im here with unrecognized message {}".format(item))
+        plotProcessLoop(summaryWriter, drawHistogramProcess, iteration,TBProcess)
 """
 if __name__ == '__main__':
     title = "test"
@@ -93,4 +140,14 @@ if __name__ == '__main__':
         i = i + 1
     plotProcessStop()
 """
-
+if __name__ == '__main__':
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    a = tf.summary.create_file_writer(log_dir)
+    iteration = 0
+    income = 5
+    expence = 10
+    with a.as_default():
+        tf.summary.scalar('income', income, step=iteration)
+        tf.summary.scalar('accuracy', expence, step=iteration)
+    #webbrowser.open('http://example.com')
