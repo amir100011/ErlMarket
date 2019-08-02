@@ -10,23 +10,23 @@
 -author("dorliv").
 
 %% API
--export([testInit/0, initCustomer/0, getBudget/0,goShopping/0]).
+-export([testInit/0, initCustomer/1, getBudget/0,goShopping/1]).
 -include_lib("records.hrl").
--define(DEPARTMENT_LIST, inventory:getDepartments()).
 -define(LOGGER_FILE_PATH, "../Logger-Customer.txt").
 -record(customer, {customer_id, budget, shopping_list}).
 -define(MAXIMUM_BUDGET, 600).
 -define(MAXITERATIONS, 10).
 
 
+
 %%----------------PRIMARY FUNCTION-------------------------
 
 %% @doc initialize the customer and spawn a customer process that shops in ErlMarket
-initCustomer() ->
-  spawn(customer, goShopping, []).
+initCustomer(TimeStamp) ->
+  spawn(customer, goShopping, [TimeStamp]).
 
 %% @doc the life cycle of a customer
-goShopping()->
+goShopping(TimeStamp)->
   timer:sleep(round(rand:uniform() * 2000)),
   %writeToLogger("reached to goShopping"),
   Customer = #customer{customer_id = self(), budget = initBudget(), shopping_list = createShuffledShoppingList()},
@@ -35,7 +35,7 @@ goShopping()->
   UniqueShuffledDepartmentList = shuffleList(?DEPARTMENT_LIST),
   OrderShoppingListByDepartments = getProductsFromDepartments(Customer#customer.shopping_list,UniqueShuffledDepartmentList),
   put(requesIteration, 0),
-  AvailableProductsToPurchase = takeTheProductsFromTheDifferentDepartments(OrderShoppingListByDepartments, UniqueShuffledDepartmentList),
+  AvailableProductsToPurchase = takeTheProductsFromTheDifferentDepartments(OrderShoppingListByDepartments, UniqueShuffledDepartmentList, TimeStamp),
   writeToLogger(variable, "customerID ~p has AvailableProductsToPurchase: ~n ~p ~n ", [self(), AvailableProductsToPurchase]),
   %{AvailableProductsToPurchase, Customer}.
   pay(AvailableProductsToPurchase,Customer#customer.budget),
@@ -113,30 +113,30 @@ getAllProductsInShoppingListThatBelongToDepartment([H|T], DepartmentName) ->
 getAllProductsInShoppingListThatBelongToDepartment([],_DepartmentName) -> [].
 
 
-takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T]) ->
+takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp) ->
   LastElementInList =  lists:nth(1,OrderedShoppingList),
   NewList = lists:delete(LastElementInList,OrderedShoppingList),
   RequestIterations = get(requesIteration),
   if
     LastElementInList =:= [] ->
-      takeTheProductsFromTheDifferentDepartments(NewList, T);
+      takeTheProductsFromTheDifferentDepartments(NewList, T,TimeStamp);
     RequestIterations >= ?MAXITERATIONS ->  % To avoid deadlock
-       AnsFromServer = gen_server:call({global,H},{purchaseandleave,LastElementInList}), % buy what ever is able and leave
-       AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T); % products found
+       AnsFromServer = gen_server:call({global,H},{purchaseandleave,LastElementInList,TimeStamp}), % buy what ever is able and leave
+       AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T, TimeStamp); % products found
     true ->
-       AnsFromServer = gen_server:call({global,H},{purchase,LastElementInList}),
+       AnsFromServer = gen_server:call({global,H},{purchase,LastElementInList,TimeStamp}),
        if
          AnsFromServer == noProducts ->
                   put(requesIteration, RequestIterations + 1),
                  % if products were not found in department wait for them to restock,
                   timer:sleep(2500),
-                  takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T]); % try again
+                  takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp); % try again
          true ->  put(requesIteration, 0),
-                  AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T) % products found
+                  AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T, TimeStamp) % products found
        end
   end;
 
-takeTheProductsFromTheDifferentDepartments(_OrderedShoppingList, []) -> [].
+takeTheProductsFromTheDifferentDepartments(_OrderedShoppingList, [], _) -> [].
 
 
 pay(AvailableProductsToPurchase, Balance) ->
@@ -196,7 +196,7 @@ testInit()->
   department:start(dairy),
   department:start(bakery),
   Y = 5,
-  initCustomer(),
+  initCustomer(0),
   Y.
 
 

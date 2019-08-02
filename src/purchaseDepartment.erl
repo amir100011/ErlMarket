@@ -11,7 +11,6 @@
 -define(DESIRED_RATIO, 2).
 -define(SAVING_RATIO, 0.8).
 -define(LOGGER_FILE_PATH, "../Logger-PurchaseDepartment.txt").
--define(DEPARTMENT_LIST, [dairy,meat,bakery]).
 -define(INTERVAL, 2000). % 5000 milliSeconds
 -define(MAX_NUMBER_OF_REQUESTS, 1000).
 -behavior(gen_server).
@@ -30,6 +29,10 @@
 %%---------------------------------------------------------
 %%                  GEN_SERVER FUNCTIONS
 %%---------------------------------------------------------
+%% @doc interface function for using gen_server cast
+castFunc(Message) ->
+  gen_server:cast({global, ?MODULE}, Message).
+
 
 start() ->
   gen_server:start({global, ?MODULE}, ?MODULE, [], []).
@@ -39,10 +42,6 @@ init(_Args) ->
   resetIterationCounter(),
   erlang:send_after(?INTERVAL, self(), trigger),
   {ok, 0}.
-
-%% @doc interface function for using gen_server cast
-castFunc(Message) ->
-  gen_server:cast({global, ?MODULE}, Message).
 
 handle_info(trigger, State) when is_integer(State)->
   writeToLogger("handle_info"),
@@ -113,8 +112,9 @@ ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers, ErlMarketB
   if CostOfReservation =< ErlMarketBudget ->
     writeToLogger("ratioToReserve Success: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
     reserve(ListOfValidProductsWithRatio, Time, CostOfReservation),
-    writeToLogger("reserve - ", ListOfValidProductsWithRatio);
-    %%[{_Budget, ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget); %FIXME change to mneasia red
+    writeToLogger("reserve - ", ListOfValidProductsWithRatio),
+    [{_Budget, ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget),
+    interface:castFunc({budgetVsExpense, ErlMarketBudget, CostOfReservation});  % TODO change at amir
     true ->
       writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
       DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,
@@ -130,7 +130,8 @@ getRatio([H|T],NumberOfCustomers)->
   [getRatioSingleElement(H,NumberOfCustomers)] ++ getRatio(T,NumberOfCustomers);
 getRatio([],_NumberOfCustomers)->[].
 
-getRatioSingleElement({departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers) ->
+getRatioSingleElement({departmentProduct,Department, Product_name, _, _Expiry_time, Amount},NumberOfCustomers) ->
+  Price = inventory:getProdcutPrice(Product_name),  % TODO change at amir
   writeToLogger("getRatioSingleElement",[{departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers]),
   NumberOfProductsToOrder = round((NumberOfCustomers * ?DESIRED_RATIO) - Amount) + 1,
   if  NumberOfProductsToOrder =< 1 -> AmountToOrder = 0;
@@ -262,6 +263,7 @@ updateIterationCounter() ->
   put(iterationCounter , get(iterationCounter) + 1).
 
 
+
 %%---------------------------------------------------------
 %%                 WRITE TO LOGGER FUNCTIONS
 %%---------------------------------------------------------
@@ -292,7 +294,6 @@ testReservation() ->
   setInitialBudget(),
   setBalance(100),
   setBalance(-150),
-  writeToLogger("reserveTest",[node(),nodes()]),
   ets:lookup(budget,erlMarketBudget).
 %%  purchaseDepartment:start().
 

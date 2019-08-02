@@ -16,9 +16,9 @@
 
 %% API
 -export([init/1, handle_call/3, handle_cast/2,
-  handle_info/2, terminate/2, code_change/3]).
+  handle_info/2, terminate/2, code_change/3, getProductsForDrawingHistogram/1]).
 
--export([start/1,callFunc/2, castFunc/2]).
+-export([start/1,callFunc/2, castFunc/2, removedExpiredProducts/2]).
 
 %% @doc create a global gen_server process that deals with the department backend
 start(Name) ->
@@ -52,7 +52,6 @@ getProductList(ListAns, [H|T], Ans) ->
   end.
 
 %% @doc handle_call is a synchronic kind of call to the server where the sender waits for a reply,
-%% TODO in future work we want to execute each call to the server with a thread to enhance performances and prevent starvation
 handle_call(getProducts, _From, State) ->
   % get Products that are currently in
   F = fun() ->
@@ -70,25 +69,23 @@ handle_call({getTotalAmountOfValidProduct, TimeStamp}, _From, State) ->
     qlc:e(Q)
       end,
   {atomic, ListAns} = mnesia:transaction(F),
-  writeToLogger(variable, "Test : Before adding non exisiting ~p~n",[ListAns]),
   {atomic, DepartmentProd} = inventory:getProductsFromDepartment(get(server_name)),
   ProductList = getProductList(ListAns, DepartmentProd, ListAns),
-  writeToLogger(variable, "Test : After adding non exisiting ~p~n",[ProductList]),
+  spawn(?MODULE, removedExpiredProducts, [get(server_name), TimeStamp]),
   {reply, ProductList, State};
 
 
-handle_call({purchase, ListOfProducts}, _From, State) ->
+handle_call({purchase, ListOfProducts, TimeStamp}, _From, State) ->
   % a purchase request has been made, the department removes the products that exist in the inventory
-  RemovedProducts = removeProducts(ListOfProducts, [], false),
+  RemovedProducts = removeProducts(ListOfProducts, [], false, TimeStamp),
   {reply, RemovedProducts, State};
 
-handle_call({purchaseandleave, ListOfProducts}, _From, State) ->
+handle_call({purchaseandleave, ListOfProducts, TimeStamp}, _From, State) ->
   % a purchase request has been made, the department removes the products that exist in the inventory
-  RemovedProducts = removeProducts(ListOfProducts, [], true),
+  RemovedProducts = removeProducts(ListOfProducts, [], true, TimeStamp),
   {reply, RemovedProducts, State}.
 
 %% @doc handle_call is a asynchronic kind of call to the server where the sender doesn't wait for a reply,
-%% TODO in future work we want to execute each cast to the server with a thread to enhance performances and prevent starvation
 handle_cast({return, ListOfProduct}, State) ->
   % a return shipment of products have been made, this function adds the products to the table,
   % or update the amount of existing similar products
@@ -113,9 +110,8 @@ handle_cast({sale, Discount}, State)->
   executeSale(ListAns, Discount),
   {noreply, onSale};
 
-handle_cast(cancelSale, State) when State =:= normal -> {noreply, State};
-% a request to stop sthe sale in the department
-handle_cast(cancelSale, State)->
+
+handle_cast(cancelSale, onSale)->
   F = fun() ->
     Q = qlc:q([E || E <- mnesia:table(get(server_name))]),
     qlc:e(Q)
@@ -123,6 +119,8 @@ handle_cast(cancelSale, State)->
   {atomic, ListAns} = mnesia:transaction(F),
   cancelSale(ListAns),
   {noreply, normal};
+handle_cast(cancelSale, State) when State =:= normal -> {noreply, normal};
+
 
 handle_cast(getProducts, State) ->
   % get Products that are currently in
@@ -146,7 +144,6 @@ handle_info(_Info, State) ->
 
 terminate(Reason, _State) ->
   io:fwrite("~p says bye bye ~n",[get(server_name)]),
-  writeToLogger("badTermination Reason: ", [Reason]),
   ok.
 
 code_change(_OldVsn, State, _Extra) ->
@@ -154,20 +151,22 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 %% @doc change the price value of each product during sale
-executeSale([],_) -> done;
+executeSale([],_) -> done; % TODO change at amir all the funciton
 executeSale([H|T], Discount)  when Discount < 1 ->
   Price = H#departmentProduct.price,
   NewPrice = (1 - Discount) * Price,
   NewPriceInt = round(NewPrice),
   New = H#departmentProduct{price = NewPriceInt},
   Department = H#departmentProduct.department,
-  mnesia:dirty_delete_object(Department, H),
-  mnesia:dirty_write(Department, New),
+  %mnesia:dirty_delete_object(Department, H),
+  %mnesia:dirty_write(Department, New),
+  F = fun() -> mnesia:delete_object(Department, H , write), mnesia:write(Department, New, write) end,
+  mnesia:transaction(F),
   executeSale(T, Discount).
 
 
 %% @doc return the normal price of each product from the inventory product mnesia table
-cancelSale([]) -> done;
+cancelSale([]) -> done;  % TODO change at amir all the funciton
 cancelSale([H|T]) ->
   F = fun() ->
     Q = qlc:q([E#product.price || E <- mnesia:table(product),
@@ -177,8 +176,8 @@ cancelSale([H|T]) ->
   {atomic, [NormalPrice]} = mnesia:transaction(F),
   Department = H#departmentProduct.department,
   New = H#departmentProduct{price = NormalPrice},
-  mnesia:dirty_delete_object(Department, H),
-  mnesia:dirty_write(Department, New),
+  F2 = fun() -> mnesia:delete_object(Department, H , write), mnesia:write(Department, New, write) end,
+  mnesia:transaction(F2),
   cancelSale(T).
 
 % a helper function to get a random element from a list
@@ -197,50 +196,52 @@ getRandomElement([H|T]) ->
 updateAmountOrDeleteProduct(Product, RequestedAmount)->
   DepartmentName = Product#departmentProduct.department,
   ProductAmountInDepartment = Product#departmentProduct.amount,
-  mnesia:dirty_delete_object(DepartmentName, Product),
+  %mnesia:dirty_delete_object(DepartmentName, Product),
+  mnesia:transaction(fun() -> mnesia:delete_object(DepartmentName, Product, write) end),
   RemovedProduct = Product#departmentProduct{amount = RequestedAmount},
   if
     RequestedAmount == ProductAmountInDepartment -> done;
     RequestedAmount < ProductAmountInDepartment ->   New = Product#departmentProduct{amount = ProductAmountInDepartment - RequestedAmount},
-      mnesia:dirty_write(DepartmentName, New) % TODO what to do with dirty
+                                                     mnesia:transaction(fun()-> mnesia:write(DepartmentName, New, write) end)
+      %mnesia:dirty_write(DepartmentName, New)
   end,
   RemovedProduct.
 
 
 %% @doc this function is used when a purchase is made and we need to update the department wares
-removeProducts([], Ans, _) -> Ans;
-removeProducts([H|T], Ans, FlagToBuyWhatThereIs) when FlagToBuyWhatThereIs == false ->
+removeProducts([], Ans, _, _) -> Ans;
+removeProducts([H|T], Ans, FlagToBuyWhatThereIs, TimeStamp) when FlagToBuyWhatThereIs == false ->
   Product_Name = H#shoppinlistelement.product_name,
   RequestedAmount = H#shoppinlistelement.amount,
   F = fun() ->
     Q = qlc:q([E || E <- mnesia:table(get(server_name)), E#departmentProduct.product_name =:= Product_Name,
-      E#departmentProduct.amount >= RequestedAmount ]),
+      E#departmentProduct.amount >= RequestedAmount, E#departmentProduct.expiry_time > TimeStamp]),
     qlc:e(Q)
       end,
   {atomic, ListAns} = mnesia:transaction(F),
   if
-    ListAns =:= [] -> removeProducts([], noProducts, FlagToBuyWhatThereIs); % send the customer a delay message to wait for product
+    ListAns =:= [] -> removeProducts([], noProducts, FlagToBuyWhatThereIs, TimeStamp); % send the customer a delay message to wait for product
     true ->
       ProductChosenRandomlyFromAvailableProducts = getRandomElement(ListAns),
       Product = updateAmountOrDeleteProduct(ProductChosenRandomlyFromAvailableProducts, RequestedAmount),
-      removeProducts(T, Ans ++ [Product], FlagToBuyWhatThereIs)
+      removeProducts(T, Ans ++ [Product], FlagToBuyWhatThereIs, TimeStamp)
   end;
 
-removeProducts([H|T], Ans, FlagToBuyWhatThereIs) when FlagToBuyWhatThereIs == true ->
+removeProducts([H|T], Ans, FlagToBuyWhatThereIs, TimeStamp) when FlagToBuyWhatThereIs == true ->
   Product_Name = H#shoppinlistelement.product_name,
   RequestedAmount = H#shoppinlistelement.amount,
   F = fun() ->
-    Q = qlc:q([E || E <- mnesia:table(get(server_name)), E#departmentProduct.product_name =:= Product_Name,
-      E#departmentProduct.amount >= RequestedAmount ]),
+    Q = qlc:q([E || E <- mnesia:table(get(server_name)), E#departmentProduct.product_name == Product_Name,
+      E#departmentProduct.amount >= RequestedAmount, E#departmentProduct.expiry_time > TimeStamp]),
     qlc:e(Q)
       end,
   {atomic, ListAns} = mnesia:transaction(F),
   if
-    ListAns =:= [] -> removeProducts(T, Ans, FlagToBuyWhatThereIs);
+    ListAns =:= [] -> removeProducts(T, Ans, FlagToBuyWhatThereIs, TimeStamp);
     true ->
       ProductChosenRandomlyFromAvailableProducts = getRandomElement(ListAns),
       Product = updateAmountOrDeleteProduct(ProductChosenRandomlyFromAvailableProducts, RequestedAmount),
-      removeProducts(T, Ans ++ [Product], FlagToBuyWhatThereIs)
+      removeProducts(T, Ans ++ [Product], FlagToBuyWhatThereIs, TimeStamp)
   end.
 
 
@@ -261,13 +262,35 @@ addProducts([H|T]) ->
                         Product = hd(ProductTmp),
                         CurrentAmount = Product#departmentProduct.amount,
                         UpdateProduct = Product#departmentProduct{amount = CurrentAmount + RequestedAmount},
-                        mnesia:dirty_delete_object(get(server_name), Product) ;
+                        mnesia:transaction(fun() -> mnesia:delete_object(get(server_name), Product, write) end);
     true -> UpdateProduct = H
   end,
-  mnesia:dirty_write(get(server_name), UpdateProduct),
+  mnesia:transaction(fun() -> mnesia:write(get(server_name), UpdateProduct, write)  end),
   addProducts(T).
 
 
+removedExpiredProducts(DepartmentName, TimeStamp) ->
+  F = fun() ->
+    Q = qlc:q([E || E <- mnesia:table(DepartmentName), E#departmentProduct.expiry_time < TimeStamp]),
+    qlc:e(Q)
+      end,
+  {atomic, ExpiredItemsList} = mnesia:transaction(F),
+  DeleteF = fun() ->
+                    deleteElements(DepartmentName, ExpiredItemsList)
+            end,
+  mnesia:transaction(DeleteF).
+
+deleteElements(_, [])-> ok;
+deleteElements(DepartmentName, [H|T])->
+  mnesia:delete_object(DepartmentName, H, write),
+  deleteElements(DepartmentName, T).
+
+
+getProductsForDrawingHistogram(DepartmentName) when DepartmentName == unified->
+ Ans = lists:flatmap(fun(E) -> getProductsForDrawingHistogram(E) end, ?DEPARTMENT_LIST),
+ Ans;
+getProductsForDrawingHistogram(DepartmentName) when is_atom(DepartmentName) ->
+  callFunc(DepartmentName, getProducts).
 %%------------------WRITING TO LOGGER------------------
 
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
@@ -275,7 +298,6 @@ writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
   file:close(S).
-
 writeToLogger(String, List) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~n ",[String]),
@@ -289,4 +311,3 @@ writeToLogger(String) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s ~n",[String]),
   file:close(S).
-

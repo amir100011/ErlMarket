@@ -27,7 +27,6 @@ init(_Args) ->
 
 
 callFunc(ListOfProductsAndAmounts, CustomerBalance) ->
-  io:fwrite("is someone here?~n"),
   gen_server:cast({global,?MODULE}, {pay,ListOfProductsAndAmounts, CustomerBalance}).
 
 %% @doc interface function for using gen_server cast
