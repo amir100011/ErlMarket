@@ -8,9 +8,9 @@
 %%%-------------------------------------------------------------------
 -module(masterFunction).
 -author("amir").
--define(PURCHASE_DEPARTMENT_NODE, 'tmp@amir-Inspiron-5559').
--define(CASHIER_SERVER_NODE, 'tmp@amir-Inspiron-5559').
--define(DEPARTMENTS_NODE, 'departments@amir-Inspiron-5559').
+-define(PURCHASE_DEPARTMENT_NODE, 'amir@amir-Inspiron-5559').
+-define(CASHIER_SERVER_NODE, 'amir@amir-Inspiron-5559').
+-define(DEPARTMENTS_NODE, 'amir@amir-Inspiron-5559').
 -behavior(gen_server).
 %% API
 %% API
@@ -43,6 +43,7 @@ initErlMarketFunctionality() ->
   globalRegisterMasterFunction(),
   writeToLogger("strating initialization"),
   ListOfModulesToNodes = buildListForWatchDogToInitialize(),
+  watchdog:start(ListOfModulesToNodes),
   global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   {ok, normal}.
@@ -52,9 +53,7 @@ globalRegisterMasterFunction() ->
 
 buildListForWatchDogToInitialize() ->
   DepartmentListOfModulesToNodes = initDepartments(?DEPARTMENT_LIST,[]),
-  DepartmentListOfModulesToNodes ++ [?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]] ++ [?CASHIER_SERVER_NODE,cashierServer,[]].
-
-
+  DepartmentListOfModulesToNodes ++ [[?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE,cashierServer,[]]].
 
 handle_call(getTimeStamp, _From, State) ->
   TimeStamp = getTimeStampFromClock(),
@@ -266,7 +265,7 @@ writeToLogger(variable, String, Variables) ->
   io:format(S, String, Variables),
   file:close(S).
 
-test()-> watchdog:monitorNewProcess(initDepartments([dairy,meat,bakery],[]) ++ [[?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE,cashierServer,[]]]).
+test()-> watchdog:start([[?CASHIER_SERVER_NODE,cashierServer,[]]]).
  % initDepartments([dairy,meat,bakery],[]).
   %NumberOfCustomers = callFunc(getNumberOfCustomers),
   %A = 5.

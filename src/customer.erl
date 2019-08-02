@@ -113,6 +113,7 @@ getAllProductsInShoppingListThatBelongToDepartment([],_DepartmentName) -> [].
 
 
 takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp) ->
+  writeToLogger(variable, "Customer has done ~p iterations ~n", [get(requesIteration)]),
   LastElementInList =  lists:nth(1,OrderedShoppingList),
   NewList = lists:delete(LastElementInList,OrderedShoppingList),
   RequestIterations = get(requesIteration),

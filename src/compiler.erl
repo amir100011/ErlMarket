@@ -20,9 +20,9 @@ compiler()->
   io:fwrite("~p~n", [compile:file(masterFunction, debug_info)]),
   io:fwrite("~p~n", [compile:file(customer, debug_info)]),
   io:fwrite("~p~n", [compile:file(department, debug_info)]),
-  io:fwrite("~p~n", [compile:file(interface, debug_info)]).
-%%  inventory:initInventory(node()),
-%%  interface:start().
+  io:fwrite("~p~n", [compile:file(interface, debug_info)]),
+  inventory:initInventory([node()]),
+  interface:start(self()).
 
 connect() ->
   net_kernel:connect_node('server@amir-Inspiron-5559'),
