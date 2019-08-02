@@ -13,7 +13,7 @@
 -define(SIZE,{1028, 1028}).
 -define(LOGGER_FILE_PATH, "../Logger_interface.txt").
 -behaviour(gen_server).
--record(state, {counter, button, start, histogramProcess, histogram, histogramButton, sale}).
+-record(state, {counter, button, start, histogramProcess, histogram, histogramButton, sale, finished}).
 %% API
 -export([start/1, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1, castFunc/1]).
 -define(HISTOGRAM_PATH, "src/").
@@ -90,7 +90,7 @@ init([WatchdogPID])->
 %%      restoreHandlesByState(State)
 %%  end,
   State = #state{counter = Counter, button = StartButton, start = false,
-              histogramProcess = P, histogram = false, histogramButton = DrawHistogramOfDepartmentProduct, sale = false},
+              histogramProcess = P, histogram = false, histogramButton = DrawHistogramOfDepartmentProduct, sale = false, finished = true},
   {ok, State}.
 
 
@@ -115,7 +115,7 @@ handle_info({'DOWN', _MonitorRef, _Type, _Object, _Info},State) ->
 
 
 
-handle_info(#wx{id = ?SALE , obj = Button, event = #wxCommand{type = command_button_clicked}},
+handle_info(#wx{id = ?SALE , event = #wxCommand{type = command_button_clicked}},
     #state{start = false} = State) ->
   io:fwrite("ERROR : Go on Sale was pressed before system start~n"),
   {noreply, State};
@@ -141,20 +141,23 @@ handle_info(#wx{obj = DepartmentScrollButton, event = #wxCommand{type = command_
   {noreply, State};
 
 
+handle_info(#wx{id = ?STARTBUTTON, event = #wxCommand{type = command_button_clicked}},
+    #state{start = false, finished = false} = State) ->
+  io:fwrite("Please wait for system to shut down~n"),
+  {noreply, State};
+
 handle_info(#wx{id = ?STARTBUTTON , obj = Button, event = #wxCommand{type = command_button_clicked}},
-    #state{counter = Counter, start = false, histogram = Histo} = State) ->
+    #state{counter = Counter, start = false, finished = true} = State) ->
   masterFunction:start(),
   wxTextCtrl:setEditable(Counter, false),
   wxButton:setLabel(Button, "Stop"),
-  %writeToMnesia(Histo, true),
   erlang:send_after(1000, self(), updateCounter),
-  {noreply, State#state{start = true}};
+  {noreply, State#state{start = true, finished = false}};
 
 %%  @doc pressing stop closes the shop
 handle_info(#wx{id = ?STARTBUTTON, event = #wxCommand{type = command_button_clicked}},
-    #state{start = true, histogram = Histo} = State) ->
+    #state{start = true} = State) ->
   masterFunction:castFunc(closeShop),
- % writeToMnesia(Histo, false),
   {noreply, State#state{start = false}};
 
 

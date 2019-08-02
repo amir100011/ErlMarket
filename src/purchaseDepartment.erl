@@ -131,7 +131,7 @@ getRatio([H|T],NumberOfCustomers)->
 getRatio([],_NumberOfCustomers)->[].
 
 getRatioSingleElement({departmentProduct,Department, Product_name, _, _Expiry_time, Amount},NumberOfCustomers) ->
-  Price = inventory:getProdcutPrice(atom_to_list(Product_name)),  % TODO change at amir
+  Price = inventory:getProdcutPrice(Product_name),  % TODO change at amir
   writeToLogger("getRatioSingleElement",[{departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers]),
   NumberOfProductsToOrder = round((NumberOfCustomers * ?DESIRED_RATIO) - Amount) + 1,
   if  NumberOfProductsToOrder =< 1 -> AmountToOrder = 0;

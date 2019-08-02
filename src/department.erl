@@ -177,7 +177,7 @@ cancelSale([H|T]) ->
   Department = H#departmentProduct.department,
   New = H#departmentProduct{price = NormalPrice},
   F2 = fun() -> mnesia:delete_object(Department, H , write), mnesia:write(Department, New, write) end,
-  mnesia:transaction(F),
+  mnesia:transaction(F2),
   cancelSale(T).
 
 % a helper function to get a random element from a list

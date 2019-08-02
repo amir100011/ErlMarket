@@ -18,6 +18,7 @@
 -define(MAXITERATIONS, 10).
 
 
+
 %%----------------PRIMARY FUNCTION-------------------------
 
 %% @doc initialize the customer and spawn a customer process that shops in ErlMarket
@@ -113,7 +114,6 @@ getAllProductsInShoppingListThatBelongToDepartment([],_DepartmentName) -> [].
 
 
 takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp) ->
-  writeToLogger(variable, "Customer has done ~p iterations ~n", [get(requesIteration)]),
   LastElementInList =  lists:nth(1,OrderedShoppingList),
   NewList = lists:delete(LastElementInList,OrderedShoppingList),
   RequestIterations = get(requesIteration),

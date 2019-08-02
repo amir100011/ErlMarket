@@ -116,11 +116,11 @@ getProdcutPrice(ProductName) ->
   {atomic, [Price]} = mnesia:transaction(F),
   Price.
 
-
-test()->
-  initInventory([node()]),
-  PriceOfProduct = getProdcutPrice("buns"),
-  io:fwrite("~p~n",[PriceOfProduct]).
+%%
+%%test()->
+%%  initInventory([node()]),
+%%  PriceOfProduct = getProdcutPrice("buns"),
+%%  io:fwrite("~p~n",[PriceOfProduct]).
 
 %%getDepartmentProductsFromDepartment(Department)->
 %%  % get Products that are currently in

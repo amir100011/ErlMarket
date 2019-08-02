@@ -21,7 +21,7 @@ compiler()->
   io:fwrite("~p~n", [compile:file(customer, debug_info)]),
   io:fwrite("~p~n", [compile:file(department, debug_info)]),
   io:fwrite("~p~n", [compile:file(interface, debug_info)]),
-  inventory:initInventory([node()]),
+  inventory:initInventory(node()),
   interface:start(self()).
 
 connect() ->
@@ -32,13 +32,7 @@ connect() ->
   io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
   watchdog:init().
 
-compileTest(ModuleName) ->
+compileTest() ->
   io:fwrite("~p~n", [compile:file(interface, debug_info)]),
   io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
-  io:fwrite("~p~n", [compile:file(inventory, debug_info)]),
-  io:fwrite("~p~n", [compile:file(cashierServer, debug_info)]),
-  io:fwrite("~p~n", [compile:file(purchaseDepartment, debug_info)]),
-  io:fwrite("~p~n", [compile:file(masterFunction, debug_info)]),
-  io:fwrite("~p~n", [compile:file(customer, debug_info)]),
-  io:fwrite("~p~n", [compile:file(department, debug_info)]),
-  watchdog:start(node(),ModuleName).
+  watchdog:init(interface).
