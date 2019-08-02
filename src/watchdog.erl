@@ -8,46 +8,48 @@
 %%%-------------------------------------------------------------------
 -module (watchdog).
 -define(LOGGER_FILE_PATH, "../Logger-watchdog.txt").
+-include_lib("records.hrl").
 -compile (export_all).
 
+start(ListOfNodesAndModules) ->
+  spawn(?MODULE, startInternal, [ListOfNodesAndModules]).
 
-start (NodeName, ModuleName) ->
-  writeToLogger ("Watchdog: Starting:", [node(),ModuleName,NodeName] ),
+startInternal (ListOfNodesAndModules) ->
+  writeToLogger ("Watchdog: Starting:", node()),
   global:register_name (watchdog, self ()),
-  spawn(NodeName,ModuleName,start,[self()]),
-  timer:sleep(5000), % 5 seconds
-  ServerPID = gen_server:call({global,ModuleName},pid),
-  erlang:monitor(process,ServerPID),
-  loop (ModuleName).
+  monitorNewProcess (ListOfNodesAndModules),
+  loop().
 
-loop (ModuleName) ->
+loop () ->
   receive
     {'DOWN', _MonitorRef, _Type, _Object, normal} ->
       writeToLogger("RECEIVED ",[normal]);
-    {'DOWN', _MonitorRef, _Type, _Object, Info} ->
+    {'DOWN', MonitorRef, _Type, _Object, Info} ->
       writeToLogger("INFO", [Info]),
-      NodesTMP = nodes(),
-      if NodesTMP =:= [] ->
-        Nodes = [node()];
-        true->
-          Nodes =  shuffleList(NodesTMP)
-      end,
-      spawn(lists:nth(1,Nodes),ModuleName,start,[self()]),
-      timer:sleep(5000), % 5 seconds
-      ServerPID = gen_server:call({global,ModuleName},pid),
-      erlang:monitor(process,ServerPID),
-      writeToLogger("raised",[lists:nth(1,Nodes)]),
-      loop(ModuleName);
+      {ModuleName,Name} = getModuleNameAndProcessName(MonitorRef),
+      ChosenNode = chooseInWhichNodeOpenTheFallenProcess(),
+      writeToLogger("raised",[ChosenNode, ModuleName,Name]),
+      monitorNewProcess([[ChosenNode,ModuleName,Name]]),
+      loop();
     _MSG ->
-      writeToLogger("RECEIVED ~p~n", [_MSG]),loop (ModuleName)
+      writeToLogger("RECEIVED ~p~n", [_MSG]),loop ()
   end.
 
+chooseInWhichNodeOpenTheFallenProcess() ->
+  NodesTMP = nodes(),
+  if NodesTMP =:= [] ->
+    node();
+    true->
+      lists:nth(1,shuffleList(NodesTMP))
+  end.
+
+
 raise(ServerPID,ModuleName)->
-  writeToLogger ("Watchdog: Starting @ ~p.~n", [node() ] ),
+  writeToLogger ("Watchdog: Starting @ ~p.~n", [node()]),
   global:unregister_name(watchdog),
   global:register_name(watchdog, self ()),
   erlang:monitor(process,ServerPID),
-  loop(ModuleName).
+  loop().
 
 
 shuffleList(ShoppingList) ->
@@ -71,38 +73,66 @@ writeToLogger(String, List) ->
 
 
 monitorNewProcess(ListOfNodesAndModules) ->
+  io:fwrite("monitoring ~p~n", [ListOfNodesAndModules]),
   lists:foreach(
     fun(NodeNameAndModuleName) ->
-      NodeName = lists:nth(1,NodeNameAndModuleName),
-      ModuleName = lists:nth(2,NodeNameAndModuleName),
-      Name = lists:nth(3,NodeNameAndModuleName),
+      {NodeName,ModuleName,Name} = getParameters(NodeNameAndModuleName),
       if Name =:= [] ->
-        spawn(NodeName,ModuleName,start,[]),
-        timer:sleep(500), % 0.5 seconds
-        writeToLogger("list", NodeNameAndModuleName),
-        ServerPID = gen_server:call({global,ModuleName},pid),
-        MonitorRef = erlang:monitor(process,ServerPID),
-        T =
-          fun() ->
-            mnesia:write(nodeList, {MonitorRef,ModuleName},write),
-            mnesia:write(nodeList, {ModuleName,MonitorRef},write)
-          end,
-        mnesia:transaction(T);
+        MonitorRef = spawnRegularServer(NodeName,ModuleName);
         true ->
-          spawn(NodeName,ModuleName,start,[Name]),
-          writeToLogger("list", NodeNameAndModuleName),
-          timer:sleep(500), % 0.5 seconds
-          ServerPID = gen_server:call({global,Name},pid),
-          MonitorRef = erlang:monitor(process,ServerPID),
-          T =
-            fun() ->
-              mnesia:write(nodeList, {MonitorRef,ModuleName},write),
-              mnesia:write(nodeList, {ModuleName,MonitorRef},write)
-            end,
-          mnesia:transaction(T)
-      end
+          MonitorRef = spawnDepartmentServer(NodeName,ModuleName,Name)
+      end,
+      writeToMnesia(MonitorRef, ModuleName, Name)
     end,
     ListOfNodesAndModules).
+
+
+getModuleNameAndProcessName(MonitorRef) ->
+  F = fun() ->
+    Q =
+      qlc:q([E || E <- mnesia:table(nodeList), E#processesAllocationToNodes.monitorRef =:= MonitorRef]),
+    qlc:e(Q)
+      end,
+  {atomic, [Reply]} = mnesia:transaction(F),
+  io:fwrite("Reply = ~p~n",[Reply]),
+  ReplyAsList = tuple_to_list(Reply),
+  io:fwrite("Reply = ~p~n",[ReplyAsList]),
+  {lists:nth(3,ReplyAsList),lists:nth(4,ReplyAsList)}.
+
+getParameters(NodeNameAndModuleName) ->
+  io:fwrite("getParameters: ~p~n", [NodeNameAndModuleName]),
+  {lists:nth(1,NodeNameAndModuleName), lists:nth(2,NodeNameAndModuleName), lists:nth(3,NodeNameAndModuleName)}.
+
+
+spawnRegularServer(NodeName,ModuleName) ->
+  spawn(NodeName,ModuleName,start,[]),
+  timer:sleep(500), % 0.5 seconds
+  writeToLogger("list", [NodeName,ModuleName]),
+  ServerPID = gen_server:call({global,ModuleName},pid),
+  erlang:monitor(process,ServerPID).
+
+spawnDepartmentServer(NodeName,ModuleName,Name)->
+  spawn(NodeName,ModuleName,start,[Name]),
+  timer:sleep(500), % 0.5 seconds
+  writeToLogger("list", [NodeName,ModuleName,Name]),
+  ServerPID = gen_server:call({global,Name},pid),
+  erlang:monitor(process,ServerPID).
+
+writeToMnesia(MonitorRef,ModuleName,Name) ->
+  T = fun() ->
+    X =
+      #processesAllocationToNodes{
+        monitorRef = MonitorRef,
+        moduleName = ModuleName,
+        processName = Name
+      },
+    mnesia:write(nodeList, X, write)
+      end,
+  mnesia:transaction(T).
+
+%%  Fun = fun() -> mnesia:all_keys(nodeList) end,
+%%  {atomic, Ans} = mnesia:transaction(Fun),
+%%  io:fwrite("czxcz ~p~n",[Ans]).
 
 
 %%
