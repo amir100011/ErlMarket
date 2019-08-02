@@ -59,10 +59,9 @@ handle_info(trigger, State) when is_atom(State)->
   castFunc(terminate),
   {noreply, State}.
 
-%% @doc returns its own PID for watchdog monitoring
-handle_call(pid, _From, State) ->
-  Reply= self(),
-  {reply, Reply, State}.
+handle_call(_Request, _From, State) ->
+  {reply, ok, State}.
+
 
 handle_cast({updateTime,Time}, _) ->
   {noreply, Time};
@@ -113,8 +112,9 @@ ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers, ErlMarketB
   if CostOfReservation =< ErlMarketBudget ->
     writeToLogger("ratioToReserve Success: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
     reserve(ListOfValidProductsWithRatio, Time, CostOfReservation),
-    writeToLogger("reserve - ", ListOfValidProductsWithRatio);
-    %%[{_Budget, ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget); %FIXME change to mneasia red
+    writeToLogger("reserve - ", ListOfValidProductsWithRatio),
+    [{_Budget, ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget),
+    interface:castFunc({budgetVsExpense, ErlMarketBudget, CostOfReservation});  % TODO change at amir
     true ->
       writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
       DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,
@@ -130,7 +130,8 @@ getRatio([H|T],NumberOfCustomers)->
   [getRatioSingleElement(H,NumberOfCustomers)] ++ getRatio(T,NumberOfCustomers);
 getRatio([],_NumberOfCustomers)->[].
 
-getRatioSingleElement({departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers) ->
+getRatioSingleElement({departmentProduct,Department, Product_name, _, _Expiry_time, Amount},NumberOfCustomers) ->
+  Price = inventory:getProdcutPrice(atom_to_list(Product_name)),  % TODO change at amir
   writeToLogger("getRatioSingleElement",[{departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers]),
   NumberOfProductsToOrder = round((NumberOfCustomers * ?DESIRED_RATIO) - Amount) + 1,
   if  NumberOfProductsToOrder =< 1 -> AmountToOrder = 0;
@@ -260,6 +261,7 @@ resetIterationCounter() ->
 
 updateIterationCounter() ->
   put(iterationCounter , get(iterationCounter) + 1).
+
 
 
 %%---------------------------------------------------------
