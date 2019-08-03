@@ -116,7 +116,7 @@ handle_info(#wx{id = ?SALE , event = #wxCommand{type = command_button_clicked}},
 
 handle_info(#wx{id = ?SALE , obj = Button, event = #wxCommand{type = command_button_clicked}},
     #state{start = true, sale = false} = State) ->
-    lists:foreach(fun(E) -> department:castFunc(E, {sale, 0.95}) end, ?DEPARTMENT_LIST),
+    lists:foreach(fun(E) -> department:castFunc(E, {sale, 0.5}) end, ?DEPARTMENT_LIST),
     wxButton:setLabel(Button, "Stop Sale"),
   {noreply, State#state{sale = true}};
 
@@ -154,7 +154,7 @@ handle_info(#wx{id = ?STARTBUTTON, event = #wxCommand{type = command_button_clic
 
 
 handle_info(#wx{id = ?DRAWBUTTON ,obj = Button, event = #wxCommand{type = command_button_clicked}},
-    #state{start = true, histogramProcess = P, histogram = false} = State) ->
+    #state{start = true, histogram = false} = State) ->
   erlang:send_after(1000, self(), plotHistogram),
   wxButton:setLabel(Button, "Stop Drawing Histogram"),
   %writeToMnesia(true, true),
@@ -196,7 +196,7 @@ handle_info(updateCounter, #state{button = Button, counter = Counter, start = fa
       wxTextCtrl:setValue(TimeButton, "0"),
       wxTextCtrl:setEditable(Counter, false),
       wxButton:setLabel(Button, "Start"),
-      {noreply, State};
+      {noreply, State#state{finished = true}};
     Throw -> exit(Throw)
   end;
 
@@ -213,7 +213,7 @@ handle_info(updateCounter, #state{button = Button, counter = Counter, start = fa
       wxButton:setLabel(Button, "Start"),
       wxButton:setLabel(HistogramButton, "Draw Histogram"),
       %writeToMnesia(false, false),
-      {noreply, State#state{histogram = false}};
+      {noreply, State#state{histogram = false, finished = true}};
     Throw -> exit(Throw)
   end;
 
