@@ -31,14 +31,15 @@ init(_Args) ->
   {ok, normal}.
 
 %% @doc interface function for using gen_server call
+
 callFunc(ServerName, Message) ->
   try gen_server:call({global, ServerName}, Message) of
-      AnsFromServer->AnsFromServer
+      AnsFromServer -> AnsFromServer
   catch
-    exit:noproc -> timer:sleep(2500),
-                   writeToLogger("Department ~p is not responding, resending message ~n",[ServerName]),
-                   callFunc(ServerName, Message);
-    exit:Error -> writeToLogger("Department ~p is not responding because ~p exiting... ~n",[ServerName, Error])
+    exit:Error -> timer:sleep(2500),
+                   writeToLogger("Department ~p is not responding becuase ~p, resending message ~n",[ServerName, Error]),
+                   Ans = callFunc(ServerName, Message),
+                   Ans
   end.
 
 
@@ -47,10 +48,9 @@ castFunc(ServerName, Message) ->
   try  gen_server:cast({global, ServerName}, Message) of
     AnsFromServer-> AnsFromServer  % usually no reply just ok or some atom
   catch
-    exit:noproc -> timer:sleep(2500),
-      writeToLogger("Department ~p is not responding, resending message ~n",[ServerName]),
-      castFunc(ServerName, Message);
-    exit:Error -> writeToLogger("Department ~p is not responding because ~p exiting... ~n",[ServerName, Error])
+    exit:Error -> timer:sleep(2500),
+      writeToLogger("Department ~p is not responding becuase ~p, resending message ~n",[ServerName, Error]),
+      castFunc(ServerName, Message)
   end.
 
 
@@ -111,26 +111,35 @@ handle_cast({return, ListOfProduct}, State) ->
   addProducts(ListOfProduct),
   {noreply, State};
 
+handle_cast({restock, ListOfProduct}, {onSale, Discount})  ->
+  % a new shipment of products have been made, this function adds the products to the table,
+  % or update the amount of existing similar products
+  ListOfProductDiscount = createDiscountedProducts(ListOfProduct, Discount),
+ % writeToLogger("restock ON SALE ",[?MODULE, ListOfProductDiscount]),
+  addProducts(ListOfProductDiscount),
+  {noreply, {onSale, Discount}};
+
 handle_cast({restock, ListOfProduct}, State) ->
   % a new shipment of products have been made, this function adds the products to the table,
   % or update the amount of existing similar products
-  writeToLogger("restock ",[?MODULE,ListOfProduct]),
+  %writeToLogger("restock ",[?MODULE,ListOfProduct]),
   addProducts(ListOfProduct),
   {noreply, State};
 
-handle_cast({sale,_}, State) when State =:= onSale -> {noreply, State};
+handle_cast({sale,_}, State) when is_tuple(State) -> {noreply, State};
   %  a request to go on sale in the department
 handle_cast({sale, Discount}, State)->
+  io:fwrite("Erl market is going on sale with ~p precent discount~n",[Discount * 100 ]),
   F = fun() ->
     Q = qlc:q([E || E <- mnesia:table(get(server_name))]),
     qlc:e(Q)
       end,
   {atomic, ListAns} = mnesia:transaction(F),
   executeSale(ListAns, Discount),
-  {noreply, onSale};
+  {noreply, {onSale, Discount}};
 
 
-handle_cast(cancelSale, onSale)->
+handle_cast(cancelSale, {onSale, _})->
   F = fun() ->
     Q = qlc:q([E || E <- mnesia:table(get(server_name))]),
     qlc:e(Q)
@@ -148,7 +157,7 @@ handle_cast(getProducts, State) ->
     qlc:e(Q)
       end,
   {atomic, ListAns} = mnesia:transaction(F),
-  writeToLogger(variable, "Department ~p Inventory is:  ~p ~n", [get(server_name) , ListAns]),
+  %writeToLogger(variable, "Department ~p Inventory is:  ~p ~n", [get(server_name) , ListAns]),
   {noreply, State};
 
 handle_cast(terminate, State) ->
@@ -171,7 +180,7 @@ code_change(_OldVsn, State, _Extra) ->
 
 %% @doc change the price value of each product during sale
 executeSale([],_) -> done; % TODO change at amir all the funciton
-executeSale([H|T], Discount)  when Discount < 1 ->
+executeSale([H|T], Discount)  when Discount =< 1 ->
   Price = H#departmentProduct.price,
   NewPrice = (1 - Discount) * Price,
   NewPriceInt = round(NewPrice),
@@ -210,6 +219,16 @@ getRandomElement([H|T]) ->
   end.
 
 
+createDiscountedProducts([], _)-> [];
+createDiscountedProducts([H|T], Discount) ->
+  Price = H#departmentProduct.price,
+  NewPrice = (1 - Discount) * Price,
+  NewPriceInt = round(NewPrice),
+  DiscountedProduct = H#departmentProduct{price = NewPriceInt},
+  [DiscountedProduct] ++ createDiscountedProducts(T, Discount).
+
+
+
 %% @doc this function is used when a purchase is made and we need o update the department mnesia table,
 %% it is a private function used by removeProducts
 updateAmountOrDeleteProduct(Product, RequestedAmount)->
@@ -222,7 +241,6 @@ updateAmountOrDeleteProduct(Product, RequestedAmount)->
     RequestedAmount == ProductAmountInDepartment -> done;
     RequestedAmount < ProductAmountInDepartment ->   New = Product#departmentProduct{amount = ProductAmountInDepartment - RequestedAmount},
                                                      mnesia:transaction(fun()-> mnesia:write(DepartmentName, New, write) end)
-      %mnesia:dirty_write(DepartmentName, New)
   end,
   RemovedProduct.
 

@@ -98,11 +98,11 @@ handle_info({'DOWN', MonitorRef, _Type, _Object, Info}, #state{bakery = MonitorR
 
 handle_info({'DOWN', MonitorRef, _Type, _Object, Info}, #state{dairy = MonitorRef} = State) ->
   writeToLogger(variable, "dairy department has fallen from ~p , reinstalling it ~n",[Info]),
-  {noreply, State#state{bakery = newMonitor(dairy)}};
+  {noreply, State#state{dairy = newMonitor(dairy)}};
 
 handle_info({'DOWN', MonitorRef, _Type, _Object, Info}, #state{meat = MonitorRef} = State) ->
   writeToLogger(variable, "meat department has fallen from ~p , reinstalling it ~n",[Info]),
-  {noreply, State#state{bakery = newMonitor(meat)}};
+  {noreply, State#state{meat = newMonitor(meat)}};
 
 handle_info(Info, State) ->
   writeToLogger("masterFunction recieved: ", Info),
