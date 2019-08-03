@@ -47,7 +47,7 @@ handle_info(trigger, State) when is_integer(State)->
   writeToLogger("handle_info"),
   Time = State,
   NumberOfCustomers = getNumberOfCustomers(),
-  [{_Budget, ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget),
+  ErlMarketBudget = getBalanceWithAccumulatedChanges(),
   ListOfValidProductsToReserve = getListOfProductsToReserve(?DEPARTMENT_LIST, Time),
   ListOfValidProductsWithRatio = checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers),
   ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers,ErlMarketBudget),
@@ -114,8 +114,8 @@ ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers, ErlMarketB
     writeToLogger("ratioToReserve Success: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
     reserve(ListOfValidProductsWithRatio, Time, CostOfReservation),
     writeToLogger("reserve - ", ListOfValidProductsWithRatio),
-    [{_Budget, ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget),
-    interface:castFunc({budgetVsExpense, ErlMarketBudget, CostOfReservation});  % TODO change at amir
+    ErlMarketBudgetNew = getBalanceWithAccumulatedChanges(),
+    interface:castFunc({budgetVsExpense, ErlMarketBudgetNew, CostOfReservation});  % TODO change at amir
     true ->
       writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
       DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,
@@ -224,6 +224,12 @@ getListOfProductsToReserveInternal(DepartmentName, Time) ->
   ListNotOrganized = gen_server:call({global,DepartmentName}, {getTotalAmountOfValidProduct, Time}),
   sumAmount(ListNotOrganized, DepartmentName).
 
+getBalanceWithAccumulatedChanges()->
+  [{_Budget,ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget),
+  Budget = ErlMarketBudget + get(erlMarketBudgetChanges),
+  writeToLogger("getBalanceWithAccumulatedChanges", [Budget]),
+  Budget.
+
 %% @doc initialize process's dictionary fields and creates ETS table for the budget
 setInitialBudget() ->
   put(erlMarketBudgetChanges,0),
@@ -237,21 +243,22 @@ setBalance(Amount) ->
   OldBalance = get(erlMarketBudget),
   NewBalance = OldBalance + Amount,
   ets:insert(budget,{erlMarketBudget, NewBalance}),
-  writeToLogger("SetBalance",[OldBalance, Amount, ets:lookup(budget,erlMarketBudget)]),
+  writeToLogger("SetBalance [OldBudget,TotalChangesAmount,NewBudget]",[OldBalance, Amount, ets:lookup(budget,erlMarketBudget)]),
   put(erlMarketBudget, NewBalance),
   put(erlMarketBudgetChanges, 0).
 
 %% @doc updates the total amount of change in the ErlMarket's budget
 accumulateChanges(TypeOfAction , Amount) ->
   writeToLogger("accumulateChanges: ", [TypeOfAction,Amount]),
-  OldBalance = get(erlMarketBudgetChanges),
+  writeToLogger("numberOfIteration: " ,[get(iterationCounter)]),
+  OldChangesAccumulator = get(erlMarketBudgetChanges),
   case TypeOfAction of
-    add -> put(erlMarketBudgetChanges, OldBalance + Amount);
-    deduce -> put(erlMarketBudgetChanges, OldBalance - Amount);
+    add -> put(erlMarketBudgetChanges, OldChangesAccumulator + Amount);
+    deduce -> put(erlMarketBudgetChanges, OldChangesAccumulator - Amount);
   _TypeOfAction -> writeToLogger("wierd got: ",TypeOfAction)
   end,
-  NewBalance = get(erlMarketBudgetChanges),
-  writeToLogger("updateBalance: OldBalance: ",OldBalance, " NewBalance:",NewBalance).
+  UpdatedChangesAccumulator = get(erlMarketBudgetChanges),
+  writeToLogger("accumulateChanges: OldChangesAccumulator: ",OldChangesAccumulator, " UpdatedChangesAccumulator:",UpdatedChangesAccumulator).
 
 sendProductsToDepartment(Department, DepartmentAndList)->
   writeToLogger("restock ",DepartmentAndList),
@@ -295,7 +302,8 @@ testReservation() ->
   setInitialBudget(),
   setBalance(100),
   setBalance(-150),
-  ets:lookup(budget,erlMarketBudget).
+  [{_Budget,ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget),
+  ErlMarketBudget.
 %%  purchaseDepartment:start().
 
 

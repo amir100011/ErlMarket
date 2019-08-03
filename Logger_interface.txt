@@ -1,2 +1,0 @@
-Server: Starting up.
- ['amir@amir-Inspiron-5559'].

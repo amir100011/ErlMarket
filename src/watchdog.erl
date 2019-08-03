@@ -8,6 +8,11 @@
 %%%-------------------------------------------------------------------
 -module (watchdog).
 -define(LOGGER_FILE_PATH, "../Logger-watchdog.txt").
+-define(TIMER, timerSuperviserProcess).
+-define(TERMINATOR, terminator).
+-define(SECURITY1, security1).
+-define(SECURITY2, security2).
+-define(INTERVAL, 2500).
 -include_lib("records.hrl").
 -compile (export_all).
 
@@ -21,7 +26,14 @@ startWatchdog (ListOfNodesAndModules) ->
   loop().
 
 loop () ->
+  io:fwrite("registerd_names() -->  ~p~n", [global:registered_names()]),
   receive
+    closeShop ->
+      writeToLogger("recived Close Shop"),
+      global:send(?SECURITY1, {terminate}),
+      global:send(?SECURITY2, {terminate}),
+      waitForCustomerToLeave(),
+      loop();
     {'DOWN', _MonitorRef, _Type, _Object, normal} ->
       writeToLogger("RECEIVED ",[normal]);
     {'DOWN', MonitorRef, _Type, _Object, Info} ->
@@ -59,18 +71,6 @@ shuffleList(ShoppingList) ->
 shuffleNodes([]) -> [node()];
 shuffleNodes(NodeList) ->
   shuffleList(NodeList).
-
-writeToLogger(String) ->
-  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
-  io:format(S,"~s ~n",[String]),
-  file:close(S).
-
-writeToLogger(String, List) ->
-  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
-  io:format(S,"~s~n ",[String]),
-  file:close(S),
-  file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
-
 
 monitorNewProcess(ListOfNodesAndModules) ->
   io:fwrite("monitoring ~p~n", [ListOfNodesAndModules]),
@@ -129,28 +129,33 @@ writeToMnesia(MonitorRef,ModuleName,Name) ->
       end,
   mnesia:transaction(T).
 
-%%  Fun = fun() -> mnesia:all_keys(nodeList) end,
-%%  {atomic, Ans} = mnesia:transaction(Fun),
-%%  io:fwrite("czxcz ~p~n",[Ans]).
+
+waitForCustomerToLeave()->
+  erlang:send_after(?INTERVAL, self(), closeShop), %% define new timer
+  NumberOfCustomers = masterFunction:callFunc(getNumberOfCustomers),
+  writeToLogger(variable, "Shop is closed: ~p  Customer remain ~n",[NumberOfCustomers]),
+  if
+    NumberOfCustomers =/= 0 ->
+      waitForCustomerToLeave();
+    true ->
+      writeToLogger("Shop is closed: all customers left~n"),
+      global:send(?TIMER, {terminate}),
+      exit(normal)
+  end.
 
 
-%%
-%%  tmp()->
-%%DeadOrAlive = lists:nth(1,Args),
-%%case  DeadOrAlive of
-%%dead ->
-%%writeToLogger("handle info Watchdog dead"),
-%%Nodes = shuffleNodes(nodes()),
-%%MonitorRef =  erlang:monitor(process,spawn(lists:nth(1,Nodes),watchdog,raise,[self(),?MODULE])),
-%%T = fun() ->
-%%mnesia:write(nodeList, {MonitorRef,watchdog},write)
-%%end,
-%%mnesia:transaction(T);
-%%alive ->
-%%writeToLogger("handle info Watchdog alive"),
-%%MonitorRef =  erlang:monitor(process,lists:nth(2,Args)),
-%%T = fun() ->
-%%mnesia:write(nodeList, {MonitorRef,watchdog},write)
-%%end,
-%%mnesia:transaction(T)
-%%end.
+writeToLogger(String) ->
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
+  io:format(S,"~s ~n",[String]),
+  file:close(S).
+
+writeToLogger(String, List) ->
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
+  io:format(S,"~s~n ",[String]),
+  file:close(S),
+  file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
+
+writeToLogger(variable, String, Variables) ->
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
+  io:format(S, String, Variables),
+  file:close(S).

@@ -98,8 +98,9 @@ handle_call(pid, _From, State) ->
   Reply = self(),
   {reply, Reply, State}.
 
-handle_cast({budgetVsExpense, Budget, Expence}, #state{ histogramProcess = P} = State) ->
-  python:call(P, drawHistogram, processBudgetVsExpenceFromErlang, [Budget, Expence]), % initialize the process that handles the plots
+handle_cast({budgetVsExpense, Budget, Expense}, #state{ histogramProcess = P} = State) ->
+  writeToLogger("handleCast budgetVsExpense: ", [Budget, Expense]),
+  python:call(P, drawHistogram, processBudgetVsExpenceFromErlang, [Budget, Expense]), % initialize the process that handles the plots
   {noreply, State};
 handle_cast(_Msg, State) ->
   {noreply, State}.

@@ -44,9 +44,9 @@ initErlMarketFunctionality() ->
   writeToLogger("strating initialization"),
   ListOfModulesToNodes = buildListForWatchDogToInitialize(),
   watchdog:start(ListOfModulesToNodes),
-%%  initDepartments(?DEPARTMENT_LIST),
-%%  initPurchaseDepartment(),
-%%  initCashiers(),
+  initDepartments(?DEPARTMENT_LIST),
+ %% initPurchaseDepartment(),
+ %% initCashiers(),
   global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   {ok, normal}.
@@ -56,7 +56,8 @@ globalRegisterMasterFunction() ->
 
 buildListForWatchDogToInitialize() ->
   DepartmentListOfModulesToNodes = initDepartmentsForWatchdog(?DEPARTMENT_LIST,[]),
-  DepartmentListOfModulesToNodes ++ [[?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE,cashierServer,[]]].
+  %%DepartmentListOfModulesToNodes ++ [[?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE,cashierServer,[]]].
+  [[?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE,cashierServer,[]]].
 
 
 initDepartmentsForWatchdog([H|T],List) ->
@@ -135,11 +136,12 @@ waitForCustomerToLeave()->
   NumberOfCustomers = callFunc(getNumberOfCustomers),
   writeToLogger(variable, "Shop is closed: ~p  Customer remain ~n",[NumberOfCustomers]),
   if
-    NumberOfCustomers == 0 ->  writeToLogger("Shop is closed: all customers left~n"),
-                               global:send(?TIMER, {terminate}),
-                               %castFunc(terminate),
-                               exit(normal);
-    true -> waitForCustomerToLeave()
+    NumberOfCustomers =/= 0 ->
+      waitForCustomerToLeave();
+    true ->
+      writeToLogger("Shop is closed: all customers left~n"),
+      global:send(?TIMER, {terminate}),
+      exit(normal)
   end.
 
 
