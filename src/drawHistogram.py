@@ -73,10 +73,8 @@ def preplotProcessLoop():
     summaryWriter = tf.summary.create_file_writer(log_dir)
     plotProcessLoop(summaryWriter)
 
-def startTB():
-    os.system("tensorboard --logdir=logdir")
 
-def plotProcessLoop(summaryWriter: tf.summary.SummaryWriter, drawHistogramProcess=None, iteration=0, TBProcess = None):
+def plotProcessLoop(summaryWriter: tf.summary.SummaryWriter, drawHistogramProcess=None, iteration=0):
     global first
     item = QueueErlang.get()
     if item[0] == "histogram":
@@ -88,33 +86,28 @@ def plotProcessLoop(summaryWriter: tf.summary.SummaryWriter, drawHistogramProces
             drawHistogramProcess.start()
             QueueData.put(title)
             QueueData.put(dataDict)
-            plotProcessLoop(summaryWriter, drawHistogramProcess, iteration, TBProcess)  # recursive call for further instructions
+            plotProcessLoop(summaryWriter, drawHistogramProcess, iteration)  # recursive call for further instructions
     if item[0] =="stopHistogram":
         print("got to terminate draw histogram")
         if drawHistogramProcess is not None:
             drawHistogramProcess.terminate()  # it can only be a living process from a previous iteration
         else:
             print("From python: i shouldn't be here.....")
-        plotProcessLoop(summaryWriter, None, iteration, TBProcess)
+        plotProcessLoop(summaryWriter, None, iteration)
     if item[0] == "plot":
         [_, income, expence] = item
         with summaryWriter.as_default():
             tf.summary.scalar('income', income, step=iteration)
             tf.summary.scalar('expence', expence, step=iteration)
-        if first:
-            TBProcess = Process(target=startTB, args=())
-            TBProcess.start()
-            first = 0
-        plotProcessLoop(summaryWriter, drawHistogramProcess, iteration + 1, TBProcess)
+        plotProcessLoop(summaryWriter, drawHistogramProcess, iteration + 1)
     if item[0] == "terminate":
         print("I got to terminate")
         if drawHistogramProcess is not None:
                 drawHistogramProcess.terminate()  # it can only be a living process from a previous iteration
-        if TBProcess is not None:
-            TBProcess.terminate()  # it can only be a living process from a previous iteration
+        return
     else:
         print("From Python: im here with unrecognized message {}".format(item))
-        plotProcessLoop(summaryWriter, drawHistogramProcess, iteration,TBProcess)
+        plotProcessLoop(summaryWriter, drawHistogramProcess, iteration)
 """
 if __name__ == '__main__':
     title = "test"

@@ -15,7 +15,7 @@
 -define(LOGGER_FILE_PATH, "../Logger-Customer.txt").
 -record(customer, {customer_id, budget, shopping_list}).
 -define(MAXIMUM_BUDGET, 600).
--define(MAXITERATIONS, 10).
+-define(MAXITERATIONS, 5).
 
 
 
@@ -113,7 +113,7 @@ getAllProductsInShoppingListThatBelongToDepartment([H|T], DepartmentName) ->
 getAllProductsInShoppingListThatBelongToDepartment([],_DepartmentName) -> [].
 
 
-takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp) ->
+takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp) ->  % TODO change at amir
   LastElementInList =  lists:nth(1,OrderedShoppingList),
   NewList = lists:delete(LastElementInList,OrderedShoppingList),
   RequestIterations = get(requesIteration),
@@ -121,10 +121,12 @@ takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp
     LastElementInList =:= [] ->
       takeTheProductsFromTheDifferentDepartments(NewList, T,TimeStamp);
     RequestIterations >= ?MAXITERATIONS ->  % To avoid deadlock
-       AnsFromServer = gen_server:call({global,H},{purchaseandleave,LastElementInList,TimeStamp}), % buy what ever is able and leave
+       %AnsFromServer = gen_server:call({global,H},{purchaseandleave,LastElementInList,TimeStamp}), % buy what ever is able and leave
+      AnsFromServer = department:callFunc(H, {purchaseandleave,LastElementInList, TimeStamp}),
        AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T, TimeStamp); % products found
     true ->
-       AnsFromServer = gen_server:call({global,H},{purchase,LastElementInList,TimeStamp}),
+       %AnsFromServer = gen_server:call({global,H},{purchase,LastElementInList,TimeStamp}),
+       AnsFromServer = department:callFunc(H, {purchase,LastElementInList, TimeStamp}),
        if
          AnsFromServer == noProducts ->
                   put(requesIteration, RequestIterations + 1),

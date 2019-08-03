@@ -16,7 +16,7 @@
 
 %% API
 -export([init/1, handle_call/3, handle_cast/2,
-  handle_info/2, terminate/2, code_change/3, getProductsForDrawingHistogram/1]).
+  handle_info/2, terminate/2, code_change/3, getProductsForDrawingHistogram/1, departmentTerminate/0]).
 
 -export([start/1,callFunc/2, castFunc/2, removedExpiredProducts/2]).
 
@@ -27,17 +27,32 @@ start(Name) ->
 
 %% @doc the gen_server process preforms this initalization
 init(_Args) ->
- % inventory:initInventory([node()]), % TODO once we have nodes we should initialize the Inventory once for all nodes, so in future design we delete this line
   put(server_name, _Args), % for future reference to the department mnesia table
   {ok, normal}.
 
 %% @doc interface function for using gen_server call
 callFunc(ServerName, Message) ->
-  gen_server:call({global, ServerName}, Message).
+  try gen_server:call({global, ServerName}, Message) of
+      AnsFromServer->AnsFromServer
+  catch
+    exit:noproc -> timer:sleep(2500),
+                   writeToLogger("Department ~p is not responding, resending message ~n",[ServerName]),
+                   callFunc(ServerName, Message);
+    exit:Error -> writeToLogger("Department ~p is not responding because ~p exiting... ~n",[ServerName, Error])
+  end.
 
-%% @doc interface function for using gen_server cast
+
+  %% @doc interface function for using gen_server cast
 castFunc(ServerName, Message) ->
-  gen_server:cast({global, ServerName}, Message).
+  try  gen_server:cast({global, ServerName}, Message) of
+    AnsFromServer-> AnsFromServer  % usually no reply just ok or some atom
+  catch
+    exit:noproc -> timer:sleep(2500),
+      writeToLogger("Department ~p is not responding, resending message ~n",[ServerName]),
+      castFunc(ServerName, Message);
+    exit:Error -> writeToLogger("Department ~p is not responding because ~p exiting... ~n",[ServerName, Error])
+  end.
+
 
 
 getProductList(_, [], Ans) -> Ans;
@@ -83,7 +98,11 @@ handle_call({purchase, ListOfProducts, TimeStamp}, _From, State) ->
 handle_call({purchaseandleave, ListOfProducts, TimeStamp}, _From, State) ->
   % a purchase request has been made, the department removes the products that exist in the inventory
   RemovedProducts = removeProducts(ListOfProducts, [], true, TimeStamp),
-  {reply, RemovedProducts, State}.
+  {reply, RemovedProducts, State};
+
+handle_call(pid, _From, State) ->
+  Reply= self(),
+  {reply, Reply, State}.
 
 %% @doc handle_call is a asynchronic kind of call to the server where the sender doesn't wait for a reply,
 handle_cast({return, ListOfProduct}, State) ->
@@ -285,6 +304,10 @@ deleteElements(DepartmentName, [H|T])->
   mnesia:delete_object(DepartmentName, H, write),
   deleteElements(DepartmentName, T).
 
+
+departmentTerminate()->
+  Pid = callFunc(dairy, pid),
+  exit(Pid, "Fuck You").
 
 getProductsForDrawingHistogram(DepartmentName) when DepartmentName == unified->
  Ans = lists:flatmap(fun(E) -> getProductsForDrawingHistogram(E) end, ?DEPARTMENT_LIST),

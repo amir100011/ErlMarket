@@ -14,6 +14,7 @@
 -compile(export_all).
 
 compiler()->
+  io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
   io:fwrite("~p~n", [compile:file(inventory, debug_info)]),
   io:fwrite("~p~n", [compile:file(cashierServer, debug_info)]),
   io:fwrite("~p~n", [compile:file(purchaseDepartment, debug_info)]),
