@@ -129,7 +129,8 @@ returnProducts([H|T], Dict) ->
   returnProducts(T, UpdatedDict).
 
 returnProductToDepartment(DepartmentProducts, Department) ->
-  gen_server:cast({global,Department},{return, DepartmentProducts}).
+  department:castFunc(Department, {return, DepartmentProducts}). % TODO change at amir
+  %gen_server:cast({global,Department},{return, DepartmentProducts}).
 
 %returnProductToDepartment({departmentProduct,Department,ProductName,_PriceForEach, Expiry, Amount}) ->
 %  gen_server:cast({global,Department},{return,[{departmentProduct,Department,ProductName,_PriceForEach, Expiry, Amount}]}).

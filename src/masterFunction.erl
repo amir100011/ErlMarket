@@ -13,7 +13,7 @@
 %% API
 -export([start/0, init/1, handle_call/3, handle_cast/2,
   handle_info/2, terminate/2, callFunc/1, castFunc/1]).
--export([count/0, timerSupervisor/0, getTimeStamp/0, test/0, terminatorLoop/0, initCustomer/2, waitForCustomerToLeave/0]).
+-export([count/0, timerSupervisor/0, getTimeStamp/0, terminatorLoop/0, initCustomer/2, waitForCustomerToLeave/0]).
 -include_lib("records.hrl").
 -define(LOGGER_FILE_PATH, "../Logger-masterFunction.txt").
 -define(NUMBER_OF_ITERATIONS, 1000000).
@@ -21,9 +21,10 @@
 -define(TERMINATOR, terminator).
 -define(SECURITY1, security1).
 -define(SECURITY2, security2).
--define(PURCHASE_DEPARTMENT_NODE, 'amir@amir-Inspiron-5559').
--define(CASHIER_SERVER_NODE, 'amir@amir-Inspiron-5559').
--define(DEPARTMENTS_NODE, 'amir@amir-Inspiron-5559').
+-define(PURCHASE_DEPARTMENT_NODE, node()).
+-define(CASHIER_SERVER_NODE, node()).
+-define(DEPARTMENTS_NODE, node()).
+-record(state, {dairy, meat, bakery}).
 -export([getNumberOfCustomers/0]).
 %%-export([periodicallyRestockInventory/0]).
 
@@ -37,6 +38,7 @@ init(_Args) ->
 
 
 initErlMarketFunctionality() ->
+  process_flag(trap_exit, true),  % to block the option of department process destroying this process
   put(numberOfCustomers,0),
   global:register_name(?TERMINATOR, spawn(?MODULE, terminatorLoop, [])),
   global:register_name(?TIMER, spawn(?MODULE, timerSupervisor, [])),
@@ -44,29 +46,18 @@ initErlMarketFunctionality() ->
   writeToLogger("strating initialization"),
   ListOfModulesToNodes = buildListForWatchDogToInitialize(),
   watchdog:start(ListOfModulesToNodes),
-  initDepartments(?DEPARTMENT_LIST),
- %% initPurchaseDepartment(),
- %% initCashiers(),
+  [DairyMonitor, MeatMonitor, BakeryMonitor] = initDepartments(?DEPARTMENT_LIST),  % Important to synch the order with DEPARTMENT_LIST when adding more departments
   global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
-  {ok, normal}.
+  % TODO monitor the security guards by adding their monitor ref to the state and adding their handle_info block, one may use the resolve option when theres a chance that the name is already registered
+  State = #state{dairy = DairyMonitor, meat = MeatMonitor, bakery = BakeryMonitor},
+  {ok, State}.
 
 globalRegisterMasterFunction() ->
   global:register_name(masterFunction, self()).
 
 buildListForWatchDogToInitialize() ->
-  DepartmentListOfModulesToNodes = initDepartmentsForWatchdog(?DEPARTMENT_LIST,[]),
-  %%DepartmentListOfModulesToNodes ++ [[?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE,cashierServer,[]]].
-  [[?PURCHASE_DEPARTMENT_NODE,purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE,cashierServer,[]]].
-
-
-initDepartmentsForWatchdog([H|T],List) ->
-  initDepartmentsForWatchdog(T,List) ++ [initDepartmentsForWatchdogInternal(H,List)];
-initDepartmentsForWatchdog([],List) -> List.
-
-initDepartmentsForWatchdogInternal(DepartmentName,List) ->
-  List ++ [?DEPARTMENTS_NODE, department, DepartmentName].
-
+  [[?PURCHASE_DEPARTMENT_NODE, purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE, cashierServer,[]]].
 
 handle_call(getTimeStamp, _From, State) ->
   TimeStamp = getTimeStampFromClock(),
@@ -94,9 +85,24 @@ handle_cast(customerOut, State) ->
   {noreply, State};
 
 handle_cast(terminate, State) ->
-  %terminate(0,0),
   writeToLogger("master function reached terminate"),
   {stop, normal, State}.
+
+% not pretty but effective, for each department we create a handle info block according to the monitorRef
+handle_info({'DOWN', MonitorRef, _Type, _Object, normal}, State) ->
+  writeToLogger(variable, "RECEIVED normal termination of ~p ~n",[MonitorRef]),
+  {noreply, State};
+handle_info({'DOWN', MonitorRef, _Type, _Object, Info}, #state{bakery = MonitorRef} = State) ->
+  writeToLogger(variable, "bakery department has fallen from ~p , reinstalling it ~n",[Info]),
+  {noreply, State#state{bakery = newMonitor(bakery)}};
+
+handle_info({'DOWN', MonitorRef, _Type, _Object, Info}, #state{dairy = MonitorRef} = State) ->
+  writeToLogger(variable, "dairy department has fallen from ~p , reinstalling it ~n",[Info]),
+  {noreply, State#state{bakery = newMonitor(dairy)}};
+
+handle_info({'DOWN', MonitorRef, _Type, _Object, Info}, #state{meat = MonitorRef} = State) ->
+  writeToLogger(variable, "meat department has fallen from ~p , reinstalling it ~n",[Info]),
+  {noreply, State#state{bakery = newMonitor(meat)}};
 
 handle_info(Info, State) ->
   writeToLogger("masterFunction recieved: ", Info),
@@ -104,7 +110,6 @@ handle_info(Info, State) ->
 
 terminate(_Reason, _State) ->
   writeToLogger("Master Function says Bye Bye"),
-  %global:send(?TIMER, {terminate}),
   ok.
 
 %% @doc interface function for using gen_server call
@@ -117,13 +122,21 @@ castFunc(Message) ->
 
 
 initErlMarketDataBase() ->
-  inventory:initInventory(node()).
+  inventory:initInventory(node()).  % TODO should init for all nodes
 
-initDepartments(DepartmentList) ->
-  writeToLogger("Initializaing Departments"),
-  lists:foreach(fun(DepartmentName) ->
-    department:start(DepartmentName)
-                end, DepartmentList).
+%%initDepartments(DepartmentList) ->
+%%  writeToLogger("Initializaing Departments"),
+%%  lists:foreach(fun(DepartmentName) ->
+%%    department:start(DepartmentName)
+%%                end, DepartmentList).
+initDepartments([]) -> [];
+initDepartments([H|T]) ->  % H is a department
+  {ok, DepartmentPid} = department:start(H),
+  link(DepartmentPid),
+  [monitor(process, DepartmentPid)] ++ initDepartments(T).
+% we link because we want to eliminate the possibility of departments working without a masterFunction
+% we assume that the masterFunction is protected by the watchdog module
+
 
 terminateDepartments(DepartmentList) ->
   writeToLogger("terminating Departments"),
@@ -132,7 +145,7 @@ terminateDepartments(DepartmentList) ->
                 end, DepartmentList).
 
 waitForCustomerToLeave()->
-  timer:sleep(2500),
+  timer:sleep(1500),
   NumberOfCustomers = callFunc(getNumberOfCustomers),
   writeToLogger(variable, "Shop is closed: ~p  Customer remain ~n",[NumberOfCustomers]),
   if
@@ -144,14 +157,14 @@ waitForCustomerToLeave()->
       exit(normal)
   end.
 
-
-initPurchaseDepartment() ->
-  writeToLogger("Initializaing Purchase Departments"),
-  purchaseDepartment:start().
-
-initCashiers() ->
-  writeToLogger("Initializaing CahsierServer"),
-  cashierServer:start().
+%%
+%%initPurchaseDepartment() ->
+%%  writeToLogger("Initializaing Purchase Departments"),
+%%  purchaseDepartment:start().
+%%
+%%initCashiers() ->
+%%  writeToLogger("Initializaing CahsierServer"),
+%%  cashierServer:start().
 
 
 initCustomer(DelayQ, TimeStamp) ->
@@ -189,6 +202,7 @@ count()->
   CurrTimestamp = ets:update_counter(timer, timestamp, {2, 1}),
   global:send(?TERMINATOR, {running}),
   gen_server:cast({global,purchaseDepartment}, {updateTime, CurrTimestamp}),
+  interface:castFunc({updateTime,CurrTimestamp}),
   if
     CurrTimestamp == ?NUMBER_OF_ITERATIONS -> castFunc(closeShop);
     true -> nothing
@@ -236,7 +250,8 @@ terminatorLoop()->
     gen_server:cast({global, purchaseDepartment},terminate),
     waitForPurchaseDepartment(),
     cashierServer:castFunc(terminate),
-    terminateDepartments(inventory:getDepartments()),
+    terminateDepartments(?DEPARTMENT_LIST),
+    timer:sleep(500), % TODO delete!!!
     castFunc(terminate),
     deleteMnesia(),
     exit(normal)
@@ -255,6 +270,12 @@ getTimeStampFromClock()->
     {timeStamp, TimeStamp} -> TimeStamp
   end.
 
+
+newMonitor(DepartmentName) ->
+  {ok, DepartmentPid} = department:start(DepartmentName),
+  link(DepartmentPid),
+  MonitorRefNew = monitor(process, DepartmentPid),
+  MonitorRefNew.
 %%------------------WRITING TO LOGGER------------------
 
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
@@ -277,7 +298,3 @@ writeToLogger(variable, String, Variables) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S, String, Variables),
   file:close(S).
-
-test()-> start().
-  %NumberOfCustomers = callFunc(getNumberOfCustomers),
-  %A = 5.

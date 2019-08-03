@@ -13,7 +13,7 @@
 -define(SIZE,{1028, 1028}).
 -define(LOGGER_FILE_PATH, "../Logger_interface.txt").
 -behaviour(gen_server).
--record(state, {counter, button, start, histogramProcess, histogram, histogramButton, sale, finished}).
+-record(state, {counter, button, start, histogramProcess, histogram, histogramButton, sale, finished, timecnt}).
 %% API
 -export([start/1, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1, castFunc/1]).
 -define(HISTOGRAM_PATH, "src/").
@@ -28,16 +28,6 @@
 
 start(WatchdogPID)->
   writeToLogger ("Server: Starting up.",[node()]),
-%%  Exists = global:whereis_name(?MODULE),
-%%  case Exists of
-%%    undefined ->
-%%      writeToLogger("undefined"),
-%%      PreviousState = null;
-%%    _defined ->
-%%      writeToLogger("defined"),
-%%      global:unregister_name(?MODULE),
-%%      PreviousState = getStateFromMnesia()
-%%  end,
   gen_server:start({global, ?MODULE}, ?MODULE, [WatchdogPID] , []).  %FIXME delete after addition of continuation from previous state implementation
 
 init([WatchdogPID])->
@@ -46,6 +36,8 @@ init([WatchdogPID])->
   Frame = wxFrame:new(Wx, ?wxID_ANY, "ErlMarket",[{size, ?SIZE}]),
   Counter = wxTextCtrl:new(Frame, ?COUNTERBOX, [{value, "0"}]),
   Label = wxStaticText:new(Frame, ?wxID_ANY, "Number of Customers:"),
+  Time = wxTextCtrl:new(Frame, ?wxID_ANY, [{value, "0"}]),
+  LabelTime = wxStaticText:new(Frame, ?wxID_ANY, "Time steps:"),
   Font = wxFont:new(16, ?wxFONTFAMILY_DEFAULT, ?wxFONTSTYLE_NORMAL, ?wxFONTWEIGHT_BOLD),
   wxTextCtrl:setFont(Counter, Font),
   StartButton = wxButton:new(Frame, ?STARTBUTTON, [{label, "Start"}]),
@@ -58,6 +50,10 @@ init([WatchdogPID])->
   wxSizer:add(CounterSizer, Label, [{flag, ?wxALL bor ?wxALIGN_CENTRE},
     {border, 5}]),
   wxSizer:add(CounterSizer, Counter, [{proportion,1}, {flag, ?wxEXPAND bor ?
+  wxALL}, {border, 5}]),
+  wxSizer:add(CounterSizer, LabelTime, [{flag, ?wxALL bor ?wxALIGN_CENTRE},
+    {border, 5}]),
+  wxSizer:add(CounterSizer, Time, [{proportion,1}, {flag, ?wxEXPAND bor ?
   wxALL}, {border, 5}]),
   wxSizer:add(CounterSizer, DrawHistogramOfDepartmentProduct, [{proportion,1}, {flag, ?wxEXPAND bor ?
   wxALL}, {border, 5}]),
@@ -80,17 +76,9 @@ init([WatchdogPID])->
   wxFrame:show(Frame),
   {ok, P} = python:start([{python_path, ?HISTOGRAM_PATH},{python, "python3"}]), % initialize a python instance % TODO link to this process and recreate it if it falls and delete it if interface falls
   python:call(P, drawHistogram, plotProcessStart, []), % initialize the process that handles the plots
-%%  case PreviousState of
-%%    null ->   State = #state{counter = Counter, button = StartButton, start = false,
-%%              histogramProcess = P, histogram = false, histogramButton = DrawHistogramOfDepartmentProduct},
-%%              writeToMnesia(false, false);
-%%    [Histogram, StartValue] ->
-%%      State = #state{counter = Counter, button = StartButton, start = StartValue,
-%%        histogramProcess = P, histogram = Histogram, histogramButton = DrawHistogramOfDepartmentProduct},
-%%      restoreHandlesByState(State)
-%%  end,
   State = #state{counter = Counter, button = StartButton, start = false,
-              histogramProcess = P, histogram = false, histogramButton = DrawHistogramOfDepartmentProduct, sale = false, finished = true},
+              histogramProcess = P, histogram = false, histogramButton = DrawHistogramOfDepartmentProduct, sale = false,
+              finished = true, timecnt = Time},
   {ok, State}.
 
 
@@ -101,6 +89,9 @@ handle_call(pid, _From, State) ->
 handle_cast({budgetVsExpense, Budget, Expense}, #state{ histogramProcess = P} = State) ->
   writeToLogger("handleCast budgetVsExpense: ", [Budget, Expense]),
   python:call(P, drawHistogram, processBudgetVsExpenceFromErlang, [Budget, Expense]), % initialize the process that handles the plots
+  {noreply, State};
+handle_cast({updateTime, CurrTime}, #state{ timecnt = TimeCNT} = State) ->
+  wxTextCtrl:setValue(TimeCNT, integer_to_list(CurrTime)),
   {noreply, State};
 handle_cast(_Msg, State) ->
   {noreply, State}.
@@ -125,7 +116,7 @@ handle_info(#wx{id = ?SALE , event = #wxCommand{type = command_button_clicked}},
 
 handle_info(#wx{id = ?SALE , obj = Button, event = #wxCommand{type = command_button_clicked}},
     #state{start = true, sale = false} = State) ->
-    lists:foreach(fun(E) -> department:castFunc(E, {sale, 0.5}) end, ?DEPARTMENT_LIST),
+    lists:foreach(fun(E) -> department:castFunc(E, {sale, 0.95}) end, ?DEPARTMENT_LIST),
     wxButton:setLabel(Button, "Stop Sale"),
   {noreply, State#state{sale = true}};
 
@@ -194,13 +185,15 @@ handle_info(updateCounter, #state{counter = Counter, start = true} = State) ->
 
 
 
-handle_info(updateCounter, #state{button = Button, counter = Counter, start = false, histogram = false} = State) ->
+handle_info(updateCounter, #state{button = Button, counter = Counter, start = false,
+  histogram = false, timecnt = TimeButton} = State) ->
   try masterFunction:callFunc(getNumberOfCustomers) of
     N when is_integer(N) -> wxTextCtrl:setValue(Counter, integer_to_list(N)),
       erlang:send_after(1000, self(), updateCounter),  % update every second
       {noreply, State}
   catch
     exit:_ -> wxTextCtrl:setValue(Counter, "0"),
+      wxTextCtrl:setValue(TimeButton, "0"),
       wxTextCtrl:setEditable(Counter, false),
       wxButton:setLabel(Button, "Start"),
       {noreply, State};
@@ -249,22 +242,16 @@ handle_info(plotHistogram, #state{histogram = false, histogramProcess = P} = Sta
 handle_info(#wx{event=#wxClose{}}, #state{start = true} = State) ->
   masterFunction:castFunc(closeShop),
   io:fwrite("Interface says bye bye ~n"),
-  %writeToMnesia(false, false),  % the windows is closed to we terminate the programm so start is false
   {stop, normal, State#state{histogram = false}};
 
 handle_info(#wx{event=#wxClose{}}, #state{start = false} = State) ->
   io:fwrite("Interface says bye bye ~n"),
   {stop, normal, State}.
-%%
-%%terminate(_Reason, #state{histogramProcess = P, histogram = true} = State) ->
-%%  wx:destroy(),
-%%  python:call(P, drawHistogram, plotProcessStop, []), % closes plotProcess
-%%  python:stop(P), % terminating python instance
-%%  ok;
 
 terminate(_Reason, #state{histogramProcess = P} = State) ->
   wx:destroy(),
   python:call(P, drawHistogram, plotProcessStop, []), % closes plotProcess
+  timer:sleep(2500),
   python:stop(P), % terminating python instance
   ok.
 

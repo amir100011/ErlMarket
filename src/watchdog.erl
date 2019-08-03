@@ -28,12 +28,6 @@ startWatchdog (ListOfNodesAndModules) ->
 loop () ->
   io:fwrite("registerd_names() -->  ~p~n", [global:registered_names()]),
   receive
-    closeShop ->
-      writeToLogger("recived Close Shop"),
-      global:send(?SECURITY1, {terminate}),
-      global:send(?SECURITY2, {terminate}),
-      waitForCustomerToLeave(),
-      loop();
     {'DOWN', _MonitorRef, _Type, _Object, normal} ->
       writeToLogger("RECEIVED ",[normal]);
     {'DOWN', MonitorRef, _Type, _Object, Info} ->
@@ -56,7 +50,7 @@ chooseInWhichNodeOpenTheFallenProcess() ->
   end.
 
 
-raise(ServerPID,ModuleName)->
+raise(ServerPID,ModuleName)->  % TODO delete Module name from caller and from here
   writeToLogger ("Watchdog: Starting @ ~p.~n", [node()]),
   global:unregister_name(watchdog),
   global:register_name(watchdog, self ()),
@@ -108,7 +102,7 @@ spawnRegularServer(NodeName,ModuleName) ->
   timer:sleep(500), % 0.5 seconds
   writeToLogger("list", [NodeName,ModuleName]),
   ServerPID = gen_server:call({global,ModuleName},pid),
-  erlang:monitor(process,ServerPID).
+  erlang:monitor(process, ServerPID).
 
 spawnDepartmentServer(NodeName,ModuleName,Name)->
   spawn(NodeName,ModuleName,start,[Name]),

@@ -115,7 +115,7 @@ ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers, ErlMarketB
     reserve(ListOfValidProductsWithRatio, Time, CostOfReservation),
     writeToLogger("reserve - ", ListOfValidProductsWithRatio),
     ErlMarketBudgetNew = getBalanceWithAccumulatedChanges(),
-    interface:castFunc({budgetVsExpense, ErlMarketBudgetNew, CostOfReservation});  % TODO change at amir
+    interface:castFunc({budgetVsExpense, ErlMarketBudgetNew, CostOfReservation});  % TODO this doesnot work for sale.... maybe eliminate this feature
     true ->
       writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
       DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,
@@ -132,13 +132,13 @@ getRatio([H|T],NumberOfCustomers)->
 getRatio([],_NumberOfCustomers)->[].
 
 getRatioSingleElement({departmentProduct,Department, Product_name, _, _Expiry_time, Amount},NumberOfCustomers) ->
-  Price = inventory:getProdcutPrice(Product_name),  % TODO change at amir
+  Price = inventory:getProdcutPrice(Product_name),  % Todo Change this function at amir to support sales
   writeToLogger("getRatioSingleElement",[{departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers]),
   NumberOfProductsToOrder = round((NumberOfCustomers * ?DESIRED_RATIO) - Amount) + 1,
   if  NumberOfProductsToOrder =< 1 -> AmountToOrder = 0;
     true -> AmountToOrder = NumberOfProductsToOrder
   end,
-  [Department,Product_name,Price,AmountToOrder].
+  [Department,Product_name, Price,AmountToOrder].
 
 reserve(ListOfValidProductsWithRatio, Time, CostOfReservation) ->
   updateIterationCounter(),
@@ -221,7 +221,8 @@ getNumberOfCustomers() ->
   masterFunction:callFunc(getNumberOfCustomers).
 
 getListOfProductsToReserveInternal(DepartmentName, Time) ->
-  ListNotOrganized = gen_server:call({global,DepartmentName}, {getTotalAmountOfValidProduct, Time}),
+  %ListNotOrganized = gen_server:call({global,DepartmentName}, {getTotalAmountOfValidProduct, Time}),
+  ListNotOrganized = department:callFunc(DepartmentName,{getTotalAmountOfValidProduct, Time}), % TODO change at amir
   sumAmount(ListNotOrganized, DepartmentName).
 
 getBalanceWithAccumulatedChanges()->
@@ -262,7 +263,8 @@ accumulateChanges(TypeOfAction , Amount) ->
 
 sendProductsToDepartment(Department, DepartmentAndList)->
   writeToLogger("restock ",DepartmentAndList),
-  gen_server:cast({global,Department},{restock, DepartmentAndList}).
+  department:castFunc(Department, {restock, DepartmentAndList}).  % TODO change at amir
+  %gen_server:cast({global,Department},{restock, DepartmentAndList}).
 
 resetIterationCounter() ->
   put(iterationCounter , 0).
