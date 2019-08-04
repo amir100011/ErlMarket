@@ -274,12 +274,13 @@ terminate(_Reason, #state{histogramProcess = P} = State) ->
 castFunc(Message) ->
   gen_server:cast({global, ?MODULE}, Message).
 
+callFunc(Message) ->
+  gen_server:call({global, ?MODULE}, Message).
+
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
 
-%% @doc interface function for using gen_server cast
-callFunc(Message) ->
-  gen_server:cast({global, ?MODULE}, Message).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%           HELPER FUNCTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

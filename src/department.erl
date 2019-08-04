@@ -189,7 +189,7 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 %% @doc change the price value of each product during sale
-executeSale([],_) -> done; % TODO change at amir all the funciton
+executeSale([],_) -> done;
 executeSale([H|T], Discount)  when Discount =< 1 ->
   Price = H#departmentProduct.price,
   NewPrice = (1 - Discount) * Price,
@@ -204,7 +204,7 @@ executeSale([H|T], Discount)  when Discount =< 1 ->
 
 
 %% @doc return the normal price of each product from the inventory product mnesia table
-cancelSale([]) -> done;  % TODO change at amir all the funciton
+cancelSale([]) -> done;
 cancelSale([H|T]) ->
   F = fun() ->
     Q = qlc:q([E#product.price || E <- mnesia:table(product),
