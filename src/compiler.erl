@@ -8,12 +8,14 @@
 %%%-------------------------------------------------------------------
 -module(compiler).
 -author("dorliv").
-
 %% API
--export([compiler/0]).
 -compile(export_all).
+-include_lib("records.hrl").
 
-compiler()->
+c()->
+  rpc:multicall(?NodeList, compiler, compile, []).
+
+compile()->
   io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
   io:fwrite("~p~n", [compile:file(inventory, debug_info)]),
   io:fwrite("~p~n", [compile:file(cashierServer, debug_info)]),
@@ -21,9 +23,11 @@ compiler()->
   io:fwrite("~p~n", [compile:file(masterFunction, debug_info)]),
   io:fwrite("~p~n", [compile:file(customer, debug_info)]),
   io:fwrite("~p~n", [compile:file(department, debug_info)]),
-  io:fwrite("~p~n", [compile:file(interface, debug_info)]),
-  inventory:initInventory(node()),
-  interface:start(self()).
+  io:fwrite("~p~n", [compile:file(interface, debug_info)]).
+%%  interface:start(self()).
+start()->
+  %inventory:initInventory(),
+  interface:start().
 
 connect() ->
   net_kernel:connect_node('server@amir-Inspiron-5559'),

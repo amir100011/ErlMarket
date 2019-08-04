@@ -17,7 +17,7 @@
 -author("amir").
 
 %% API
--export([init/1, handle_call/3, handle_cast/2, start/0, handle_info/2]).
+-export([init/1, handle_call/3, handle_cast/2, start/0, handle_info/2, callFunc/1]).
 -export([setBalance/1]).
 -export([setInitialBudget/0]).
 -export([testReservation/0]).
@@ -31,8 +31,24 @@
 %%---------------------------------------------------------
 %% @doc interface function for using gen_server cast
 castFunc(Message) ->
-  gen_server:cast({global, ?MODULE}, Message).
+  try gen_server:cast({global, ?MODULE}, Message) of
+    AnsFromServer-> AnsFromServer  % usually no reply just ok or some atom
+  catch
+    exit:Error -> timer:sleep(2500),
+      writeToLogger(variable,"~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
+      castFunc(Message)
+  end.
 
+
+callFunc(Message) ->
+  try gen_server:call({global,?MODULE}, Message) of
+    AnsFromServer -> AnsFromServer
+  catch
+    exit:Error -> timer:sleep(2500),
+      writeToLogger(variable ," ~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
+      Ans = callFunc(Message),
+      Ans
+  end.
 
 start() ->
   gen_server:start({global, ?MODULE}, ?MODULE, [], []).
@@ -57,6 +73,10 @@ handle_info(trigger, State) when is_integer(State)->
 handle_info(trigger, State) when is_atom(State)->
   writeToLogger("trigger shut down"),
   castFunc(terminate),
+  {noreply, State};
+
+handle_info(MSG, State)->
+  io:fwrite("purchase Department gets ~p~n",[MSG]),
   {noreply, State}.
 
 handle_call(pid, _From, State) ->
@@ -67,7 +87,7 @@ handle_call(pid, _From, State) ->
 handle_cast({updateTime,Time}, _) ->
   {noreply, Time};
 handle_cast({updateBalance,Action,Amount}, State) ->
-  writeToLogger("handleCast balance", [Action, Amount]),
+  %writeToLogger("handleCast balance", [Action, Amount]),
   CurrentIteration = updateIterationCounter(),
   if CurrentIteration < 1000 -> accumulateChanges(Action,Amount);
     true -> resetIterationCounter(), setBalance(Amount)
@@ -76,7 +96,7 @@ handle_cast({updateBalance,Action,Amount}, State) ->
   {noreply,State};
 
 handle_cast(terminate, State) when is_integer(State) ->
-  writeToLogger("purchaseDepartment begin termination sequence"),
+  %writeToLogger("purchaseDepartment begin termination sequence"),
   {noreply, stoptrigger};
 
 handle_cast(terminate, State) when is_atom(State) ->
@@ -102,22 +122,22 @@ getListOfProductsToReserve([], _) -> [].
 
 %% @doc checks the ratio for each product (customer / number of products valid in depatment)
 checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers) ->
-  writeToLogger("checkProductStatus:ListOfValidProducts  - ",ListOfValidProductsToReserve),
+  %writeToLogger("checkProductStatus:ListOfValidProducts  - ",ListOfValidProductsToReserve),
   ListOfValidProductsWithRatio = getRatio(ListOfValidProductsToReserve, NumberOfCustomers),
-  writeToLogger("checkProductStatus:ListOfValidProductsWithRatio  - ",ListOfValidProductsWithRatio),
+  %writeToLogger("checkProductStatus:ListOfValidProductsWithRatio  - ",ListOfValidProductsWithRatio),
   ListOfValidProductsWithRatio.
 
 
 ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers, ErlMarketBudget) ->
   CostOfReservation = priceOfReservation(ListOfValidProductsWithRatio),
   if CostOfReservation =< ErlMarketBudget ->
-    writeToLogger("ratioToReserve Success: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
+   % writeToLogger("ratioToReserve Success: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
     reserve(ListOfValidProductsWithRatio, Time, CostOfReservation),
-    writeToLogger("reserve - ", ListOfValidProductsWithRatio),
+    %writeToLogger("reserve - ", ListOfValidProductsWithRatio),
     ErlMarketBudgetNew = getBalanceWithAccumulatedChanges(),
     interface:castFunc({budgetVsExpense, ErlMarketBudgetNew, CostOfReservation});  % TODO this doesnot work for sale.... maybe eliminate this feature
     true ->
-      writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
+      %writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
       DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,
       ListOfValidProductsWithNewRatio =  editRatio(ListOfValidProductsWithRatio,DeltaRatio),
       ratioToReserve(ListOfValidProductsWithNewRatio, Time, NumberOfCustomers, ErlMarketBudget)
@@ -131,9 +151,9 @@ getRatio([H|T],NumberOfCustomers)->
   [getRatioSingleElement(H,NumberOfCustomers)] ++ getRatio(T,NumberOfCustomers);
 getRatio([],_NumberOfCustomers)->[].
 
-getRatioSingleElement({departmentProduct,Department, Product_name, _, _Expiry_time, Amount},NumberOfCustomers) ->
+  getRatioSingleElement({departmentProduct,Department, Product_name, _, _Expiry_time, Amount},NumberOfCustomers) ->
   Price = inventory:getProdcutPrice(Product_name),  % Todo Change this function at amir to support sales
-  writeToLogger("getRatioSingleElement",[{departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers]),
+  %writeToLogger("getRatioSingleElement",[{departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers]),
   NumberOfProductsToOrder = round((NumberOfCustomers * ?DESIRED_RATIO) - Amount) + 1,
   if  NumberOfProductsToOrder =< 1 -> AmountToOrder = 0;
     true -> AmountToOrder = NumberOfProductsToOrder
@@ -218,7 +238,13 @@ sumAmountInternal([H|T], Dict) ->
 
 %% @doc returns the current number of customers in ErlMarket
 getNumberOfCustomers() ->
-  masterFunction:callFunc(getNumberOfCustomers).
+  try masterFunction:callFunc(getNumberOfCustomers) of
+    Ans -> Ans
+  catch
+    exit:Error -> timer:sleep(2500),
+      writeToLogger(variable,"FROM ~p: MasterFunction is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
+      getNumberOfCustomers()
+  end.
 
 getListOfProductsToReserveInternal(DepartmentName, Time) ->
   %ListNotOrganized = gen_server:call({global,DepartmentName}, {getTotalAmountOfValidProduct, Time}),
@@ -228,7 +254,7 @@ getListOfProductsToReserveInternal(DepartmentName, Time) ->
 getBalanceWithAccumulatedChanges()->
   [{_Budget,ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget),
   Budget = ErlMarketBudget + get(erlMarketBudgetChanges),
-  writeToLogger("getBalanceWithAccumulatedChanges", [Budget]),
+  %writeToLogger("getBalanceWithAccumulatedChanges", [Budget]),
   Budget.
 
 %% @doc initialize process's dictionary fields and creates ETS table for the budget
@@ -236,22 +262,22 @@ setInitialBudget() ->
   put(erlMarketBudgetChanges,0),
   put(erlMarketBudget,1000000),
   ets:new(budget,[set, public, named_table]),
-  ets:insert(budget,{erlMarketBudget, 1000000}),
-  writeToLogger("setInitialBudget ", get(erlMarketBudgetChanges)).
+  ets:insert(budget,{erlMarketBudget, 1000000}).
+  %writeToLogger("setInitialBudget ", get(erlMarketBudgetChanges)).
 
 %% @doc updates the ErlMarket budget in ETS table and also in process dictionary
 setBalance(Amount) ->
   OldBalance = get(erlMarketBudget),
   NewBalance = OldBalance + Amount,
   ets:insert(budget,{erlMarketBudget, NewBalance}),
-  writeToLogger("SetBalance [OldBudget,TotalChangesAmount,NewBudget]",[OldBalance, Amount, ets:lookup(budget,erlMarketBudget)]),
+  %writeToLogger("SetBalance [OldBudget,TotalChangesAmount,NewBudget]",[OldBalance, Amount, ets:lookup(budget,erlMarketBudget)]),
   put(erlMarketBudget, NewBalance),
   put(erlMarketBudgetChanges, 0).
 
 %% @doc updates the total amount of change in the ErlMarket's budget
 accumulateChanges(TypeOfAction , Amount) ->
-  writeToLogger("accumulateChanges: ", [TypeOfAction,Amount]),
-  writeToLogger("numberOfIteration: " ,[get(iterationCounter)]),
+  %writeToLogger("accumulateChanges: ", [TypeOfAction,Amount]),
+  %writeToLogger("numberOfIteration: " ,[get(iterationCounter)]),
   OldChangesAccumulator = get(erlMarketBudgetChanges),
   case TypeOfAction of
     add -> put(erlMarketBudgetChanges, OldChangesAccumulator + Amount);
@@ -293,6 +319,11 @@ writeToLogger(String, OldBalance) ->
 writeToLogger(String) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s ~n",[String]),
+  file:close(S).
+
+writeToLogger(variable, String, Variables) ->
+  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
+  io:format(S, String, Variables),
   file:close(S).
 
 %%---------------------------------------------------------

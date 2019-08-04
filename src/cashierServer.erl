@@ -15,9 +15,9 @@
 -export([init/1, handle_call/3, handle_cast/2,
   handle_info/2, terminate/2, code_change/3]).
 
--export([start/0,callFunc/2,castFunc/1, payToMaxAndReturnTheRest/2, payToMaxAndReturnTheRest/4]).
-
--export([testPay/0]).
+-export([start/0,callFunc/1,castFunc/1, payToMaxAndReturnTheRest/2, payToMaxAndReturnTheRest/4]).
+%%
+%%-export([testPay/0]).
 
 start() ->
   gen_server:start({global, ?MODULE}, ?MODULE, [], []).
@@ -26,12 +26,28 @@ init(_Args) ->
   {ok, []}.
 
 
-callFunc(ListOfProductsAndAmounts, CustomerBalance) ->
-  gen_server:cast({global,?MODULE}, {pay,ListOfProductsAndAmounts, CustomerBalance}).
-
+%%callFunc(ListOfProductsAndAmounts, CustomerBalance) ->
+%%  gen_server:cast({global,?MODULE}, {pay,ListOfProductsAndAmounts, CustomerBalance}).
+callFunc(MSG) ->
+  try gen_server:call({global, ?MODULE}, MSG) of
+    AnsFromServer -> AnsFromServer
+  catch
+    exit:Error -> timer:sleep(2500),
+      writeToLogger(variable ," ~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
+      Ans = callFunc(MSG),
+      Ans
+  end.
 %% @doc interface function for using gen_server cast
 castFunc(Message) ->
-  gen_server:cast({global, ?MODULE}, Message).
+  try  gen_server:cast({global, ?MODULE}, Message) of
+    AnsFromServer-> AnsFromServer  % usually no reply just ok or some atom
+  catch
+    exit:Error -> timer:sleep(2500),
+      writeToLogger(variable,"~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
+      castFunc(Message)
+  end.
+
+
 
 %% @doc returns its own PID for watchdog monitoring
 handle_call(pid, _From, State) ->
@@ -49,7 +65,8 @@ handle_cast({pay,ListOfProductsAndAmounts,CustomerBalance}, State) ->
   pay(ListOfProductsAndAmounts, CustomerBalance),
  {noreply, State}.
 
-handle_info(_Info, State) ->
+handle_info(MSG, State)->
+  io:fwrite("cashierServer Department gets ~p~n",[MSG]),
   {noreply, State}.
 
 terminate(_Reason, _State) ->
@@ -143,7 +160,8 @@ costOfSingleProduct({departmentProduct,_department,_productName,PriceForEach,_ex
   Amount * PriceForEach.
 
 updateErlMarketBalance(AmountToAdd) ->
-  gen_server:cast({global,purchaseDepartment}, {updateBalance, add, AmountToAdd}).
+  purchaseDepartment:castFunc({updateBalance, add, AmountToAdd}).
+  %gen_server:cast({global,purchaseDepartment}, {updateBalance, add, AmountToAdd}).
 
 %%------------------WRITING TO LOGGER------------------
 
@@ -171,30 +189,30 @@ writeToLogger(String) ->
 
 %%------------------TEST FUNCTIONS------------------
 
-testPay() ->
-  inventory:initInventory(node()),
-  cashierServer:start(),
-  purchaseDepartment:initPurchaseDepartment(),
-  department:start(meat),
-  department:start(dairy),
-  department:start(bakery),
-  [ShoppingList, Balance] =
-    [[{departmentProduct,dairy,"milk",5,40,2},
-      {departmentProduct,dairy,"yogurt",3,40,3},
-      {departmentProduct,dairy,"cheese",10,60,5},
-      {departmentProduct,meat,"chicken",40,500,5},
-      {departmentProduct,meat,"steak",80,500,2},
-      {departmentProduct,bakery,"bread",8,100,10}],
-      6108.332946432113],
-  {AvailableProductsToPurchase, _} = customer:initCustomer(),
-  MeatListProductsPrepurchase = department:callFunc(meat, getProducts),
-  DairyListProductsPrepurchase = department:callFunc(dairy, getProducts),
-  BakeryListProductsPrepurchase = department:callFunc(bakery, getProducts),
-  pay(AvailableProductsToPurchase, 0),
-  timer:sleep(500),
-  %gen_server:cast({global,?MODULE},{pay, AvailableProductsToPurchase, 40}),
-  MeatListProductsPostpurchase = department:callFunc(meat, getProducts),
-  DairyListProductsPostpurchase = department:callFunc(dairy, getProducts),
-  BakeryListProductsPostpurchase = department:callFunc(bakery, getProducts),
-  A = 5.
-
+%%testPay() ->
+%%  inventory:initInventory(node()),
+%%  cashierServer:start(),
+%%  purchaseDepartment:initPurchaseDepartment(),
+%%  department:start(meat),
+%%  department:start(dairy),
+%%  department:start(bakery),
+%%  [ShoppingList, Balance] =
+%%    [[{departmentProduct,dairy,"milk",5,40,2},
+%%      {departmentProduct,dairy,"yogurt",3,40,3},
+%%      {departmentProduct,dairy,"cheese",10,60,5},
+%%      {departmentProduct,meat,"chicken",40,500,5},
+%%      {departmentProduct,meat,"steak",80,500,2},
+%%      {departmentProduct,bakery,"bread",8,100,10}],
+%%      6108.332946432113],
+%%  {AvailableProductsToPurchase, _} = customer:initCustomer(),
+%%  MeatListProductsPrepurchase = department:callFunc(meat, getProducts),
+%%  DairyListProductsPrepurchase = department:callFunc(dairy, getProducts),
+%%  BakeryListProductsPrepurchase = department:callFunc(bakery, getProducts),
+%%  pay(AvailableProductsToPurchase, 0),
+%%  timer:sleep(500),
+%%  %gen_server:cast({global,?MODULE},{pay, AvailableProductsToPurchase, 40}),
+%%  MeatListProductsPostpurchase = department:callFunc(meat, getProducts),
+%%  DairyListProductsPostpurchase = department:callFunc(dairy, getProducts),
+%%  BakeryListProductsPostpurchase = department:callFunc(bakery, getProducts),
+%%  A = 5.
+%%

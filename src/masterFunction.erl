@@ -21,9 +21,7 @@
 -define(TERMINATOR, terminator).
 -define(SECURITY1, security1).
 -define(SECURITY2, security2).
--define(PURCHASE_DEPARTMENT_NODE, node()).
--define(CASHIER_SERVER_NODE, node()).
--define(DEPARTMENTS_NODE, node()).
+-define(CAP, 1500).
 -record(state, {dairy, meat, bakery}).
 -export([getNumberOfCustomers/0]).
 %%-export([periodicallyRestockInventory/0]).
@@ -33,7 +31,7 @@ start()->
   gen_server:start({global, ?MODULE}, ?MODULE, [], []).
 
 init(_Args) ->
-  initErlMarketDataBase(),
+  %initErlMarketDataBase(),
   initErlMarketFunctionality().
 
 
@@ -44,8 +42,12 @@ initErlMarketFunctionality() ->
   global:register_name(?TIMER, spawn(?MODULE, timerSupervisor, [])),
   globalRegisterMasterFunction(),
   writeToLogger("strating initialization"),
-  ListOfModulesToNodes = buildListForWatchDogToInitialize(),
-  watchdog:start(ListOfModulesToNodes),
+  IsWatchDogAlredayRegisterd = global:whereis_name(watchdog),
+  if IsWatchDogAlredayRegisterd =:= undefined ->
+    writeToLogger("Starting watchdog"),
+    startWatchdog();
+    true -> skip
+  end,
   [DairyMonitor, MeatMonitor, BakeryMonitor] = initDepartments(?DEPARTMENT_LIST),  % Important to synch the order with DEPARTMENT_LIST when adding more departments
   global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
@@ -55,6 +57,10 @@ initErlMarketFunctionality() ->
 
 globalRegisterMasterFunction() ->
   global:register_name(masterFunction, self()).
+
+startWatchdog() ->
+  ListOfModulesToNodes = buildListForWatchDogToInitialize(),
+  watchdog:start(ListOfModulesToNodes).
 
 buildListForWatchDogToInitialize() ->
   [[?PURCHASE_DEPARTMENT_NODE, purchaseDepartment,[]]] ++ [[?CASHIER_SERVER_NODE, cashierServer,[]]].
@@ -66,6 +72,10 @@ handle_call(getTimeStamp, _From, State) ->
 handle_call(getNumberOfCustomers, _From, State) ->
   writeToLogger("getNumberofCustomers reached"),
   Reply = getNumberOfCustomers(),
+  {reply, Reply, State};
+
+handle_call(pid, _From, State) ->
+  Reply= self(),
   {reply, Reply, State}.
 
 handle_cast(createCustomer, State) ->
@@ -98,11 +108,11 @@ handle_info({'DOWN', MonitorRef, _Type, _Object, Info}, #state{bakery = MonitorR
 
 handle_info({'DOWN', MonitorRef, _Type, _Object, Info}, #state{dairy = MonitorRef} = State) ->
   writeToLogger(variable, "dairy department has fallen from ~p , reinstalling it ~n",[Info]),
-  {noreply, State#state{bakery = newMonitor(dairy)}};
+  {noreply, State#state{dairy = newMonitor(dairy)}};
 
 handle_info({'DOWN', MonitorRef, _Type, _Object, Info}, #state{meat = MonitorRef} = State) ->
   writeToLogger(variable, "meat department has fallen from ~p , reinstalling it ~n",[Info]),
-  {noreply, State#state{bakery = newMonitor(meat)}};
+  {noreply, State#state{meat = newMonitor(meat)}};
 
 handle_info(Info, State) ->
   writeToLogger("masterFunction recieved: ", Info),
@@ -112,23 +122,33 @@ terminate(_Reason, _State) ->
   writeToLogger("Master Function says Bye Bye"),
   ok.
 
+
 %% @doc interface function for using gen_server call
+callFunc(getNumberOfCustomers) ->
+  gen_server:call({global,?MODULE}, getNumberOfCustomers);
 callFunc(Message) ->
-  gen_server:call({global,?MODULE}, Message).
+  try gen_server:call({global,?MODULE}, Message) of
+    AnsFromServer -> AnsFromServer
+  catch
+    exit:Error -> timer:sleep(2500),
+      writeToLogger(variable ," ~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
+      Ans = callFunc(Message),
+      Ans
+  end.
+
 
 %% @doc interface function for using gen_server cast
 castFunc(Message) ->
-  gen_server:cast({global, ?MODULE}, Message).
+  try   gen_server:cast({global, ?MODULE}, Message) of
+    AnsFromServer-> AnsFromServer  % usually no reply just ok or some atom
+  catch
+    exit:Error -> timer:sleep(2500),
+      writeToLogger(variable,"~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
+      castFunc(Message)
+  end.
 
 
-initErlMarketDataBase() ->
-  inventory:initInventory(node()).  % TODO should init for all nodes
 
-%%initDepartments(DepartmentList) ->
-%%  writeToLogger("Initializaing Departments"),
-%%  lists:foreach(fun(DepartmentName) ->
-%%    department:start(DepartmentName)
-%%                end, DepartmentList).
 initDepartments([]) -> [];
 initDepartments([H|T]) ->  % H is a department
   {ok, DepartmentPid} = department:start(H),
@@ -146,25 +166,23 @@ terminateDepartments(DepartmentList) ->
 
 waitForCustomerToLeave()->
   timer:sleep(1500),
-  NumberOfCustomers = callFunc(getNumberOfCustomers),
-  writeToLogger(variable, "Shop is closed: ~p  Customer remain ~n",[NumberOfCustomers]),
-  if
-    NumberOfCustomers =/= 0 ->
-      waitForCustomerToLeave();
-    true ->
-      writeToLogger("Shop is closed: all customers left~n"),
-      global:send(?TIMER, {terminate}),
-      exit(normal)
+  try callFunc(getNumberOfCustomers) of
+    NumberOfCustomers -> writeToLogger(variable, "Shop is closed: ~p  Customer remain ~n",[NumberOfCustomers]),
+      if
+        NumberOfCustomers =/= 0 ->
+          waitForCustomerToLeave();
+        true ->
+          writeToLogger("Shop is closed: all customers left~n"),
+          global:send(?TIMER, {terminate}),
+          exit(normal)
+      end
+  catch
+    exit:Error -> timer:sleep(2500),
+      writeToLogger(variable,"FROM WaitingForCustomersToleave: MasterFunction is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
+      waitForCustomerToLeave()
   end.
 
-%%
-%%initPurchaseDepartment() ->
-%%  writeToLogger("Initializaing Purchase Departments"),
-%%  purchaseDepartment:start().
-%%
-%%initCashiers() ->
-%%  writeToLogger("Initializaing CahsierServer"),
-%%  cashierServer:start().
+
 
 
 initCustomer(DelayQ, TimeStamp) ->
@@ -174,11 +192,23 @@ initCustomer(DelayQ, TimeStamp) ->
       exit(normal);
     {updateTime, CurrTimestamp} -> initCustomer(round(rand:uniform() * 20), CurrTimestamp)
     after DelayQ ->
-      customer:initCustomer(TimeStamp),
-      castFunc(createCustomer),
-      customer:initCustomer(TimeStamp),
-      castFunc(createCustomer),
-      initCustomer(round(rand:uniform() * 20), TimeStamp)
+     try callFunc(getNumberOfCustomers) of
+       NumOfCustomers ->
+         if NumOfCustomers < ?CAP ->
+               customer:initCustomer(TimeStamp),
+               castFunc(createCustomer),
+               customer:initCustomer(TimeStamp),
+               castFunc(createCustomer),
+               initCustomer(round(rand:uniform() * 20), TimeStamp);
+         true ->
+                timer:sleep(500),
+                initCustomer(round(rand:uniform() * 20), TimeStamp)
+         end
+    catch
+      exit:Error -> timer:sleep(2500),
+                    writeToLogger(variable,"FROM Security: MasterFunction is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
+                    initCustomer(round(rand:uniform() * 20), TimeStamp)
+    end
   end.
   %writeToLogger("Initializaing Customer"),
 
@@ -197,16 +227,18 @@ getNumberOfCustomers() ->
   get(numberOfCustomers).
 
 
+
 count()->
   timer:sleep(1000),
   CurrTimestamp = ets:update_counter(timer, timestamp, {2, 1}),
   global:send(?TERMINATOR, {running}),
-  gen_server:cast({global,purchaseDepartment}, {updateTime, CurrTimestamp}),
+  purchaseDepartment:castFunc( {updateTime, CurrTimestamp}),
+  %gen_server:cast({global,purchaseDepartment}, {updateTime, CurrTimestamp}),
   interface:castFunc({updateTime,CurrTimestamp}),
-  if
-    CurrTimestamp == ?NUMBER_OF_ITERATIONS -> castFunc(closeShop);
-    true -> nothing
-  end,
+%%  if
+%%    CurrTimestamp == ?NUMBER_OF_ITERATIONS -> castFunc(closeShop);
+%%    true -> nothing
+%%  end,
   count().
 
 
@@ -226,7 +258,8 @@ timerSupervisorLoop()->
    {terminate} ->
      exit(get(timerPid), kill),
      ets:delete(timer),
-     writeToLogger("Timer is terminated");
+     writeToLogger("Timer is terminated"),
+    io:fwrite("Timer is terminated");
     {getTimeStamp, Pid} ->
                              [{timestamp, TimeStamp}] = ets:lookup(timer, timestamp),
                              Pid ! {timeStamp, TimeStamp},
@@ -247,7 +280,9 @@ terminatorLoop()->
     {running} -> terminatorLoop()
   after 5000 ->
     writeToLogger("Terminator decided program is dead"),
-    gen_server:cast({global, purchaseDepartment},terminate),
+    io:fwrite("Terminator decided program is dead"),
+    purchaseDepartment:castFunc(terminate),
+    %gen_server:cast({global, purchaseDepartment},terminate),
     waitForPurchaseDepartment(),
     cashierServer:castFunc(terminate),
     terminateDepartments(?DEPARTMENT_LIST),

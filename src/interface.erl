@@ -15,7 +15,7 @@
 -behaviour(gen_server).
 -record(state, {counter, button, start, histogramProcess, histogram, histogramButton, sale, finished, timecnt}).
 %% API
--export([start/1, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1, castFunc/1]).
+-export([start/0, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1, castFunc/1]).
 -define(HISTOGRAM_PATH, "src/").
 -define(STARTBUTTON, 1).
 -define(COUNTERBOX,2).
@@ -26,12 +26,12 @@
 %-record(state, {counter, button, start, histogramProcess, histogram, histogramButton}).
 
 
-start(WatchdogPID)->
+start()->
   writeToLogger ("Server: Starting up.",[node()]),
-  gen_server:start({global, ?MODULE}, ?MODULE, [WatchdogPID] , []).  %FIXME delete after addition of continuation from previous state implementation
+  gen_server:start({global, ?MODULE}, ?MODULE, [] , []).  %FIXME delete after addition of continuation from previous state implementation
 
-init([WatchdogPID])->
-  erlang:monitor(process,WatchdogPID),
+init([])->
+%%  erlang:monitor(process,WatchdogPID),
   Wx = wx:new(),
   Frame = wxFrame:new(Wx, ?wxID_ANY, "ErlMarket",[{size, ?SIZE}]),
   Counter = wxTextCtrl:new(Frame, ?COUNTERBOX, [{value, "0"}]),
@@ -82,6 +82,10 @@ init([WatchdogPID])->
   {ok, State}.
 
 
+handle_call({monitor, PID}, _From, State) ->
+  erlang:monitor(process, PID),
+  {reply, ok, State};
+
 handle_call(pid, _From, State) ->
   Reply = self(),
   {reply, Reply, State}.
@@ -90,6 +94,7 @@ handle_cast({budgetVsExpense, Budget, Expense}, #state{ histogramProcess = P} = 
   writeToLogger("handleCast budgetVsExpense: ", [Budget, Expense]),
   python:call(P, drawHistogram, processBudgetVsExpenceFromErlang, [Budget, Expense]), % initialize the process that handles the plots
   {noreply, State};
+
 handle_cast({updateTime, CurrTime}, #state{ timecnt = TimeCNT} = State) ->
   wxTextCtrl:setValue(TimeCNT, integer_to_list(CurrTime)),
   {noreply, State};
@@ -116,7 +121,7 @@ handle_info(#wx{id = ?SALE , event = #wxCommand{type = command_button_clicked}},
 
 handle_info(#wx{id = ?SALE , obj = Button, event = #wxCommand{type = command_button_clicked}},
     #state{start = true, sale = false} = State) ->
-    lists:foreach(fun(E) -> department:castFunc(E, {sale, 0.95}) end, ?DEPARTMENT_LIST),
+    lists:foreach(fun(E) -> department:castFunc(E, {sale, 0.5}) end, ?DEPARTMENT_LIST),
     wxButton:setLabel(Button, "Stop Sale"),
   {noreply, State#state{sale = true}};
 
@@ -140,7 +145,8 @@ handle_info(#wx{id = ?STARTBUTTON, event = #wxCommand{type = command_button_clic
 
 handle_info(#wx{id = ?STARTBUTTON , obj = Button, event = #wxCommand{type = command_button_clicked}},
     #state{counter = Counter, start = false, finished = true} = State) ->
-  masterFunction:start(),
+  inventory:initInventory(),
+  spawn(?MASTER_SERVER_NODE, masterFunction, start, []),
   wxTextCtrl:setEditable(Counter, false),
   wxButton:setLabel(Button, "Stop"),
   erlang:send_after(1000, self(), updateCounter),
@@ -154,7 +160,7 @@ handle_info(#wx{id = ?STARTBUTTON, event = #wxCommand{type = command_button_clic
 
 
 handle_info(#wx{id = ?DRAWBUTTON ,obj = Button, event = #wxCommand{type = command_button_clicked}},
-    #state{start = true, histogramProcess = P, histogram = false} = State) ->
+    #state{start = true, histogram = false} = State) ->
   erlang:send_after(1000, self(), plotHistogram),
   wxButton:setLabel(Button, "Stop Drawing Histogram"),
   %writeToMnesia(true, true),
@@ -196,7 +202,8 @@ handle_info(updateCounter, #state{button = Button, counter = Counter, start = fa
       wxTextCtrl:setValue(TimeButton, "0"),
       wxTextCtrl:setEditable(Counter, false),
       wxButton:setLabel(Button, "Start"),
-      {noreply, State};
+      {noreply, State#state{finished = true}};
+      %rpc:multicall(?NodeList, application, stop, [mnesia]);
     Throw -> exit(Throw)
   end;
 
@@ -213,7 +220,8 @@ handle_info(updateCounter, #state{button = Button, counter = Counter, start = fa
       wxButton:setLabel(Button, "Start"),
       wxButton:setLabel(HistogramButton, "Draw Histogram"),
       %writeToMnesia(false, false),
-      {noreply, State#state{histogram = false}};
+      {noreply, State#state{histogram = false, finished = true}};
+      %rpc:multicall(?NodeList, application, stop, [mnesia]);
     Throw -> exit(Throw)
   end;
 
@@ -246,7 +254,12 @@ handle_info(#wx{event=#wxClose{}}, #state{start = true} = State) ->
 
 handle_info(#wx{event=#wxClose{}}, #state{start = false} = State) ->
   io:fwrite("Interface says bye bye ~n"),
-  {stop, normal, State}.
+  {stop, normal, State};
+
+handle_info(MSG, State)->
+  io:fwrite("interface gets ~p~n",[MSG]),
+  {noreply, State}.
+
 
 terminate(_Reason, #state{histogramProcess = P} = State) ->
   wx:destroy(),
@@ -290,41 +303,3 @@ writeToLogger(String, List) ->
   io:format(S,"~s~n ",[String]),
   file:close(S),
   file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%       WRITE/READ TO MNESIA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%%writeToMnesia(HistogramValue, Start) ->
-%%  F = fun() ->
-%%    mnesia:write(interfaceState, {start, Start}, write),
-%%    mnesia:write(interfaceState, {histogram, HistogramValue}, write)
-%%      end,
-%%  mnesia:transaction(F).
-%%
-%%
-%%getStateFromMnesia()->
-%%  F = fun() -> mnesia:read(interfaceState, start, read) end,
-%%  {atomic, StartValue} = mnesia:transaction(F),
-%%  F2 = fun() -> mnesia:read(interfaceState, histogram, read) end,
-%%  {atomic, Histogram} = mnesia:transaction(F2),
-%%  [Histogram, StartValue].
-
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%       Recovery Functions
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%%restoreHandlesByState(#state{button = StartButton, counter = Counter, start = Start,
-%%  histogram = Histogram, histogramButton = HistogramBUtton} = State) ->
-%%  case Start of
-%%    false -> donothing;
-%%    true -> erlang:send_after(2000, self(), updateCounter),  % call updateCounter
-%%            wxTextCtrl:setEditable(Counter, false),
-%%            wxButton:setLabel(StartButton, "Stop"),
-%%            case Histogram of
-%%              false -> donothing;
-%%              true ->   erlang:send_after(2000, self(), plotHistogram),
-%%                        wxButton:setLabel(HistogramBUtton, "Stop Drawing Histogram")
-%%            end
-%%  end.

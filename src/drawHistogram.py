@@ -108,31 +108,7 @@ def plotProcessLoop(summaryWriter: tf.summary.SummaryWriter, drawHistogramProces
     else:
         print("From Python: im here with unrecognized message {}".format(item))
         plotProcessLoop(summaryWriter, drawHistogramProcess, iteration)
-"""
-if __name__ == '__main__':
-    title = "test"
-    Productdict = defaultdict(int)
-    Productdict["milk"] = 5
-    Productdict["yogurt"] = 10
-    Productdict["dasd"] = 0
-    plotProcessStart()
-    QueueErlang.put(["histogram", title, Productdict])
-    i = 0
-    while i < 300000:
-        print("im still alive {}".format(i))
-        i = i + 1
-    title = "test2"
-    Productdict = defaultdict(int)
-    Productdict["milk"] = 30
-    Productdict["yogurt"] = 15
-    Productdict["dasd"] = 20
-    QueueErlang.put(["histogram", title, Productdict])
-    i = 0
-    while i < 300000:
-        print("im still alive {}".format(i))
-        i = i + 1
-    plotProcessStop()
-"""
+
 if __name__ == '__main__':
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
