@@ -34,8 +34,11 @@ callFunc(MSG) ->
   catch
     exit:Error -> timer:sleep(2500),
       writeToLogger(variable ," ~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
-      Ans = callFunc(MSG),
-      Ans
+      case interface:callFunc(isFinished) of
+          false ->     Ans = callFunc(MSG),
+                       Ans;
+           true -> writeToLogger(variable ,"System is down, closing stray process from Module ~p ~n",[?MODULE])
+      end
   end.
 %% @doc interface function for using gen_server cast
 castFunc(Message) ->
@@ -44,7 +47,10 @@ castFunc(Message) ->
   catch
     exit:Error -> timer:sleep(2500),
       writeToLogger(variable,"~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
-      castFunc(Message)
+      case interface:callFunc(isFinished) of
+            false -> castFunc(Message);
+            true -> writeToLogger(variable ,"System is down, closing stray process from Module ~p ~n",[?MODULE])
+      end
   end.
 
 

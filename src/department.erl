@@ -32,14 +32,19 @@ init(_Args) ->
 
 %% @doc interface function for using gen_server call
 
+
 callFunc(ServerName, Message) ->
   try gen_server:call({global, ServerName}, Message) of
       AnsFromServer -> AnsFromServer
   catch
     exit:Error -> timer:sleep(200),
                    writeToLogger(variable ,"Department ~p is not responding becuase ~p, resending message ~p ~n",[ServerName, Error, Message]),
-                   Ans = callFunc(ServerName, Message),
-                   Ans
+                   case interface:callFunc(isFinished) of
+                    false ->  Ans = callFunc(ServerName, Message),
+                                                Ans;
+                    true -> writeToLogger(variable ,"System is down, closing stray process from Department ~p ~n",[ServerName])
+                   end
+
   end.
 
 
@@ -49,8 +54,12 @@ castFunc(ServerName, Message) ->
     AnsFromServer-> AnsFromServer  % usually no reply just ok or some atom
   catch
     exit:Error -> timer:sleep(200),
-      writeToLogger(variable,"Department ~p is not responding becuase ~p, resending message ~p ~n",[ServerName, Error, Message]),
-      castFunc(ServerName, Message)
+                  writeToLogger(variable,"Department ~p is not responding becuase ~p, resending message ~p ~n",[ServerName, Error, Message]),
+                 case interface:callFunc(isFinished) of
+                     false ->  castFunc(ServerName, Message);
+                     true -> writeToLogger(variable ,"System is down, closing stray process from Department ~p ~n",[ServerName])
+                 end
+
   end.
 
 

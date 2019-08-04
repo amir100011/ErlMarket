@@ -36,7 +36,10 @@ castFunc(Message) ->
   catch
     exit:Error -> timer:sleep(2500),
       writeToLogger(variable,"~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
-      castFunc(Message)
+     case interface:callFunc(isFinished) of
+         false -> castFunc(Message);
+         true -> writeToLogger(variable ,"System is down, closing stray process from Module ~p ~n",[?MODULE])
+     end
   end.
 
 
@@ -46,8 +49,11 @@ callFunc(Message) ->
   catch
     exit:Error -> timer:sleep(2500),
       writeToLogger(variable ," ~p is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
-      Ans = callFunc(Message),
-      Ans
+      case interface:callFunc(isFinished) of
+                false ->     Ans = callFunc(Message),
+                             Ans;
+                true -> writeToLogger(variable ,"System is down, closing stray process from Module ~p ~n",[?MODULE])
+      end
   end.
 
 start() ->
