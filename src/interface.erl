@@ -31,7 +31,6 @@ start()->
   gen_server:start({global, ?MODULE}, ?MODULE, [] , []).  %FIXME delete after addition of continuation from previous state implementation
 
 init([])->
-%%  erlang:monitor(process,WatchdogPID),
   Wx = wx:new(),
   Frame = wxFrame:new(Wx, ?wxID_ANY, "ErlMarket",[{size, ?SIZE}]),
   Counter = wxTextCtrl:new(Frame, ?COUNTERBOX, [{value, "0"}]),
@@ -88,7 +87,10 @@ handle_call({monitor, PID}, _From, State) ->
 
 handle_call(pid, _From, State) ->
   Reply = self(),
-  {reply, Reply, State}.
+  {reply, Reply, State};
+
+handle_call(isFinished, _From,  #state{ finished = Finished } = State) ->
+  {reply, Finished, State}.
 
 handle_cast({budgetVsExpense, Budget, Expense}, #state{ histogramProcess = P} = State) ->
   writeToLogger("handleCast budgetVsExpense: ", [Budget, Expense]),
