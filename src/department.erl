@@ -36,8 +36,8 @@ callFunc(ServerName, Message) ->
   try gen_server:call({global, ServerName}, Message) of
       AnsFromServer -> AnsFromServer
   catch
-    exit:Error -> timer:sleep(2500),
-                   writeToLogger("Department ~p is not responding becuase ~p, resending message ~n",[ServerName, Error]),
+    exit:Error -> timer:sleep(200),
+                   writeToLogger(variable ,"Department ~p is not responding becuase ~p, resending message ~p ~n",[ServerName, Error, Message]),
                    Ans = callFunc(ServerName, Message),
                    Ans
   end.
@@ -48,8 +48,8 @@ castFunc(ServerName, Message) ->
   try  gen_server:cast({global, ServerName}, Message) of
     AnsFromServer-> AnsFromServer  % usually no reply just ok or some atom
   catch
-    exit:Error -> timer:sleep(2500),
-      writeToLogger("Department ~p is not responding becuase ~p, resending message ~n",[ServerName, Error]),
+    exit:Error -> timer:sleep(200),
+      writeToLogger(variable,"Department ~p is not responding becuase ~p, resending message ~p ~n",[ServerName, Error, Message]),
       castFunc(ServerName, Message)
   end.
 
@@ -168,6 +168,7 @@ handle_cast(_Request, State) ->
   {noreply, State}.
 
 handle_info(_Info, State) ->
+  io:fwrite("Department ~p got message ~p",[get(server_name), _Info]),
   {noreply, State}.
 
 terminate(Reason, _State) ->

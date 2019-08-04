@@ -17,11 +17,14 @@
 -compile (export_all).
 
 start (ListOfNodesAndModules) ->
-  spawn(?MODULE,startWatchdog,[ListOfNodesAndModules]).
+  spawn(?INTERFACE_NODE,?MODULE,startWatchdog,[ListOfNodesAndModules]).
 
 startWatchdog (ListOfNodesAndModules) ->
   writeToLogger ("Watchdog: Starting:", node()),
+  MasterMonitorRef = erlang:monitor(process,global:whereis_name(masterFunction)),%%monitor masterFunction
+  watchdog:writeToMnesia(MasterMonitorRef,masterFunction,[]),
   global:register_name (watchdog, self ()),
+  interface:castFunc({monitor, self()}),
   monitorNewProcess (ListOfNodesAndModules),
   loop().
 
@@ -98,10 +101,15 @@ getParameters(NodeNameAndModuleName) ->
 
 
 spawnRegularServer(NodeName,ModuleName) ->
+  writeToLogger("list", [NodeName,ModuleName]),
   spawn(NodeName,ModuleName,start,[]),
   timer:sleep(500), % 0.5 seconds
-  writeToLogger("list", [NodeName,ModuleName]),
-  ServerPID = gen_server:call({global,ModuleName},pid),
+  %ServerPID = gen_server:call({global,ModuleName},pid),
+  case ModuleName of
+    masterFunction -> ServerPID = masterFunction:callFunc(pid);
+    purchaseDepartment -> ServerPID = purchaseDepartment:callFunc(pid);
+    cashierServer -> ServerPID = cashierServer:callFunc(pid)
+  end,
   erlang:monitor(process, ServerPID).
 
 spawnDepartmentServer(NodeName,ModuleName,Name)->

@@ -9,9 +9,10 @@
 -module(inventory).
 -author("dorliv").
 %% API
--export([initInventory/1, getProductsFromDepartment/1, getDepartments/0, fillInventory/0, getProdcutPrice/1]).
+-export([initInventory/0, getProductsFromDepartment/1, getDepartments/0, fillInventory/0, getProdcutPrice/1]).
 -define(Filename, "Inventory.txt").
 -define(LOGGER_FILE_PATH, "../Logger-Inventory.txt").
+
 -include_lib("records.hrl").
 
 
@@ -20,36 +21,44 @@ getDepartments()->
   {atomic, Ans} = mnesia:transaction(Fun),
   Ans.
 
-test_mnesia()->
-  Node = node(),
-  initInventory([Node]),
-  Departments = getDepartments(),
-  io:fwrite("Departments : ~p ~n",[Departments]).
-
 
 %% @doc initialize the inventory for all the nodes in NodeList
 %% this function creates the initial tables and fills them with initial value
-initInventory(NodeList)->
+%%
+%%startMnesia()->
+%%  io:fwrite("node ~p start mneisa ~n",[node()]),
+%%  mnesia:start().
 
-  mnesia:create_schema(NodeList),
-  mnesia:start(),
-  mnesia:create_table(product,[{type, bag} ,{attributes, record_info(fields, product)}]),
-  mnesia:create_table(department,[{attributes, record_info(fields, department)}]),
+initInventory()->
+  Ans = mnesia:create_schema(?NodeList),
+  io:fwrite("creating schame returns ~p ~n",[Ans]),
+  rpc:multicall(?NodeList, application, start, [mnesia]),
+  mnesia:create_table(product,[{type, bag} ,{disc_copies, ?NodeList}, {attributes, record_info(fields, product)}]),
+  mnesia:create_table(department,[{attributes, record_info(fields, department)}, {disc_copies, ?NodeList}]),
   mnesia:create_table(dairy,[
     {type,bag},
     {record_name, departmentProduct},
-    {attributes,record_info(fields,departmentProduct)}]
+    {attributes,record_info(fields,departmentProduct)},
+    {disc_copies, ?NodeList}]
   ),
   mnesia:create_table(meat,[
     {type,bag},
     {record_name, departmentProduct},
-    {attributes,record_info(fields,departmentProduct)}]
+    {attributes,record_info(fields,departmentProduct)},
+    {disc_copies, ?NodeList}]
   ),
   mnesia:create_table(bakery,[
     {type, bag},
     {record_name, departmentProduct},
-    {attributes,record_info(fields,departmentProduct)}]
+    {attributes,record_info(fields,departmentProduct)},
+    {disc_copies, ?NodeList}]
  ),
+  mnesia:create_table(nodeList,[
+    {type, set},
+    {record_name, processesAllocationToNodes},
+    {attributes,record_info(fields,processesAllocationToNodes)},
+    {disc_copies, ?NodeList}]
+  ),
   fillInventory().
 
 

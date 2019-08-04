@@ -121,9 +121,8 @@ takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp
     LastElementInList =:= [] ->
       takeTheProductsFromTheDifferentDepartments(NewList, T,TimeStamp);
     RequestIterations >= ?MAXITERATIONS ->  % To avoid deadlock
-       %AnsFromServer = gen_server:call({global,H},{purchaseandleave,LastElementInList,TimeStamp}), % buy what ever is able and leave
       AnsFromServer = department:callFunc(H, {purchaseandleave,LastElementInList, TimeStamp}),
-       AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T, TimeStamp); % products found
+      AnsFromServer ++ takeTheProductsFromTheDifferentDepartments(NewList, T, TimeStamp); % products found
     true ->
        %AnsFromServer = gen_server:call({global,H},{purchase,LastElementInList,TimeStamp}),
        AnsFromServer = department:callFunc(H, {purchase,LastElementInList, TimeStamp}),
@@ -143,7 +142,8 @@ takeTheProductsFromTheDifferentDepartments(_OrderedShoppingList, [], _) -> [].
 
 pay(AvailableProductsToPurchase, Balance) ->
   %writeToLogger("i'm paying"),
-  gen_server:cast({global,cashierServer}, {pay, AvailableProductsToPurchase,Balance}).
+  %gen_server:cast({global,cashierServer}, {pay, AvailableProductsToPurchase,Balance}).
+  cashierServer:castFunc({pay, AvailableProductsToPurchase,Balance}).
 
 
 
