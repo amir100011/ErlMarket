@@ -106,7 +106,6 @@ def plotProcessLoop(summaryWriter: tf.summary.SummaryWriter, drawHistogramProces
                 drawHistogramProcess.terminate()  # it can only be a living process from a previous iteration
         return
     else:
-        print("From Python: im here with unrecognized message {}".format(item))
         plotProcessLoop(summaryWriter, drawHistogramProcess, iteration)
 
 if __name__ == '__main__':

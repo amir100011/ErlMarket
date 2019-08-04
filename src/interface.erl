@@ -15,7 +15,7 @@
 -behaviour(gen_server).
 -record(state, {counter, button, start, histogramProcess, histogram, histogramButton, sale, finished, timecnt}).
 %% API
--export([start/0, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1, castFunc/1]).
+-export([start/0, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1, castFunc/1, callFunc/1]).
 -define(HISTOGRAM_PATH, "src/").
 -define(STARTBUTTON, 1).
 -define(COUNTERBOX,2).
@@ -277,7 +277,9 @@ castFunc(Message) ->
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
 
-
+%% @doc interface function for using gen_server cast
+callFunc(Message) ->
+  gen_server:cast({global, ?MODULE}, Message).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%           HELPER FUNCTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
