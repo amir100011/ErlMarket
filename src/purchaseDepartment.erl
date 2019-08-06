@@ -141,7 +141,7 @@ ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers, ErlMarketB
     reserve(ListOfValidProductsWithRatio, Time, CostOfReservation),
     %writeToLogger("reserve - ", ListOfValidProductsWithRatio),
     ErlMarketBudgetNew = getBalanceWithAccumulatedChanges(),
-    interface:castFunc({budgetVsExpense, ErlMarketBudgetNew, CostOfReservation});  % TODO this doesnot work for sale.... maybe eliminate this feature
+    interface:castFunc({budgetVsExpense, ErlMarketBudgetNew, CostOfReservation});
     true ->
       %writeToLogger("ratioToReserve Failed: PriceOfReservation - " , CostOfReservation, " ErlMarketBudget - ", ErlMarketBudget),
       DeltaRatio = (?SAVING_RATIO * ErlMarketBudget) / CostOfReservation,

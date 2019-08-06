@@ -313,12 +313,6 @@ newMonitor(DepartmentName) ->
   MonitorRefNew.
 %%------------------WRITING TO LOGGER------------------
 
-%% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
-writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
-  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
-  io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
-  file:close(S).
-
 writeToLogger(String, List) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~n ",[String]),

@@ -25,8 +25,20 @@ compile()->
   io:fwrite("~p~n", [compile:file(customer, debug_info)]),
   io:fwrite("~p~n", [compile:file(department, debug_info)]),
   io:fwrite("~p~n", [compile:file(interface, debug_info)]).
-
-
+%%  interface:start(self()).
 start()->
-
+  %inventory:initInventory(),
   interface:start().
+
+connect() ->
+  net_kernel:connect_node('server@amir-Inspiron-5559'),
+  net_kernel:connect_node('server2@amir-Inspiron-5559'),
+  net_kernel:connect_node('watchdog2@amir-Inspiron-5559'),
+  io:fwrite("~p~n", [compile:file(server, debug_info)]),
+  io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
+  watchdog:init().
+
+compileTest() ->
+  io:fwrite("~p~n", [compile:file(interface, debug_info)]),
+  io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
+  watchdog:init(interface).
