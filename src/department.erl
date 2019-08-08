@@ -10,8 +10,6 @@
 -behavior(gen_server).
 -define(LOGGER_FILE_PATH, "../Logger-Department.txt").
 -author("amir").
-
--record(state, {}).
 -include_lib("records.hrl").
 
 %% API
@@ -137,7 +135,7 @@ handle_cast({restock, ListOfProduct}, State) ->
 
 handle_cast({sale,_}, State) when is_tuple(State) -> {noreply, State};
   %  a request to go on sale in the department
-handle_cast({sale, Discount}, State)->
+handle_cast({sale, Discount}, _)->
   io:fwrite("Erl market is going on sale with ~p precent discount~n",[Discount * 100 ]),
   F = fun() ->
     Q = qlc:q([E || E <- mnesia:table(get(server_name))]),
@@ -165,7 +163,7 @@ handle_cast(getProducts, State) ->
     Q = qlc:q([E || E <- mnesia:table(get(server_name))]),
     qlc:e(Q)
       end,
-  {atomic, ListAns} = mnesia:transaction(F),
+  {atomic, _} = mnesia:transaction(F),
   %writeToLogger(variable, "Department ~p Inventory is:  ~p ~n", [get(server_name) , ListAns]),
   {noreply, State};
 
@@ -180,7 +178,7 @@ handle_info(_Info, State) ->
   io:fwrite("Department ~p got message ~p",[get(server_name), _Info]),
   {noreply, State}.
 
-terminate(Reason, _State) ->
+terminate(_, _State) ->
   io:fwrite("~p says bye bye ~n",[get(server_name)]),
   ok.
 
@@ -345,20 +343,8 @@ getProductsForDrawingHistogram(DepartmentName) when is_atom(DepartmentName) ->
 %%------------------WRITING TO LOGGER------------------
 
 %% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
-writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
-  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
-  io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
-  file:close(S).
-writeToLogger(String, List) ->
-  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
-  io:format(S,"~s~n ",[String]),
-  file:close(S),
-  file:write_file(?LOGGER_FILE_PATH, io_lib:format("~p.~n", [List]), [append]).
 writeToLogger(variable, String, Variables) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S, String, Variables),
   file:close(S).
-writeToLogger(String) ->
-  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
-  io:format(S,"~s ~n",[String]),
-  file:close(S).
+

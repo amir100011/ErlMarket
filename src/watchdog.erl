@@ -14,7 +14,10 @@
 -define(SECURITY2, security2).
 -define(INTERVAL, 2500).
 -include_lib("records.hrl").
--compile (export_all).
+%-compile (export_all).
+-export([start/1,startWatchdog/1, loop/0, chooseInWhichNodeOpenTheFallenProcess/0, raise/1, shuffleList/1, shuffleNodes/1,
+        monitorNewProcess/1,getModuleNameAndProcessName/1, getParameters/1, spawnDepartmentServer/3, spawnRegularServer/2,
+        writeToMnesia/3, waitForCustomerToLeave/0]).
 
 start (ListOfNodesAndModules) ->
   spawn(?INTERFACE_NODE,?MODULE,startWatchdog,[ListOfNodesAndModules]).
@@ -53,7 +56,7 @@ chooseInWhichNodeOpenTheFallenProcess() ->
   end.
 
 
-raise(ServerPID,ModuleName)->  % TODO delete Module name from caller and from here
+raise(ServerPID)->  % TODO delete Module name from caller and from here
   writeToLogger ("Watchdog: Starting @ ~p.~n", [node()]),
   global:unregister_name(watchdog),
   global:register_name(watchdog, self ()),

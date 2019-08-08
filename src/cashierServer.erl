@@ -171,12 +171,6 @@ updateErlMarketBalance(AmountToAdd) ->
 
 %%------------------WRITING TO LOGGER------------------
 
-%% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
-writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
-  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
-  io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
-  file:close(S).
-
 writeToLogger(String, List) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S,"~s~n ",[String]),
@@ -188,10 +182,6 @@ writeToLogger(variable, String, Variables) ->
   io:format(S, String, Variables),
   file:close(S).
 
-writeToLogger(String) ->
-  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
-  io:format(S,"~s ~n",[String]),
-  file:close(S).
 
 %%------------------TEST FUNCTIONS------------------
 

@@ -21,7 +21,7 @@
 -define(TERMINATOR, terminator).
 -define(SECURITY1, security1).
 -define(SECURITY2, security2).
--define(CAP, 1500).
+-define(CAP, 500).
 -record(state, {dairy, meat, bakery}).
 -export([getNumberOfCustomers/0]).
 %%-export([periodicallyRestockInventory/0]).
@@ -312,12 +312,6 @@ newMonitor(DepartmentName) ->
   MonitorRefNew = monitor(process, DepartmentPid),
   MonitorRefNew.
 %%------------------WRITING TO LOGGER------------------
-
-%% @doc these functions write to ../LOG.txt file all important actions in purchaseDepartment
-writeToLogger(String, IntegerCost, String2, IntegerCurrentBalance) ->
-  {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
-  io:format(S,"~s~w~s~w ~n",[String, IntegerCost, String2, IntegerCurrentBalance]),
-  file:close(S).
 
 writeToLogger(String, List) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),

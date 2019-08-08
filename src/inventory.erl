@@ -59,6 +59,7 @@ initInventory()->
     {attributes,record_info(fields,processesAllocationToNodes)},
     {disc_copies, ?NodeList}]
   ),
+
   fillInventory().
 
 

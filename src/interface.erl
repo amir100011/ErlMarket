@@ -15,7 +15,7 @@
 -behaviour(gen_server).
 -record(state, {counter, button, start, histogramProcess, histogram, histogramButton, sale, finished, timecnt}).
 %% API
--export([start/0, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1, castFunc/1]).
+-export([start/0, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2, init/1, castFunc/1, callFunc/1]).
 -define(HISTOGRAM_PATH, "src/").
 -define(STARTBUTTON, 1).
 -define(COUNTERBOX,2).
@@ -25,11 +25,13 @@
 
 %-record(state, {counter, button, start, histogramProcess, histogram, histogramButton}).
 
-
+%% @doc start the interface module
 start()->
   writeToLogger ("Server: Starting up.",[node()]),
   gen_server:start({global, ?MODULE}, ?MODULE, [] , []).  %FIXME delete after addition of continuation from previous state implementation
 
+
+%% @doc intialize
 init([])->
   Wx = wx:new(),
   Frame = wxFrame:new(Wx, ?wxID_ANY, "ErlMarket",[{size, ?SIZE}]),
@@ -109,7 +111,7 @@ handle_cast(_Msg, State) ->
 handle_info({'DOWN', _MonitorRef, _Type, _Object, _Info},State) ->
   writeToLogger("handle info raised because watcdog died"),
   Nodes = shuffleNodes(nodes()),
-  erlang:monitor(process,spawn(lists:nth(1,Nodes), watchdog,raise,[self(),?MODULE])),
+  erlang:monitor(process,spawn(lists:nth(1,Nodes), watchdog,raise,[self()])),
   {noreply, State};
 
 
@@ -169,7 +171,7 @@ handle_info(#wx{id = ?DRAWBUTTON ,obj = Button, event = #wxCommand{type = comman
   {noreply, State#state{histogram = true}};
 
 handle_info(#wx{id = ?DRAWBUTTON ,obj = Button, event = #wxCommand{type = command_button_clicked}},
-    #state{start = Start,histogramProcess = P, histogram = true} = State) ->
+    #state{histogram = true} = State) ->
   wxButton:setLabel(Button, "Draw Histogram"),
   %writeToMnesia(false, Start),
   {noreply, State#state{histogram = false}};
@@ -263,7 +265,7 @@ handle_info(MSG, State)->
   {noreply, State}.
 
 
-terminate(_Reason, #state{histogramProcess = P} = State) ->
+terminate(_Reason, #state{histogramProcess = P} = _) ->
   wx:destroy(),
   python:call(P, drawHistogram, plotProcessStop, []), % closes plotProcess
   timer:sleep(2500),
@@ -277,7 +279,9 @@ castFunc(Message) ->
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
 
-
+%% @doc interface function for using gen_server cast
+callFunc(Message) ->
+  gen_server:cast({global, ?MODULE}, Message).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%           HELPER FUNCTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
