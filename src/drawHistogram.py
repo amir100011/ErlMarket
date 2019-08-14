@@ -14,17 +14,17 @@ Products = {'dairy': ['cheese', 'milk', 'yogurt'],
             'bakery': ['bread', 'buns'],
             'unified': ['cheese', 'milk', 'yogurt', 'steak', 'chicken', 'bread', 'buns']}
 
-
+# stop signal to the histogram
 def processStopHistogram():
     QueueErlang.put(["stopHistogram"])
 
-
+# receiving data from erlang to buffer the tensorboard with
 def processBudgetVsExpenceFromErlang(income, expence):
     messageToPlotProcess = ["plot", income, expence]
     QueueErlang.put(messageToPlotProcess)
 
 
-
+# receiving data from erlang to create the histogram
 def processDepartmentDataFromErlang(title: List, productList: List):
     departmentName = title.to_string()
     defaultProductsList = Products[departmentName]
@@ -39,7 +39,8 @@ def processDepartmentDataFromErlang(title: List, productList: List):
     messageToPlotProcess = ["histogram", departmentName, dictAmountPerProduct]
     QueueErlang.put(messageToPlotProcess)
 
-
+# drawing the histogram, matplotlib forces a process to freeze when using plt.show(), we bypassed it by creating a new process each time we want
+# show the histogram ( this is why the histogram is flickering) and kill the last process who showed the histogram
 def drawHistogramHelper(QueueData:Queue):
     title = QueueData.get()
     data = QueueData.get()
@@ -74,6 +75,8 @@ def preplotProcessLoop():
     plotProcessLoop(summaryWriter)
 
 
+
+# this resembles a recieve block in erlang, we send messages through QueueErlang and decipher them
 def plotProcessLoop(summaryWriter: tf.summary.SummaryWriter, drawHistogramProcess=None, iteration=0):
     global first
     item = QueueErlang.get()
@@ -108,6 +111,8 @@ def plotProcessLoop(summaryWriter: tf.summary.SummaryWriter, drawHistogramProces
     else:
         plotProcessLoop(summaryWriter, drawHistogramProcess, iteration)
 
+
+# main is for testing, please ignore
 if __name__ == '__main__':
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)

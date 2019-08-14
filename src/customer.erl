@@ -112,7 +112,7 @@ getAllProductsInShoppingListThatBelongToDepartment([H|T], DepartmentName) ->
   end;
 getAllProductsInShoppingListThatBelongToDepartment([],_DepartmentName) -> [].
 
-
+%% @doc as the name states we send a call request to the appropriate department to fetch the products in the shopping list
 takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp) ->  % TODO change at amir
   LastElementInList =  lists:nth(1,OrderedShoppingList),
   NewList = lists:delete(LastElementInList,OrderedShoppingList),
@@ -139,7 +139,7 @@ takeTheProductsFromTheDifferentDepartments(OrderedShoppingList, [H|T], TimeStamp
 
 takeTheProductsFromTheDifferentDepartments(_OrderedShoppingList, [], _) -> [].
 
-
+%% @doc pay to ErlMart through the cashier server
 pay(AvailableProductsToPurchase, Balance) ->
   %writeToLogger("i'm paying"),
   %gen_server:cast({global,cashierServer}, {pay, AvailableProductsToPurchase,Balance}).
@@ -176,13 +176,13 @@ writeToLogger(variable, String, Variables) ->
 %%------------------TEST FUNCTIONS------------------
 
 
-testInit()->
-  department:start(meat),
-  department:start(dairy),
-  department:start(bakery),
-  Y = 5,
-  initCustomer(0),
-  Y.
+%%testInit()->
+%%  department:start(meat),
+%%  department:start(dairy),
+%%  department:start(bakery),
+%%  Y = 5,
+%%  initCustomer(0),
+%%  Y.
 
 
 %%  ShoppingList = [{shoppinlistelement,bakery,"buns",20,4},

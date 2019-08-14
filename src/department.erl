@@ -29,8 +29,6 @@ init(_Args) ->
   {ok, normal}.
 
 %% @doc interface function for using gen_server call
-
-
 callFunc(ServerName, Message) ->
   try gen_server:call({global, ServerName}, Message) of
       AnsFromServer -> AnsFromServer
@@ -46,7 +44,7 @@ callFunc(ServerName, Message) ->
   end.
 
 
-  %% @doc interface function for using gen_server cast
+%% @doc interface function for using gen_server cast
 castFunc(ServerName, Message) ->
   try  gen_server:cast({global, ServerName}, Message) of
     AnsFromServer-> AnsFromServer  % usually no reply just ok or some atom
@@ -61,7 +59,8 @@ castFunc(ServerName, Message) ->
   end.
 
 
-
+%% @doc get the products from the department storage that answer the criterion of [H|T] this function is mainly used
+%% when the purchase department want to compute the ratio for the new order of products
 getProductList(_, [], Ans) -> Ans;
 getProductList(ListAns, [H|T], Ans) ->
   ProductName = H#product.product_name,
@@ -74,6 +73,7 @@ getProductList(ListAns, [H|T], Ans) ->
   end.
 
 %% @doc handle_call is a synchronic kind of call to the server where the sender waits for a reply,
+%% @doc getProducts is a method to get all the products in the department storage
 handle_call(getProducts, _From, State) ->
   % get Products that are currently in
   F = fun() ->
@@ -83,6 +83,7 @@ handle_call(getProducts, _From, State) ->
   {atomic, ListAns} = mnesia:transaction(F),
   {reply, ListAns, State};
 
+%% @doc specifically designed to be used by the purchase department for ordering new products
 handle_call({getTotalAmountOfValidProduct, TimeStamp}, _From, State) ->
   % returns the valid Products in the department
   F = fun() ->
@@ -96,12 +97,16 @@ handle_call({getTotalAmountOfValidProduct, TimeStamp}, _From, State) ->
   spawn(?MODULE, removedExpiredProducts, [get(server_name), TimeStamp]),
   {reply, ProductList, State};
 
-
+%% @doc the backend of the purchase request of the customer, gets a shopping list and removes products from the storage
+%% according to the shopping list, if a product does not exist the customer will try again at a later time
 handle_call({purchase, ListOfProducts, TimeStamp}, _From, State) ->
   % a purchase request has been made, the department removes the products that exist in the inventory
   RemovedProducts = removeProducts(ListOfProducts, [], false, TimeStamp),
   {reply, RemovedProducts, State};
 
+%% @doc this is used to answer a problem we faced when closing the shop and we are left with several customers that demand
+%% to purchase a product we dont have in storage and the ratio is not enough to order the product, so after 5 continous calls to purchase
+%% the customer gives up and buys what he can
 handle_call({purchaseandleave, ListOfProducts, TimeStamp}, _From, State) ->
   % a purchase request has been made, the department removes the products that exist in the inventory
   RemovedProducts = removeProducts(ListOfProducts, [], true, TimeStamp),
@@ -118,6 +123,7 @@ handle_cast({return, ListOfProduct}, State) ->
   addProducts(ListOfProduct),
   {noreply, State};
 
+%% @doc gets a ListOfProduct to restock the storage when the department is on sale
 handle_cast({restock, ListOfProduct}, {onSale, Discount})  ->
   % a new shipment of products have been made, this function adds the products to the table,
   % or update the amount of existing similar products
@@ -126,6 +132,8 @@ handle_cast({restock, ListOfProduct}, {onSale, Discount})  ->
   addProducts(ListOfProductDiscount),
   {noreply, {onSale, Discount}};
 
+
+%% @doc gets a ListOfProduct to restock the storage
 handle_cast({restock, ListOfProduct}, State) ->
   % a new shipment of products have been made, this function adds the products to the table,
   % or update the amount of existing similar products
@@ -133,6 +141,8 @@ handle_cast({restock, ListOfProduct}, State) ->
   addProducts(ListOfProduct),
   {noreply, State};
 
+
+%% @doc go on sale, by default all products are 50% off
 handle_cast({sale,_}, State) when is_tuple(State) -> {noreply, State};
   %  a request to go on sale in the department
 handle_cast({sale, Discount}, _)->
@@ -145,7 +155,7 @@ handle_cast({sale, Discount}, _)->
   executeSale(ListAns, Discount),
   {noreply, {onSale, Discount}};
 
-
+%% @doc cancel sale all products return to their default prices
 handle_cast(cancelSale, {onSale, _})->
   F = fun() ->
     Q = qlc:q([E || E <- mnesia:table(get(server_name))]),
@@ -156,7 +166,7 @@ handle_cast(cancelSale, {onSale, _})->
   {noreply, normal};
 handle_cast(cancelSale, State) when State =:= normal -> {noreply, normal};
 
-
+%% probably missed this function because we have the exact same one above, please ignore..
 handle_cast(getProducts, State) ->
   % get Products that are currently in
   F = fun() ->
@@ -226,7 +236,7 @@ getRandomElement([H|T]) ->
     true -> getRandomElement(T)
   end.
 
-
+%% @doc helper function to create a discounted product from a list of products
 createDiscountedProducts([], _)-> [];
 createDiscountedProducts([H|T], Discount) ->
   Price = H#departmentProduct.price,
@@ -313,7 +323,7 @@ addProducts([H|T]) ->
   mnesia:transaction(fun() -> mnesia:write(get(server_name), UpdateProduct, write)  end),
   addProducts(T).
 
-
+%% @doc this function is called each time we restock the storage, it deletes expired items from our department
 removedExpiredProducts(DepartmentName, TimeStamp) ->
   F = fun() ->
     Q = qlc:q([E || E <- mnesia:table(DepartmentName), E#departmentProduct.expiry_time < TimeStamp]),

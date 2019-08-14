@@ -21,7 +21,7 @@
 -define(TERMINATOR, terminator).
 -define(SECURITY1, security1).
 -define(SECURITY2, security2).
--define(CAP, 1500).
+-define(CAP, 200).
 -record(state, {dairy, meat, bakery}).
 -export([getNumberOfCustomers/0]).
 %%-export([periodicallyRestockInventory/0]).
@@ -34,7 +34,7 @@ init(_Args) ->
   %initErlMarketDataBase(),
   initErlMarketFunctionality().
 
-
+%% @doc initialize s the masterfunction gen_Server, initializing the watchdog and monitors the departments
 initErlMarketFunctionality() ->
   process_flag(trap_exit, true),  % to block the option of department process destroying this process
   put(numberOfCustomers,0),
@@ -48,10 +48,9 @@ initErlMarketFunctionality() ->
     startWatchdog();
     true -> skip
   end,
-  [DairyMonitor, MeatMonitor, BakeryMonitor] = initDepartments(?DEPARTMENT_LIST),  % Important to synch the order with DEPARTMENT_LIST when adding more departments
+  [DairyMonitor, MeatMonitor, BakeryMonitor] = initDepartments(?DEPARTMENT_LIST),
   global:register_name(?SECURITY1, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
   global:register_name(?SECURITY2, spawn(?MODULE, initCustomer, [ round(rand:uniform() * 50), 0 ])),
-  % TODO monitor the security guards by adding their monitor ref to the state and adding their handle_info block, one may use the resolve option when theres a chance that the name is already registered
   State = #state{dairy = DairyMonitor, meat = MeatMonitor, bakery = BakeryMonitor},
   {ok, State}.
 
@@ -164,6 +163,8 @@ terminateDepartments(DepartmentList) ->
                  department:castFunc(DepartmentName, terminate)
                 end, DepartmentList).
 
+
+% we want to have no customers in the shop before shutting down so we wait for them to complete their shopping spree
 waitForCustomerToLeave()->
   timer:sleep(1500),
   try callFunc(getNumberOfCustomers) of
@@ -184,13 +185,13 @@ waitForCustomerToLeave()->
 
 
 
-
+%% initialize customers is a function used by the Security guards where they spawn customers periodically
 initCustomer(DelayQ, TimeStamp) ->
   receive
     {terminate} ->
       writeToLogger("Store is Closed: no new customers"),
       exit(normal);
-    {updateTime, CurrTimestamp} -> initCustomer(round(rand:uniform() * 20), CurrTimestamp)
+    {updateTime, CurrTimestamp} -> initCustomer(round(rand:uniform() * 100), CurrTimestamp)
     after DelayQ ->
      try callFunc(getNumberOfCustomers) of
        NumOfCustomers ->
@@ -199,15 +200,15 @@ initCustomer(DelayQ, TimeStamp) ->
                castFunc(createCustomer),
                customer:initCustomer(TimeStamp),
                castFunc(createCustomer),
-               initCustomer(round(rand:uniform() * 20), TimeStamp);
+               initCustomer(round(rand:uniform() * 100), TimeStamp);
          true ->
                 timer:sleep(500),
-                initCustomer(round(rand:uniform() * 20), TimeStamp)
+                initCustomer(round(rand:uniform() * 100), TimeStamp)
          end
     catch
       exit:Error -> timer:sleep(2500),
                     writeToLogger(variable,"FROM Security: MasterFunction is not responding becuase ~p, resending message ~n",[?MODULE, Error]),
-                    initCustomer(round(rand:uniform() * 20), TimeStamp)
+                    initCustomer(round(rand:uniform() * 100), TimeStamp)
     end
   end.
   %writeToLogger("Initializaing Customer"),
@@ -241,7 +242,8 @@ count()->
 %%  end,
   count().
 
-
+%% @doc timer is used for maintating a unified time in all nodes, this is mandatory when removing expired products
+%% and also sends an "im alive" signal to the terminator
 timerSupervisor()->
   writeToLogger("timerSupervisor"),
   ets:new(timer,[public, named_table]),
@@ -274,7 +276,8 @@ waitForPurchaseDepartment() ->
     undefined -> continue;
     _ -> waitForPurchaseDepartment()
   end.
-
+%% @doc  the terminator receives a signal from the timer indicating that the system is alive, once the timer is dead the
+%% terminator shuts down all the Market servers
 terminatorLoop()->
   receive
     {running} -> terminatorLoop()

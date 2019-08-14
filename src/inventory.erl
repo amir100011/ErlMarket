@@ -29,6 +29,7 @@ getDepartments()->
 %%  io:fwrite("node ~p start mneisa ~n",[node()]),
 %%  mnesia:start().
 
+%% @doc initialize the inventory of our Market with initial values
 initInventory()->
   Ans = mnesia:create_schema(?NodeList),
   io:fwrite("creating schame returns ~p ~n",[Ans]),

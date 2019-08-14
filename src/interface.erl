@@ -31,7 +31,7 @@ start()->
   gen_server:start({global, ?MODULE}, ?MODULE, [] , []).  %FIXME delete after addition of continuation from previous state implementation
 
 
-%% @doc intialize
+%% @doc initialize the interface
 init([])->
   Wx = wx:new(),
   Frame = wxFrame:new(Wx, ?wxID_ANY, "ErlMarket",[{size, ?SIZE}]),
@@ -79,10 +79,10 @@ init([])->
   python:call(P, drawHistogram, plotProcessStart, []), % initialize the process that handles the plots
   State = #state{counter = Counter, button = StartButton, start = false,
               histogramProcess = P, histogram = false, histogramButton = DrawHistogramOfDepartmentProduct, sale = false,
-              finished = true, timecnt = Time},
+              finished = true, timecnt = Time}, % initializing the state
   {ok, State}.
 
-
+%% @doc the interface will monitor the PID
 handle_call({monitor, PID}, _From, State) ->
   erlang:monitor(process, PID),
   {reply, ok, State};
@@ -91,14 +91,17 @@ handle_call(pid, _From, State) ->
   Reply = self(),
   {reply, Reply, State};
 
+%% @doc finished means that the store is close and that there are no customers in the market
 handle_call(isFinished, _From,  #state{ finished = Finished } = State) ->
   {reply, Finished, State}.
 
+%% @doc sends data to the tensorboard buffer via python
 handle_cast({budgetVsExpense, Budget, Expense}, #state{ histogramProcess = P} = State) ->
   writeToLogger("handleCast budgetVsExpense: ", [Budget, Expense]),
   python:call(P, drawHistogram, processBudgetVsExpenceFromErlang, [Budget, Expense]), % initialize the process that handles the plots
   {noreply, State};
 
+%% @doc updates the time in the interface
 handle_cast({updateTime, CurrTime}, #state{ timecnt = TimeCNT} = State) ->
   wxTextCtrl:setValue(TimeCNT, integer_to_list(CurrTime)),
   {noreply, State};
@@ -107,7 +110,7 @@ handle_cast(_Msg, State) ->
 
 
 
-
+%% @doc the interface is supposed to only monitor the watchdog process so this is why we don't care about the monitor ref
 handle_info({'DOWN', _MonitorRef, _Type, _Object, _Info},State) ->
   writeToLogger("handle info raised because watcdog died"),
   Nodes = shuffleNodes(nodes()),
@@ -115,74 +118,66 @@ handle_info({'DOWN', _MonitorRef, _Type, _Object, _Info},State) ->
   {noreply, State};
 
 
-
+%% @doc Pressing the Sale button initiates this method
 handle_info(#wx{id = ?SALE , event = #wxCommand{type = command_button_clicked}},
     #state{start = false} = State) ->
   io:fwrite("ERROR : Go on Sale was pressed before system start~n"),
   {noreply, State};
-
-
-
 handle_info(#wx{id = ?SALE , obj = Button, event = #wxCommand{type = command_button_clicked}},
     #state{start = true, sale = false} = State) ->
     lists:foreach(fun(E) -> department:castFunc(E, {sale, 0.5}) end, ?DEPARTMENT_LIST),
     wxButton:setLabel(Button, "Stop Sale"),
   {noreply, State#state{sale = true}};
-
 handle_info(#wx{id = ?SALE , obj = Button, event = #wxCommand{type = command_button_clicked}},
     #state{start = true, sale = true} = State) ->
   lists:foreach(fun(E) -> department:castFunc(E, cancelSale) end, ?DEPARTMENT_LIST),
   wxButton:setLabel(Button, "Go on Sale"),
   {noreply, State#state{sale = false}};
 
-
+%% @doc using the scroll box initiates this method
 handle_info(#wx{obj = DepartmentScrollButton, event = #wxCommand{type = command_combobox_selected}}, State) ->
   Value = wxComboBox:getValue(DepartmentScrollButton),
   put(department, list_to_atom(Value)),
   {noreply, State};
 
-
+%% @doc using the start/stop button initiates this method
 handle_info(#wx{id = ?STARTBUTTON, event = #wxCommand{type = command_button_clicked}},
     #state{start = false, finished = false} = State) ->
-  io:fwrite("Please wait for system to shut down~n"),
+  io:fwrite("Please wait for system to shut down~n"), % cannot start the Market before it is finished meaning while customers are still inside
   {noreply, State};
-
 handle_info(#wx{id = ?STARTBUTTON , obj = Button, event = #wxCommand{type = command_button_clicked}},
     #state{counter = Counter, start = false, finished = true} = State) ->
   inventory:initInventory(),
-  spawn(?MASTER_SERVER_NODE, masterFunction, start, []),
+  spawn(?MASTER_SERVER_NODE, masterFunction, start, []),  % start the Market
   wxTextCtrl:setEditable(Counter, false),
   wxButton:setLabel(Button, "Stop"),
   erlang:send_after(1000, self(), updateCounter),
   {noreply, State#state{start = true, finished = false}};
-
 %%  @doc pressing stop closes the shop
 handle_info(#wx{id = ?STARTBUTTON, event = #wxCommand{type = command_button_clicked}},
     #state{start = true} = State) ->
-  masterFunction:castFunc(closeShop),
+  masterFunction:castFunc(closeShop),  % closing the Market, stop from customers from entering the market
   {noreply, State#state{start = false}};
 
-
+%% @doc pressing the draw histogram initializes this method
 handle_info(#wx{id = ?DRAWBUTTON ,obj = Button, event = #wxCommand{type = command_button_clicked}},
     #state{start = true, histogram = false} = State) ->
   erlang:send_after(1000, self(), plotHistogram),
   wxButton:setLabel(Button, "Stop Drawing Histogram"),
   %writeToMnesia(true, true),
   {noreply, State#state{histogram = true}};
-
 handle_info(#wx{id = ?DRAWBUTTON ,obj = Button, event = #wxCommand{type = command_button_clicked}},
     #state{histogram = true} = State) ->
   wxButton:setLabel(Button, "Draw Histogram"),
   %writeToMnesia(false, Start),
   {noreply, State#state{histogram = false}};
-
 handle_info(#wx{id = ?DRAWBUTTON, event = #wxCommand{type = command_button_clicked}}, #state{ start = false} = State) ->
   io:fwrite("ERROR : Draw Histogram was pressed before system start~n"),
   {noreply, State};
 
 
 
-
+%% @doc keeps a tab on the number of customers in the shop
 handle_info(updateCounter, #state{counter = Counter, start = true} = State) ->
   try masterFunction:callFunc(getNumberOfCustomers) of
     NumberOfCustomers-> wxTextCtrl:setValue(Counter, integer_to_list(NumberOfCustomers)),
@@ -192,9 +187,6 @@ handle_info(updateCounter, #state{counter = Counter, start = true} = State) ->
     exit:_ -> erlang:send_after(1000, self(), updateCounter),  % update every second
       {noreply, State}
   end;
-
-
-
 handle_info(updateCounter, #state{button = Button, counter = Counter, start = false,
   histogram = false, timecnt = TimeButton} = State) ->
   try masterFunction:callFunc(getNumberOfCustomers) of
@@ -210,7 +202,6 @@ handle_info(updateCounter, #state{button = Button, counter = Counter, start = fa
       %rpc:multicall(?NodeList, application, stop, [mnesia]);
     Throw -> exit(Throw)
   end;
-
 handle_info(updateCounter, #state{button = Button, counter = Counter, start = false,
   histogramButton = HistogramButton, histogramProcess = P , histogram = true} = State) ->
   try masterFunction:callFunc(getNumberOfCustomers) of
@@ -230,7 +221,7 @@ handle_info(updateCounter, #state{button = Button, counter = Counter, start = fa
   end;
 
 
-
+%% @doc plot the histogram by sending data to matplotlib via python
 handle_info(plotHistogram, #state{histogram = true , histogramProcess = P} = State) ->
   DepartmentName = get(department),
   try department:getProductsForDrawingHistogram(DepartmentName) of  % if the department gets turned off before the histogram status was changed
@@ -243,19 +234,15 @@ handle_info(plotHistogram, #state{histogram = true , histogramProcess = P} = Sta
     %  we do not change the state in this case
     % this is intentional because we want to get to update Counter where we close the drawHistogram in an orderly fashion
   end;
-
-
-
 handle_info(plotHistogram, #state{histogram = false, histogramProcess = P} = State) -> % stop sending message to self after pressing stop drawing histogram
   python:call(P, drawHistogram, processStopHistogram, []),
   {noreply, State};
 
-
+%% @doc closing the interface initiates this method
 handle_info(#wx{event=#wxClose{}}, #state{start = true} = State) ->
   masterFunction:castFunc(closeShop),
   io:fwrite("Interface says bye bye ~n"),
   {stop, normal, State#state{histogram = false}};
-
 handle_info(#wx{event=#wxClose{}}, #state{start = false} = State) ->
   io:fwrite("Interface says bye bye ~n"),
   {stop, normal, State};
