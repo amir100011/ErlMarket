@@ -234,12 +234,7 @@ count()->
   CurrTimestamp = ets:update_counter(timer, timestamp, {2, 1}),
   global:send(?TERMINATOR, {running}),
   purchaseDepartment:castFunc( {updateTime, CurrTimestamp}),
-  %gen_server:cast({global,purchaseDepartment}, {updateTime, CurrTimestamp}),
   interface:castFunc({updateTime,CurrTimestamp}),
-%%  if
-%%    CurrTimestamp == ?NUMBER_OF_ITERATIONS -> castFunc(closeShop);
-%%    true -> nothing
-%%  end,
   count().
 
 %% @doc timer is used for maintating a unified time in all nodes, this is mandatory when removing expired products

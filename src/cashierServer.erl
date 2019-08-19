@@ -14,10 +14,7 @@
 %% API
 -export([init/1, handle_call/3, handle_cast/2,
   handle_info/2, terminate/2, code_change/3]).
-
 -export([start/0,callFunc/1,castFunc/1, payToMaxAndReturnTheRest/2, payToMaxAndReturnTheRest/4]).
-%%
-%%-export([testPay/0]).
 
 start() ->
   gen_server:start({global, ?MODULE}, ?MODULE, [], []).
@@ -25,9 +22,7 @@ start() ->
 init(_Args) ->
   {ok, []}.
 
-
-%%callFunc(ListOfProductsAndAmounts, CustomerBalance) ->
-%%  gen_server:cast({global,?MODULE}, {pay,ListOfProductsAndAmounts, CustomerBalance}).
+%% @doc uses to call for using the cashier sever
 callFunc(MSG) ->
   try gen_server:call({global, ?MODULE}, MSG) of
     AnsFromServer -> AnsFromServer
@@ -53,8 +48,6 @@ castFunc(Message) ->
       end
   end.
 
-
-
 %% @doc returns its own PID for watchdog monitoring
 handle_call(pid, _From, State) ->
   Reply= self(),
@@ -62,7 +55,6 @@ handle_call(pid, _From, State) ->
 
 
 handle_cast(terminate, State) ->
-  %terminate(0,0),
   {stop, normal, State};
 
 %% @doc  checks if the customer can pay or not, if not pays to the maximum available, the rest are going back to the relevant department
@@ -82,10 +74,7 @@ terminate(_Reason, _State) ->
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
 
-
-printBoughtListToLogger(ListOfBoughtProducts) ->
-  writeToLogger("Bought Products ~p ~n",[ListOfBoughtProducts]).
-
+%% @doc checks if a customer can pay for all his products (budget issues) if not spawns a new cashier to return all the products that he cannot afford
 pay(ListOfProductsAndAmounts,CustomerBalance)->
   %writeToLogger("payFunction ",[ListOfProductsAndAmounts,CustomerBalance]),
   {CanPay, AmountToPay} = canPay(ListOfProductsAndAmounts,CustomerBalance),
@@ -97,12 +86,16 @@ pay(ListOfProductsAndAmounts,CustomerBalance)->
       spawn(cashierServer, payToMaxAndReturnTheRest, [ListOfProductsAndAmounts, CustomerBalance])
   end.
 
-
+%% @doc pay up and leave the shop
 canPay(ListOfProductsAndAmounts,CustomerBalance) ->
   SumOfAllProducts = sumOfAllProducts(ListOfProductsAndAmounts),
   if SumOfAllProducts =< CustomerBalance -> {canPay, SumOfAllProducts};
     true -> {cannotPay,0}
   end.
+
+%% @doc checks what is the productss that the customer can afford to buy.
+%% than let the customer pay for them.
+%%returns the rest to the right department and update the ErlMart budget.
 payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance)->
   spawn_monitor(?MODULE, payToMaxAndReturnTheRest, [ListOfProductsAndAmounts, CustomerBalance, dict:new(), []]),
   receive
@@ -111,8 +104,6 @@ payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance)->
       writeToLogger(variable, "Process ~p Died because ~p , respawning a new process~n",[PID, Reason]),
       payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance)
   end.
-  %payToMaxAndReturnTheRest(ListOfProductsAndAmounts, CustomerBalance, dict:new(), []).
-
 payToMaxAndReturnTheRest([],_CustomerBalance, Dict, ListOfProducts) ->
   case dict:is_key(amountToPay, Dict) of % when the customer didnt buy anything this will be false
     true ->  {Amount, UpdatedDict} = dict:take(amountToPay, Dict),
@@ -132,7 +123,6 @@ payToMaxAndReturnTheRest([H|T],CustomerBalance, Dict, ListOfProducts) ->
         true -> OldAmount = dict:fetch(amountToPay, Dict),
                 DictUpdated = dict:store(amountToPay, AmountToPay + OldAmount, Dict)
       end,
-      %updateErlMarketBalance(AmountToPay),
       payToMaxAndReturnTheRest(T, NewCustomerBalance, DictUpdated, ListOfProducts ++ [H]);
     cannotPay ->
       DepartmentName = H#departmentProduct.department,
@@ -140,23 +130,18 @@ payToMaxAndReturnTheRest([H|T],CustomerBalance, Dict, ListOfProducts) ->
         false -> DictUpdated = dict:store(DepartmentName, [H], Dict);
         true ->  DictUpdated = dict:append(DepartmentName, H, Dict)
       end,
-      %returnProductToDepartment(H),
       payToMaxAndReturnTheRest(T, CustomerBalance, DictUpdated, ListOfProducts)
   end.
 
+%% @doc been called when a customer cannot pay for all the products he bought. this function returns the remaining products to the right department.
 returnProducts([],_) -> done;
 returnProducts([H|T], Dict) ->
-
   {ListOfProduct, UpdatedDict} = dict:take(H, Dict),
   returnProductToDepartment(ListOfProduct, H),
   returnProducts(T, UpdatedDict).
 
 returnProductToDepartment(DepartmentProducts, Department) ->
-  department:castFunc(Department, {return, DepartmentProducts}). % TODO change at amir
-  %gen_server:cast({global,Department},{return, DepartmentProducts}).
-
-%returnProductToDepartment({departmentProduct,Department,ProductName,_PriceForEach, Expiry, Amount}) ->
-%  gen_server:cast({global,Department},{return,[{departmentProduct,Department,ProductName,_PriceForEach, Expiry, Amount}]}).
+  department:castFunc(Department, {return, DepartmentProducts}).
 
 sumOfAllProducts([H|T]) ->
   costOfSingleProduct(H) + sumOfAllProducts(T);
@@ -167,7 +152,6 @@ costOfSingleProduct({departmentProduct,_department,_productName,PriceForEach,_ex
 
 updateErlMarketBalance(AmountToAdd) ->
   purchaseDepartment:castFunc({updateBalance, add, AmountToAdd}).
-  %gen_server:cast({global,purchaseDepartment}, {updateBalance, add, AmountToAdd}).
 
 %%------------------WRITING TO LOGGER------------------
 
@@ -182,33 +166,5 @@ writeToLogger(variable, String, Variables) ->
   io:format(S, String, Variables),
   file:close(S).
 
-
-%%------------------TEST FUNCTIONS------------------
-
-%%testPay() ->
-%%  inventory:initInventory(node()),
-%%  cashierServer:start(),
-%%  purchaseDepartment:initPurchaseDepartment(),
-%%  department:start(meat),
-%%  department:start(dairy),
-%%  department:start(bakery),
-%%  [ShoppingList, Balance] =
-%%    [[{departmentProduct,dairy,"milk",5,40,2},
-%%      {departmentProduct,dairy,"yogurt",3,40,3},
-%%      {departmentProduct,dairy,"cheese",10,60,5},
-%%      {departmentProduct,meat,"chicken",40,500,5},
-%%      {departmentProduct,meat,"steak",80,500,2},
-%%      {departmentProduct,bakery,"bread",8,100,10}],
-%%      6108.332946432113],
-%%  {AvailableProductsToPurchase, _} = customer:initCustomer(),
-%%  MeatListProductsPrepurchase = department:callFunc(meat, getProducts),
-%%  DairyListProductsPrepurchase = department:callFunc(dairy, getProducts),
-%%  BakeryListProductsPrepurchase = department:callFunc(bakery, getProducts),
-%%  pay(AvailableProductsToPurchase, 0),
-%%  timer:sleep(500),
-%%  %gen_server:cast({global,?MODULE},{pay, AvailableProductsToPurchase, 40}),
-%%  MeatListProductsPostpurchase = department:callFunc(meat, getProducts),
-%%  DairyListProductsPostpurchase = department:callFunc(dairy, getProducts),
-%%  BakeryListProductsPostpurchase = department:callFunc(bakery, getProducts),
-%%  A = 5.
-%%
+printBoughtListToLogger(ListOfBoughtProducts) ->
+  writeToLogger("Bought Products ~p ~n",[ListOfBoughtProducts]).

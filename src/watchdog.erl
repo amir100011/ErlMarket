@@ -22,6 +22,7 @@
 start (ListOfNodesAndModules) ->
   spawn(?INTERFACE_NODE,?MODULE,startWatchdog,[ListOfNodesAndModules]).
 
+%% @doc starts monitoring the given processes
 startWatchdog (ListOfNodesAndModules) ->
   writeToLogger ("Watchdog: Starting:", node()),
   MasterMonitorRef = erlang:monitor(process,global:whereis_name(masterFunction)),%%monitor masterFunction
@@ -31,6 +32,7 @@ startWatchdog (ListOfNodesAndModules) ->
   monitorNewProcess (ListOfNodesAndModules),
   loop().
 
+%% @doc receive recursive block for detecting failures
 loop () ->
   io:fwrite("registerd_names() -->  ~p~n", [global:registered_names()]),
   receive
@@ -47,6 +49,8 @@ loop () ->
       writeToLogger("RECEIVED ~p~n", [_MSG]),loop ()
   end.
 
+%% @doc randonly chooses wherte to open the new failed process (except to the watchdog self node).
+%% if and only if one node remains open it on this node.
 chooseInWhichNodeOpenTheFallenProcess() ->
   NodesTMP = nodes(),
   if NodesTMP =:= [] ->
@@ -55,14 +59,18 @@ chooseInWhichNodeOpenTheFallenProcess() ->
       lists:nth(1,shuffleList(NodesTMP))
   end.
 
-
-raise(ServerPID)->  % TODO delete Module name from caller and from here
+%% @doc when watchdog itself fails the interface module restarts it with this function
+raise(ServerPID)->
   writeToLogger ("Watchdog: Starting @ ~p.~n", [node()]),
   global:unregister_name(watchdog),
   global:register_name(watchdog, self ()),
   erlang:monitor(process,ServerPID),
   loop().
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%              INTERNAL FUNCTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 shuffleList(ShoppingList) ->
   [X||{_,X} <- lists:sort([ {rand:uniform(), N} || N <- ShoppingList])].
@@ -72,6 +80,7 @@ shuffleNodes([]) -> [node()];
 shuffleNodes(NodeList) ->
   shuffleList(NodeList).
 
+%% @doc monitors new single process
 monitorNewProcess(ListOfNodesAndModules) ->
   io:fwrite("monitoring ~p~n", [ListOfNodesAndModules]),
   lists:foreach(
@@ -86,7 +95,7 @@ monitorNewProcess(ListOfNodesAndModules) ->
     end,
     ListOfNodesAndModules).
 
-
+%% @doc gets the pid of monitored processes from Mnesia using qlc
 getModuleNameAndProcessName(MonitorRef) ->
   F = fun() ->
     Q =
@@ -102,7 +111,7 @@ getModuleNameAndProcessName(MonitorRef) ->
 getParameters(NodeNameAndModuleName) ->
   {lists:nth(1,NodeNameAndModuleName), lists:nth(2,NodeNameAndModuleName), lists:nth(3,NodeNameAndModuleName)}.
 
-
+%% @doc spawn unique module anme server
 spawnRegularServer(NodeName,ModuleName) ->
   writeToLogger("list", [NodeName,ModuleName]),
   spawn(NodeName,ModuleName,start,[]),
@@ -115,6 +124,7 @@ spawnRegularServer(NodeName,ModuleName) ->
   end,
   erlang:monitor(process, ServerPID).
 
+%% @doc starts unique server name but module name is shared
 spawnDepartmentServer(NodeName,ModuleName,Name)->
   spawn(NodeName,ModuleName,start,[Name]),
   timer:sleep(500), % 0.5 seconds
@@ -134,7 +144,7 @@ writeToMnesia(MonitorRef,ModuleName,Name) ->
       end,
   mnesia:transaction(T).
 
-
+%% @doc kills the system on exit
 waitForCustomerToLeave()->
   erlang:send_after(?INTERVAL, self(), closeShop), %% define new timer
   NumberOfCustomers = masterFunction:callFunc(getNumberOfCustomers),
@@ -148,6 +158,9 @@ waitForCustomerToLeave()->
       exit(normal)
   end.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%            WRITE TO LOGGER FUNCTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 writeToLogger(String) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),

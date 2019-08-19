@@ -20,7 +20,6 @@
 -export([init/1, handle_call/3, handle_cast/2, start/0, handle_info/2, callFunc/1]).
 -export([setBalance/1]).
 -export([setInitialBudget/0]).
--export([testReservation/0]).
 -export([sumAmount/2]).
 -export([getRatio/2,ratioToReserve/4]).
 -export([writeToLogger/2, castFunc/1, terminate/2]).
@@ -65,6 +64,8 @@ init(_Args) ->
   erlang:send_after(?INTERVAL, self(), trigger),
   {ok, 0}.
 
+%% @doc periodically sends a massage to itself for checking the ratio between products and customers in the ErlMart
+%% if needed restock the departments to the predefined ratio.
 handle_info(trigger, State) when is_integer(State)->
   writeToLogger("handle_info"),
   Time = State,
@@ -133,7 +134,8 @@ checkProductStatus(ListOfValidProductsToReserve, NumberOfCustomers) ->
   %writeToLogger("checkProductStatus:ListOfValidProductsWithRatio  - ",ListOfValidProductsWithRatio),
   ListOfValidProductsWithRatio.
 
-
+%% @doc checks the minimal possible ratio to restock all departments, default is the predefined ratio
+%% if the default isn't possible due to insufficient budget calculates the minimal ratio possible
 ratioToReserve(ListOfValidProductsWithRatio, Time, NumberOfCustomers, ErlMarketBudget) ->
   CostOfReservation = priceOfReservation(ListOfValidProductsWithRatio),
   if CostOfReservation =< ErlMarketBudget ->
@@ -157,6 +159,7 @@ getRatio([H|T],NumberOfCustomers)->
   [getRatioSingleElement(H,NumberOfCustomers)] ++ getRatio(T,NumberOfCustomers);
 getRatio([],_NumberOfCustomers)->[].
 
+%% @doc checks the ratio between a single department's product valid amount in stock to the number of customers
   getRatioSingleElement({departmentProduct,Department, Product_name, _, _Expiry_time, Amount},NumberOfCustomers) ->
   Price = inventory:getProdcutPrice(Product_name),  % Todo Change this function at amir to support sales
   %writeToLogger("getRatioSingleElement",[{departmentProduct,Department, Product_name, Price, _Expiry_time, Amount},NumberOfCustomers]),
@@ -166,6 +169,7 @@ getRatio([],_NumberOfCustomers)->[].
   end,
   [Department,Product_name, Price,AmountToOrder].
 
+%% @doc restocks all the department with the new products and updates the ErlMart budget
 reserve(ListOfValidProductsWithRatio, Time, CostOfReservation) ->
   updateIterationCounter(),
   accumulateChanges(deduce,CostOfReservation/2),
@@ -175,6 +179,7 @@ reserve(ListOfValidProductsWithRatio, Time, CostOfReservation) ->
       sendProductsToDepartment(N,ListOfProductsToAddToDepartment)
     end, ?DEPARTMENT_LIST).
 
+%% @doc creates a list of new products and amounts to restock for each department
 addProducts(DepartmentName,Time,[H|T],CallList) ->
   CallListToAdd = addProductsToCallList(DepartmentName,Time,H,CallList),
   addProducts(DepartmentName,Time,T,CallListToAdd);
@@ -199,7 +204,6 @@ priceOfReservationSingleElement([_Department,_Product_name,Price,AmountToOrder])
   Price * AmountToOrder.
 
 addProductsToCallList(DepartmentName,Time,[Department,Product,Price,Amount], CallList) ->
-
   if Department =:= DepartmentName andalso  Amount > 0 ->
     ProductToAdd =
       [#departmentProduct{
@@ -331,78 +335,3 @@ writeToLogger(variable, String, Variables) ->
   {ok, S} = file:open(?LOGGER_FILE_PATH, [append]),
   io:format(S, String, Variables),
   file:close(S).
-
-%%---------------------------------------------------------
-%%                 TEST FUNCTIONS
-%%---------------------------------------------------------
-
-
-testReservation() ->
-  setInitialBudget(),
-  setBalance(100),
-  setBalance(-150),
-  [{_Budget,ErlMarketBudget}] = ets:lookup(budget,erlMarketBudget),
-  ErlMarketBudget.
-%%  purchaseDepartment:start().
-
-
-
-%%  department:start(meat),
-%%  department:start(dairy),
-%%  department:start(bakery),
-%%
-%%  ListOfProductsToReserve =
-%%    [[dairy, "milk", 5, 5, 50],
-%%    [dairy, "yogurt", 1, 5, 3],
-%%    [dairy, "cheese", 100, 5, 25],
-%%    [meat, "steak", 17, 5, 33],
-%%    [meat, "chicken", 9, 5, 7],
-%%    [bakery, "bread", 9, 5, 77]],
-%%
-%%
-%%
-%%  reserveTmp(ListOfProductsToReserve).
-%%
-%%reserveTmp(RatioedList)->
-%%  lists:foreach(
-%%    fun(N) ->
-%%      List = addProductsAMIR(N,RatioedList,[]),
-%%      sendProductsToDepartment(N,List)
-%%    end, ?DEPARTMENT_LIST).
-%%
-%%addProductsAMIR(DepartmentName,[H|T],CallList) ->
-%%  CallListToAdd = addProductsToCallListAMIR(DepartmentName,H,CallList),
-%%  addProductsAMIR(DepartmentName,T,CallListToAdd);
-%%addProductsAMIR(_DepartmentName,[],CallList) -> CallList.
-%%
-%%
-%%addProductsToCallListAMIR(DepartmentName,[Department,Product,Price,Expiry,Amount], CallList) ->
-%%
-%%  if Department =:= DepartmentName ->
-%%    ProductToAdd = [#departmentProduct{department = DepartmentName,
-%%    product_name = Product,
-%%    price = Price,
-%%    expiry_time = Expiry,
-%%    amount = Amount}],
-%%    CallList++ProductToAdd;
-%%
-%%    true -> CallList
-%%  end.
-%%%%
-%%addProductsDor([]) -> done;
-%%addProductsDor([H|T]) ->
-%%  Product_Name = H#departmentProduct.product_name,
-%%  RequestedAmount = H#departmentProduct.amount,
-%%  ExpiryTime = H#departmentProduct.expiry_time,
-%%  addProductsDor(T).
-%%
-%%
-%%
-
-
-%%   RatioedList = getRatio(Tmp, 1000),
-%%  initPurchaseDepartment().
-%%  ErlMarketBudget = get(erlMarketBudget),
-%%  purchaseDepartment ! {"add",5}.
-%%  ratioToReserve(RatioedList, 1000, ErlMarketBudget).
-

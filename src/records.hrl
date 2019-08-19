@@ -13,9 +13,9 @@
 -record(shoppinlistelement, {department_name, product_name, price, amount}).
 -record(processesAllocationToNodes,{monitorRef,moduleName,processName}).
 -define(DEPARTMENT_LIST, [dairy, meat, bakery]).
--define(PURCHASE_DEPARTMENT_NODE, 'amir@132.72.52.249').
--define(CASHIER_SERVER_NODE,  'amir@132.72.52.249').
--define(MASTER_SERVER_NODE,  'dor@132.72.54.107').
+-define(PURCHASE_DEPARTMENT_NODE,'amir@172.16.147.165' ).
+-define(CASHIER_SERVER_NODE,'amir@172.16.147.165').
+-define(MASTER_SERVER_NODE, 'dor@132.72.54.107').
 -define(INTERFACE_NODE, 'dor@132.72.54.107').
--define(NodeList, [?INTERFACE_NODE, ?MASTER_SERVER_NODE]).%, ?CASHIER_SERVER_NODE, ?MASTER_SERVER_NODE, ?INTERFACE_NODE]).
+-define(NodeList, [?INTERFACE_NODE,?CASHIER_SERVER_NODE]).%, ?CASHIER_SERVER_NODE, ?MASTER_SERVER_NODE, ?INTERFACE_NODE]).
 -include_lib("stdlib/include/qlc.hrl").

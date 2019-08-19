@@ -9,12 +9,13 @@
 -module(compiler).
 -author("dorliv").
 %% API
--compile(export_all).
+-export([c/0,compile/0,start/0]).
 -include_lib("records.hrl").
 
-%% @doc compile all the modules in each node
+%% @doc compile all the modules in each noded
 c()->
-  net_kernel:connect_node('amir@132.72.52.249'),
+  lists:foreach(fun(NodeName) ->
+  net_kernel:connect_node(NodeName) end, ?NodeList),
   rpc:multicall(?NodeList, compiler, compile, []).
 
 %% @doc compile all the modules
@@ -30,20 +31,4 @@ compile()->
 
 %% @doc start the interface
 start()->
-  %inventory:initInventory(),
   interface:start().
-
-
-% irrelevent
-%%connect() ->
-%%  net_kernel:connect_node('server@amir-Inspiron-5559'),
-%%  net_kernel:connect_node('server2@amir-Inspiron-5559'),
-%%  net_kernel:connect_node('watchdog2@amir-Inspiron-5559'),
-%%  io:fwrite("~p~n", [compile:file(server, debug_info)]),
-%%  io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
-%%  watchdog:init().
-%%
-%%compileTest() ->
-%%  io:fwrite("~p~n", [compile:file(interface, debug_info)]),
-%%  io:fwrite("~p~n", [compile:file(watchdog, debug_info)]),
-%%  watchdog:init(interface).

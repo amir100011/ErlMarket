@@ -21,14 +21,6 @@ getDepartments()->
   {atomic, Ans} = mnesia:transaction(Fun),
   Ans.
 
-
-%% @doc initialize the inventory for all the nodes in NodeList
-%% this function creates the initial tables and fills them with initial value
-%%
-%%startMnesia()->
-%%  io:fwrite("node ~p start mneisa ~n",[node()]),
-%%  mnesia:start().
-
 %% @doc initialize the inventory of our Market with initial values
 initInventory()->
   Ans = mnesia:create_schema(?NodeList),
@@ -71,10 +63,6 @@ fillInventory()->
     true ->
       read_lines(File)
   end.
-
-
-
-
 
 read_lines(File) ->
   Line = process_line(file:read_line(File)),
@@ -124,63 +112,3 @@ getProdcutPrice(ProductName) ->
       end,
   {atomic, [Price]} = mnesia:transaction(F),
   Price.
-
-%%
-%%test()->
-%%  initInventory([node()]),
-%%  PriceOfProduct = getProdcutPrice("buns"),
-%%  io:fwrite("~p~n",[PriceOfProduct]).
-
-%%getDepartmentProductsFromDepartment(Department)->
-%%  % get Products that are currently in
-%%  F = fun() ->
-%%    Q = qlc:q([E || E <- mnesia:table(Department)]),
-%%    qlc:e(Q)
-%%      end,
-%%  {atomic, ListAns} = mnesia:transaction(F),
-%%   ListAns.
-%%
-%%
-%%
-%%%% @doc change the price value of each product during sale
-%%executeSale([],_) -> done;
-%%executeSale([H|T], Discount)  when Discount < 1 ->
-%%  Price = H#departmentProduct.price,
-%%  NewPrice = (1 - Discount) * Price,
-%%  NewPriceInt = round(NewPrice),
-%%  New = H#departmentProduct{price = NewPriceInt},
-%%  Department = H#departmentProduct.department,
-%%  %mnesia:dirty_delete_object(Department, H),
-%%  %mnesia:dirty_write(Department, New),
-%%  F = fun() -> mnesia:delete_object(Department, H , write), mnesia:write(Department, New, write) end,
-%%  mnesia:transaction(F),
-%%  executeSale(T, Discount).
-%%
-%%
-%%%% @doc return the normal price of each product from the inventory product mnesia table
-%%cancelSale([]) -> done;
-%%cancelSale([H|T]) ->
-%%  F = fun() ->
-%%    Q = qlc:q([E#product.price || E <- mnesia:table(product),
-%%      E#product.product_name =:= H#departmentProduct.product_name]),
-%%    qlc:e(Q)
-%%      end,
-%%  {atomic, [NormalPrice]} = mnesia:transaction(F),
-%%  Department = H#departmentProduct.department,
-%%  New = H#departmentProduct{price = NormalPrice},
-%%  F2= fun() -> mnesia:delete_object(Department, H , write), mnesia:write(Department, New, write) end,
-%%  mnesia:transaction(F2),
-%%  cancelSale(T).
-%%
-%%
-%%test() ->
-%%  initInventory([node()]),
-%%  ListProducts = getDepartmentProductsFromDepartment(dairy),
-%%  io:fwrite("Products : ~p ~n",[ListProducts]),
-%%  executeSale(ListProducts, 0.5),
-%%  ListProducts2 = getDepartmentProductsFromDepartment(dairy),
-%%  io:fwrite("Products : ~p ~n",[ListProducts2]),
-%%  cancelSale(ListProducts2),
-%%  ListProducts3 = getDepartmentProductsFromDepartment(dairy),
-%%  io:fwrite("Products : ~p ~n",[ListProducts3]).
-
